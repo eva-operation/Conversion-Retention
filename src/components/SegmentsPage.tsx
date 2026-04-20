@@ -23,40 +23,9 @@ import {
     TooltipTrigger,
 } from "./Tooltip";
 
-export function SegmentsPage({ onOpenBuilder }: { onOpenBuilder: () => void }) {
+export function SegmentsPage({ onOpenBuilder, segments }: { onOpenBuilder: () => void, segments: any[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-
-    const segments = [
-        { 
-            name: 'Hesitant shoppers', 
-            description: 'Email subscribers who open and click emails frequently, but have never purchased.', 
-            goal: 'Convert subscribers',
-            members: '0', 
-            lastComputed: 'Apr 20, 2026, 3:40 PM',
-            created: 'Apr 20, 2026, 3:40 PM'
-        },
-        { 
-            name: 'Previously engaged', 
-            description: 'Email subscribers who have not recently opened or clicked an email from you, but used to do so frequently.', 
-            goal: 'Re-engage subscribers',
-            members: '0', 
-            lastComputed: 'Apr 9, 2026, 10:00 PM',
-            created: 'Apr 9, 2026, 10:00 PM'
-        },
-        { 
-            name: 'Engaged 60 days (Email)', 
-            description: 'Profiles who have engaged with your emails in the last 60 days.', 
-            goal: 'Engagement',
-            members: '0', 
-            lastComputed: 'Apr 9, 2026, 9:50 PM',
-            created: 'Apr 9, 2026, 9:49 PM'
-        },
-        { name: 'Engaged (90 Days)', goal: '-', members: '0', lastComputed: '-', created: 'Apr 3, 2026, 5:04 PM' },
-        { name: 'Engaged (60 Days)', goal: '-', members: '0', lastComputed: '-', created: 'Apr 3, 2026, 5:04 PM' },
-        { name: 'Engaged (30 Days)', goal: '-', members: '0', lastComputed: '-', created: 'Apr 3, 2026, 5:04 PM' },
-        { name: 'New Subscribers', goal: '-', members: '0', lastComputed: '-', created: 'Apr 3, 2026, 5:04 PM' }
-    ];
 
     return (
         <div className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-[1200px] mx-auto p-4 md:p-8">
@@ -190,8 +159,9 @@ export function SegmentsPage({ onOpenBuilder }: { onOpenBuilder: () => void }) {
                                         onClick={onOpenBuilder}
                                         className="w-full flex items-center justify-between p-4 bg-gradient-to-br from-[#0066FF] to-[#0052CC] rounded-xl text-white shadow-lg shadow-blue-500/20 group hover:-translate-y-0.5 transition-all"
                                     >
-                                        <div className="flex flex-col items-start gap-0.5">
-                                            <span className="text-[15px] font-black">Segment Builder</span>
+                                        <div className="flex flex-col items-start gap-0.5 text-left">
+                                            <span className="text-[14px] font-black leading-none">Segment Builder</span>
+                                            <span className="text-[11px] font-medium opacity-70 leading-tight">Advanced logic builder for custom audiences</span>
                                         </div>
                                         <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                                             <ArrowRight size={16} />

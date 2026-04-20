@@ -2291,6 +2291,47 @@ export default function App() {
     // Summary Section State
     const [summaryVisible, setSummaryVisible] = useState(true);
 
+    // Segment Builder Data Persistence
+    const [segments, setSegments] = useState([
+        { 
+            name: 'Hesitant shoppers', 
+            description: 'Email subscribers who open and click emails frequently, but have never purchased.', 
+            goal: 'Convert subscribers',
+            members: '12,430', 
+            lastComputed: 'Apr 20, 2026, 3:40 PM',
+            created: 'Apr 20, 2026, 3:40 PM'
+        },
+        { 
+            name: 'Previously engaged', 
+            description: 'Email subscribers who have not recently opened or clicked an email from you, but used to do so frequently.', 
+            goal: 'Re-engage subscribers',
+            members: '8,120', 
+            lastComputed: 'Apr 9, 2026, 10:00 PM',
+            created: 'Apr 9, 2026, 10:00 PM'
+        },
+        { 
+            name: 'Engaged 60 days (Email)', 
+            description: 'Profiles who have engaged with your emails in the last 60 days.', 
+            goal: 'Engagement',
+            members: '45,600', 
+            lastComputed: 'Apr 9, 2026, 9:50 PM',
+            created: 'Apr 9, 2026, 9:49 PM'
+        }
+    ]);
+
+    const handleSaveSegment = (newSegment: any) => {
+        setSegments(prev => [
+            {
+                ...newSegment,
+                members: '1,240', // Placeholder for simulation
+                lastComputed: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }),
+                created: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })
+            },
+            ...prev
+        ]);
+        setCurrentPage('segments');
+    };
+
     // Scroll Observer for sticky summary
     useEffect(() => {
         const handleScroll = () => {
@@ -7561,9 +7602,15 @@ export default function App() {
                                 ) : currentPage === 'lists' ? (
                                     <ListsPage onViewHistory={() => setCurrentPage('settings')} />
                                 ) : currentPage === 'segments' ? (
-                                    <SegmentsPage onOpenBuilder={() => setCurrentPage('segment-builder')} />
+                                    <SegmentsPage 
+                                        segments={segments}
+                                        onOpenBuilder={() => setCurrentPage('segment-builder')} 
+                                    />
                                 ) : currentPage === 'segment-builder' ? (
-                                    <SegmentBuilderPage onBack={() => setCurrentPage('segments')} />
+                                    <SegmentBuilderPage 
+                                        onBack={() => setCurrentPage('segments')} 
+                                        onSave={handleSaveSegment}
+                                    />
                                 ) : currentPage === 'settings' ? (
                                     <SettingsPage onBack={() => setCurrentPage('dashboard')} />
                                 ) : (

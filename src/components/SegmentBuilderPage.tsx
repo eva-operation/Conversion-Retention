@@ -1,174 +1,526 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
     ChevronLeft, 
     Save, 
     Plus, 
-    Minus, 
-    Play, 
-    Users, 
     Trash2, 
     GripVertical, 
     ArrowRight,
     Search,
-    Filter,
-    ChevronDown,
-    Settings2,
     Database,
     Zap,
-    MousePointer2
+    Mail,
+    ShoppingBag,
+    ChevronDown,
+    ShieldCheck,
+    ChevronRight,
+    Check,
+    Layers,
+    Copy,
+    Info,
+    History,
+    Activity,
+    CreditCard,
+    Target
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-export function SegmentBuilderPage({ onBack }: { onBack: () => void }) {
+const SEGMENT_GOALS = [
+    { 
+        name: 'Engagement', 
+        description: 'Used for engaged audience targeting, deliverability-safe promotional sends, and campaign exclusions from re-engagement flows. It is also used for re-engagement campaigns and deliverability-safe suppression candidates for subscribers who never engaged.' 
+    },
+    { 
+        name: 'Customer Lifecycle', 
+        description: 'Used for customer-only campaigns, post-purchase audiences, and excluding buyers from prospect promotions. It is also utilized for second-purchase campaigns and early loyalty progression.' 
+    },
+    { 
+        name: 'Past Purchasers', 
+        description: 'Used for loyalty, retention, and higher-frequency customer campaigns targeting those who have placed an order more than once.' 
+    },
+    { 
+        name: 'Retain customers', 
+        description: 'Used for recent-customer upsell, replenishment, reviews, exclusions from winback, broad retention, seasonal campaigns, and annual recency targeting.' 
+    },
+    { 
+        name: 'Exclude recent buyers', 
+        description: 'Used mainly as an exclusion segment for promotions or as a fresh post-purchase audience.' 
+    },
+    { 
+        name: 'Re-engage subscribers', 
+        description: 'Used for winback-style re-engagement campaigns targeting once-responsive prospects who have gone cold.' 
+    },
+    { 
+        name: 'Convert subscribers', 
+        description: 'Used for first-purchase conversion campaigns, stronger offers, and benefit-led nurture for subscribers who frequently interact but have never purchased.' 
+    }
+];
+import { 
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "./Tooltip";
+
+interface Criteria {
+    name: string;
+    description: string;
+    type: 'Person' | 'Email Event' | 'Order' | 'Activity';
+}
+
+const CRITERIA_LIBRARY: Record<string, Criteria[]> = {
+    "Consent & Profile": [
+        { name: 'Email Marketing Consent', type: 'Person', description: "Information about the person's email marketing permission status." },
+        { name: 'SMS Marketing Consent', type: 'Person', description: "Information about the person's SMS marketing permission status." },
+        { name: 'Created At Date', type: 'Person', description: "Information about the date the user profile was created." }
+    ],
+    "Engagement & Rates": [
+        { name: 'Opened Count', type: 'Email Event', description: "Information about how many times emails were opened within specified time intervals." },
+        { name: 'Clicked Count', type: 'Email Event', description: "Information about how many times emails were clicked within specified time intervals." },
+        { name: 'Delivered Count', type: 'Email Event', description: "Information about how many emails were successfully delivered to the user in the specified period." },
+        { name: 'Email Open Rate', type: 'Email Event', description: "Information about the person's email open rate (as a percentage)." },
+        { name: 'Email Click Rate', type: 'Email Event', description: "Information about the person's email click rate (as a percentage)." },
+        { name: 'SMS Engagement Rate', type: 'Activity', description: "Information about the person's engagement rate with SMS messages." }
+    ],
+    "Order Activity": [
+        { name: 'Valid Order Count', type: 'Order', description: "Information about the number of valid orders that match the specified conditions and time interval." },
+        { name: 'Order Count (Total)', type: 'Order', description: "Information about the user's total number of orders." },
+        { name: 'Last Purchase Date', type: 'Order', description: "Information about the time elapsed since the user's last purchase." }
+    ],
+    "LTV & AOV": [
+        { name: 'Average Order Value', type: 'Order', description: "Information about the user's average order value (AOV)." },
+        { name: 'Lifetime Value', type: 'Order', description: "Information about the customer's total lifetime value (LTV)." }
+    ],
+    "Activity & Status": [
+        { name: 'Days Since Last Activity', type: 'Activity', description: "Information about the number of days since the user's last activity." },
+        { name: 'Subscription Status', type: 'Activity', description: "Information about the user's current subscription status." }
+    ]
+};
+
+interface Condition {
+    id: string;
+    type: string;
+    field: string;
+    operator: string;
+    value: string;
+    window?: string;
+    junction: 'AND' | 'OR';
+}
+
+interface ConditionGroup {
+    id: string;
+    conditions: Condition[];
+    junction: 'AND' | 'OR';
+}
+
+export function SegmentBuilderPage({ onBack, onSave }: { onBack: () => void, onSave: (segment: any) => void }) {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [segmentName, setSegmentName] = useState('');
+    const [segmentGoal, setSegmentGoal] = useState(SEGMENT_GOALS[0]);
+    const [isGoalDropdownOpen, setIsGoalDropdownOpen] = useState(false);
+    const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
+    const goalRef = useRef<HTMLDivElement>(null);
+
+    // Close dropdown on outside click
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (goalRef.current && !goalRef.current.contains(event.target as Node)) {
+                setIsGoalDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const [groups, setGroups] = useState<ConditionGroup[]>([
+        {
+            id: 'g1',
+            junction: 'AND',
+            conditions: [
+                { id: 'c1', type: 'Person', field: 'Email Marketing Consent', operator: 'Equal To', value: 'subscribed', junction: 'AND' },
+                { id: 'c2', type: 'Email Event', field: 'Opened Count', operator: 'Greater Than or Equal', value: '1', window: '30 days', junction: 'AND' }
+            ]
+        }
+    ]);
+
+    const addGroup = () => {
+        setGroups([...groups, {
+            id: `g-${Date.now()}`,
+            junction: 'OR',
+            conditions: [{ id: `c-${Date.now()}`, type: 'Person', field: 'Select field...', operator: 'Equal To', value: '0', junction: 'AND' }]
+        }]);
+    };
+
+    const addCondition = (groupId: string, field?: string, type: string = 'Person') => {
+        const fieldsWithWindow = ['Opened Count', 'Clicked Count', 'Delivered Count', 'Email Open Rate', 'Email Click Rate', 'SMS Engagement Rate', 'Valid Order Count'];
+        const needsWindow = field && fieldsWithWindow.includes(field);
+
+        setGroups(groups.map(g => g.id === groupId ? {
+            ...g,
+            conditions: [...g.conditions, { 
+                id: `c-${Date.now()}`, 
+                type: type, 
+                field: field || 'Select field...', 
+                operator: field?.toLowerCase().includes('date') ? 'Within Last' : 'Equal To', 
+                value: '0', 
+                window: needsWindow ? '30 days' : undefined,
+                junction: 'AND' 
+            }]
+        } : g));
+    };
+
+    const removeCondition = (groupId: string, conditionId: string) => {
+        setGroups(groups.map(g => g.id === groupId ? {
+            ...g,
+            conditions: g.conditions.filter(c => c.id !== conditionId)
+        } : g).filter(g => g.conditions.length > 0));
+    };
+
+    const updateCondition = (groupId: string, conditionId: string, updates: any) => {
+        // If field changes, update type and window logic
+        if (updates.field) {
+            // Find the criteria in the library to get its type
+            let newType = 'Person';
+            Object.values(CRITERIA_LIBRARY).forEach(categoryItems => {
+                const match = categoryItems.find(i => i.name === updates.field);
+                if (match) newType = match.type;
+            });
+            updates.type = newType;
+
+            const fieldsWithWindow = ['Opened Count', 'Clicked Count', 'Delivered Count', 'Email Open Rate', 'Email Click Rate', 'SMS Engagement Rate', 'Valid Order Count'];
+            const needsWindow = fieldsWithWindow.includes(updates.field);
+            updates.window = needsWindow ? (updates.window || '30 days') : undefined;
+        }
+
+        setGroups(groups.map(g => g.id === groupId ? {
+            ...g,
+            conditions: g.conditions.map(c => c.id === conditionId ? { ...c, ...updates } : c)
+        } : g));
+    };
+
+    const humanizeGroup = (group: ConditionGroup) => {
+        if (group.conditions.length === 0) return "No conditions defined";
+        
+        const parts = group.conditions.map((c, idx) => {
+            const junction = idx < group.conditions.length - 1 ? ` ${c.junction} ` : "";
+            const fieldText = c.field === "Select field..." ? "a specific criteria" : c.field;
+            const valueText = (c.value === "0" || c.value === "...") && !c.field.includes('Consent') ? "" : ` ${c.operator.toLowerCase()} ${c.value}`;
+            
+            let windowText = "";
+            if (c.field.toLowerCase().includes('date')) {
+                windowText = " days";
+            } else if (c.window) {
+                windowText = ` in last ${c.window}`;
+            }
+            
+            return `[${fieldText}${valueText}${windowText}]${junction}`;
+        });
+
+        return `Matches profiles where: ${parts.join("")}`;
+    };
+
+    const handleDrop = (e: React.DragEvent, groupId: string) => {
+        e.preventDefault();
+        try {
+            const data = JSON.parse(e.dataTransfer.getData('criteria'));
+            addCondition(groupId, data.name, data.type);
+        } catch (err) {}
+    };
+
+    const filteredLibrary = Object.entries(CRITERIA_LIBRARY).reduce((acc, [category, items]) => {
+        const filteredItems = items.filter(item => 
+            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.description.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        if (filteredItems.length > 0) {
+            acc[category] = filteredItems;
+        }
+        return acc;
+    }, {} as Record<string, Criteria[]>);
+
     return (
-        <div className="flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* Header / Toolbar */}
-            <div className="flex items-center justify-between px-8 py-4 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shrink-0">
-                <div className="flex items-center gap-4">
-                    <button 
-                        onClick={onBack}
-                        className="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                    >
+        <div className="flex flex-col h-full animate-in fade-in duration-500 bg-slate-50 dark:bg-slate-950 font-sans">
+            {/* Header / Compact Toolbar */}
+            <div className="flex items-center justify-between px-6 py-4 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div className="flex items-center gap-6">
+                    <button onClick={onBack} className="p-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-all text-slate-400">
                         <ChevronLeft size={20} />
                     </button>
-                    <div className="h-6 w-px bg-slate-100 dark:bg-slate-800" />
-                    <div>
-                        <h1 className="text-lg font-black text-slate-900 dark:text-white leading-tight">Advanced Segment Builder</h1>
-                        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Creating: New Custom Segment</p>
+                    
+                    <div className="flex items-center gap-4">
+                        <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.1em]">Segment name</label>
+                            <input 
+                                value={segmentName}
+                                onChange={(e) => setSegmentName(e.target.value)}
+                                className="w-64 h-9 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[13px] font-bold outline-none focus:border-[#0066FF] focus:bg-white transition-all shadow-sm"
+                                placeholder="e.g. High Value Customers"
+                            />
+                        </div>
+
+                        <div className="h-10 w-px bg-slate-100 dark:bg-slate-800" />
+
+                        <div className="flex flex-col gap-1 relative" ref={goalRef}>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.1em]">Strategy Goal</label>
+                            <button 
+                                onClick={() => setIsGoalDropdownOpen(!isGoalDropdownOpen)}
+                                className="w-56 h-9 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-between text-[13px] font-bold text-slate-700 dark:text-slate-200 hover:border-slate-300 transition-all shadow-sm"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <Target size={14} className="text-[#0066FF]" />
+                                    {segmentGoal.name}
+                                </span>
+                                <ChevronDown size={14} className={cn("text-slate-400 transition-transform", isGoalDropdownOpen && "rotate-180")} />
+                            </button>
+
+                            {isGoalDropdownOpen && (
+                                <div className="absolute top-[calc(100%+8px)] left-0 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-[100] p-2 animate-in fade-in zoom-in-95 duration-200">
+                                    <div className="max-h-[400px] overflow-y-auto no-scrollbar">
+                                        {SEGMENT_GOALS.map((goal) => (
+                                            <button
+                                                key={goal.name}
+                                                onClick={() => {
+                                                    setSegmentGoal(goal);
+                                                    setIsGoalDropdownOpen(false);
+                                                }}
+                                                className={cn(
+                                                    "w-full text-left p-3 rounded-xl transition-all group",
+                                                    segmentGoal.name === goal.name 
+                                                        ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30" 
+                                                        : "hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent"
+                                                )}
+                                            >
+                                                <div className="flex flex-col gap-1">
+                                                    <span className={cn(
+                                                        "text-[13px] font-black",
+                                                        segmentGoal.name === goal.name ? "text-[#0066FF]" : "text-slate-900 dark:text-white"
+                                                    )}>
+                                                        {goal.name}
+                                                    </span>
+                                                    <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-medium">
+                                                        {goal.description}
+                                                    </p>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <button className="flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-300 font-bold text-[13px] hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all">
-                        <Play size={16} className="text-emerald-500 fill-emerald-500" />
-                        Preview Results
-                    </button>
-                    <button className="flex items-center gap-2 px-6 py-2.5 bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-xl text-[13px] font-black shadow-lg shadow-blue-500/20 transition-all active:scale-95">
-                        <Save size={16} />
-                        Save Segment
+                    <button 
+                        onClick={() => onSave({ name: segmentName || "Unnamed Segment", goal: segmentGoal.name, description: humanizeGroup(groups[0]) })}
+                        className="flex items-center gap-2 px-6 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-sm font-black shadow-lg transition-all hover:-translate-y-0.5 active:scale-95"
+                    >
+                        <Save size={16} /> Save Segment
                     </button>
                 </div>
             </div>
 
-            {/* Main Content Area */}
             <div className="flex-1 flex overflow-hidden">
-                {/* Left Sidebar: Components / Toolboxes */}
-                <div className="w-80 border-r border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col pt-6 overflow-y-auto no-scrollbar">
-                    <div className="px-6 mb-8">
-                        <h2 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">DRAG COMPONENTS</h2>
-                        <div className="relative mb-4">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
-                            <input 
-                                type="text" 
-                                placeholder="Search filters..." 
-                                className="w-full pl-9 pr-4 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs outline-none shadow-sm"
-                            />
+                {/* Condition Library - Full List with Tooltips */}
+                <div className="w-64 border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col pt-4 overflow-hidden">
+                    <div className="px-5 mb-4 flex flex-col gap-4">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">CRITERIA LIBRARY</h2>
+                            <Info size={12} className="text-slate-300" />
                         </div>
                         
-                        <div className="space-y-3">
-                            <ComponentItem icon={MousePointer2} label="Behavioral" items={['Clicked Email', 'Opened Email', 'Visited Site']} color="text-purple-500" />
-                            <ComponentItem icon={Database} label="Properties" items={['City', 'Country', 'LTV', 'Join Date']} color="text-blue-500" />
-                            <ComponentItem icon={Zap} label="Predictive" items={['Predicted LTV', 'Churn Risk', 'Gender']} color="text-amber-500" />
-                            <ComponentItem icon={Users} label="Membership" items={['In List', 'In Segment']} color="text-emerald-500" />
+                        {/* Search Input */}
+                        <div className="relative group">
+                            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0066FF] transition-colors" />
+                            <input 
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search criteria..."
+                                className="w-full h-9 pl-9 pr-4 bg-slate-50 border border-slate-100 rounded-xl text-[11px] font-medium focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/10 focus:border-[#0066FF] transition-all"
+                            />
                         </div>
                     </div>
 
-                    <div className="mt-auto p-6 bg-slate-100/50 dark:bg-slate-800/30">
-                        <div className="flex items-center gap-2 text-[#0066FF] font-black text-xs">
-                            <Plus size={14} />
-                            Add custom property
+                    <div className="flex-1 overflow-y-auto no-scrollbar scroll-smooth px-5 pb-6">
+                        <div className="space-y-6">
+                            {Object.entries(filteredLibrary).map(([category, items]) => {
+                                const icons: any = {
+                                    "Consent & Profile": ShieldCheck,
+                                    "Engagement & Rates": Mail,
+                                    "Order Activity": ShoppingBag,
+                                    "LTV & AOV": CreditCard,
+                                    "Activity & Status": Activity
+                                };
+                                const colors: any = {
+                                    "Consent & Profile": "text-emerald-500",
+                                    "Engagement & Rates": "text-purple-500",
+                                    "Order Activity": "text-[#0066FF]",
+                                    "LTV & AOV": "text-blue-600",
+                                    "Activity & Status": "text-amber-500"
+                                };
+
+                                return (
+                                    <SidebarCategory 
+                                        key={category}
+                                        icon={icons[category] || Database} 
+                                        label={category} 
+                                        items={items} 
+                                        color={colors[category] || "text-slate-400"} 
+                                    />
+                                );
+                            })}
+
+                            {Object.keys(filteredLibrary).length === 0 && (
+                                <div className="flex flex-col items-center justify-center py-12 text-center">
+                                    <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center mb-3">
+                                        <Search size={16} className="text-slate-300" />
+                                    </div>
+                                    <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">No matches found</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
 
-                {/* Workspace / Canvas */}
-                <div className="flex-1 bg-slate-50/30 dark:bg-slate-950/20 p-12 overflow-y-auto">
-                    <div className="max-w-[800px] mx-auto space-y-4">
-                        {/* Segment Logic Blocks */}
-                        <div className="space-y-4">
-                            <LogicBlock 
-                                condition="What someone has done (or not done)"
-                                action="Clicked Email"
-                                frequency="at least once"
-                                date="in the last 30 days"
-                            />
-                            
-                            <div className="flex justify-center -my-2 relative z-10">
-                                <span className="bg-slate-100 dark:bg-slate-800 px-4 py-1.5 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-widest border border-slate-200 dark:border-slate-700 shadow-sm">AND</span>
-                            </div>
+                {/* Workspace */}
+                <div className="flex-1 p-6 md:p-8 overflow-y-auto relative bg-[#F8FAFC] dark:bg-slate-950/40">
+                    <div className="max-w-[1000px] mx-auto space-y-4">
+                        {groups.map((group, gIdx) => (
+                            <div key={group.id} className="relative">
+                                {gIdx > 0 && (
+                                    <div className="flex justify-start ml-12 -my-2 relative z-30">
+                                        <button 
+                                            onClick={() => setGroups(groups.map((g, i) => i === gIdx - 1 ? { ...g, junction: g.junction === 'AND' ? 'OR' : 'AND' } : g))}
+                                            className={cn(
+                                                "px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.2em] border shadow-md transition-all animate-in zoom-in duration-300 active:scale-95",
+                                                groups[gIdx-1].junction === 'AND' 
+                                                    ? "bg-slate-900 border-slate-900 text-white" 
+                                                    : "bg-indigo-600 border-indigo-500 text-white shadow-indigo-200/50"
+                                            )}
+                                        >
+                                            {groups[gIdx-1].junction}
+                                        </button>
+                                    </div>
+                                )}
 
-                            <LogicBlock 
-                                condition="Properties about someone"
-                                action="LTV (Life Time Value)"
-                                frequency="is greater than"
-                                date="$500"
-                            />
-
-                            <div className="flex justify-center -my-2 relative z-10">
-                                <span className="bg-slate-100 dark:bg-slate-800 px-4 py-1.5 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-widest border border-slate-200 dark:border-slate-700 shadow-sm">AND</span>
-                            </div>
-
-                            <button className="w-full py-8 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl flex flex-col items-center justify-center gap-2 text-slate-400 hover:text-[#0066FF] hover:border-[#0066FF]/50 transition-all group bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900">
-                                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-all">
-                                    <Plus size={24} />
-                                </div>
-                                <span className="text-sm font-black uppercase tracking-widest">Add New Condition</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Right Sidebar: Quick Look / Stats */}
-                <div className="w-80 border-l border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
-                    <div className="p-8 space-y-8">
-                        <div>
-                            <h2 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">SEGMENT SUMMARY</h2>
-                            <div className="p-6 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-100 dark:border-slate-800 space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-[13px] font-bold text-slate-500">Profiles Match</span>
-                                    <span className="text-2xl font-black text-slate-900 dark:text-white">1,240</span>
-                                </div>
-                                <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                    <div className="h-full bg-[#0066FF] w-[45%]" />
-                                </div>
-                                <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
-                                    This represents <span className="text-[#0066FF] font-bold">45.2%</span> of your total audience.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h2 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">QUICK SETTINGS</h2>
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 transition-all cursor-pointer">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600">
-                                            <Zap size={16} />
+                                <div 
+                                    className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm group/grp hover:border-blue-200 transition-all"
+                                    onDragOver={(e) => e.preventDefault()}
+                                    onDrop={(e) => handleDrop(e, group.id)}
+                                >
+                                    {/* Humanized Explanation & Actions */}
+                                    <div className="mb-6 flex items-start justify-between gap-4">
+                                        <div className="flex-1 p-4 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100/50 dark:border-blue-900/30 rounded-xl">
+                                            <div className="flex items-start gap-2.5">
+                                                <div className="mt-0.5 p-1 bg-blue-500 rounded-md">
+                                                    <Zap size={10} className="text-white fill-white" />
+                                                </div>
+                                                <p className="text-[11px] font-semibold text-blue-700 dark:text-blue-400 leading-relaxed">
+                                                    {humanizeGroup(group)}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <span className="text-[13px] font-bold">Auto-Sync</span>
-                                    </div>
-                                    <div className="w-8 h-4 bg-emerald-500 rounded-full relative">
-                                        <div className="absolute right-1 top-1 w-2 h-2 bg-white rounded-full" />
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-between p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 transition-all cursor-pointer opacity-50 grayscale">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600">
-                                            <Database size={16} />
+
+                                        <div className="flex items-center gap-1 opacity-0 group-hover/grp:opacity-100 transition-opacity pt-2">
+                                            <button className="p-1.5 hover:bg-slate-50 rounded text-slate-400" title="Duplicate Group">
+                                                <Copy size={14} />
+                                            </button>
+                                            <button 
+                                                onClick={() => setGroups(groups.filter(g => g.id !== group.id))}
+                                                className="p-1.5 hover:bg-rose-50 rounded text-rose-400"
+                                                title="Remove Group"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
                                         </div>
-                                        <span className="text-[13px] font-bold">Snapshots</span>
                                     </div>
-                                    <Plus size={16} className="text-slate-400" />
+
+                                    <div className="space-y-3">
+                                        {group.conditions.map((condition, cIdx) => (
+                                            <React.Fragment key={condition.id}>
+                                                <CompactCondition 
+                                                    {...condition} 
+                                                    onDelete={() => removeCondition(group.id, condition.id)}
+                                                    onChange={(updates) => updateCondition(group.id, condition.id, updates)}
+                                                />
+                                                {cIdx < group.conditions.length - 1 && (
+                                                    <div className="flex justify-center -my-2 relative z-20">
+                                                        <button 
+                                                            onClick={() => updateCondition(group.id, condition.id, { junction: condition.junction === 'AND' ? 'OR' : 'AND' })}
+                                                            className={cn(
+                                                                "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border shadow-sm transition-all",
+                                                                condition.junction === 'AND' ? "bg-white border-slate-200 text-slate-400" : "bg-emerald-50 border-emerald-200 text-emerald-600 font-bold"
+                                                            )}
+                                                        >
+                                                            {condition.junction}
+                                                        </button>
+                                                    </div>
+                                                )}
+                                            </React.Fragment>
+                                        ))}
+
+                                        <div className="mt-3 h-12 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-center text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-50/50 hover:bg-white hover:border-[#0066FF] transition-all cursor-default">
+                                            Drop Criteria Here
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        ))}
 
-                    <div className="mt-auto p-8 border-t border-slate-100 dark:border-slate-800">
-                        <button className="w-full flex items-center justify-between px-6 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-black text-[13px] group shadow-xl">
-                            Export to CSV
-                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        <button 
+                            onClick={addGroup}
+                            className="w-full py-4 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center gap-2 text-slate-400 hover:text-[#0066FF] hover:border-[#0066FF] transition-all bg-white hover:bg-blue-50/30 group"
+                        >
+                            <Plus size={16} />
+                            <span className="text-xs font-bold uppercase">Add New Group</span>
                         </button>
+                    </div>
+                </div>
+
+                {/* Right Sidebar Wrap */}
+                <div className={cn(
+                    "relative flex flex-col border-l border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 ease-in-out",
+                    isRightSidebarOpen ? "w-72" : "w-4 bg-slate-50/50"
+                )}>
+                    {/* Attached Toggle Button */}
+                    <button 
+                        onClick={() => setIsRightSidebarOpen(!isRightSidebarOpen)}
+                        className={cn(
+                            "absolute -left-3 top-6 z-50 w-6 h-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full shadow-md flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all active:scale-90 hover:scale-110",
+                            !isRightSidebarOpen && "rotate-180 -left-6 bg-slate-900 text-white border-slate-800"
+                        )}
+                    >
+                        <ChevronRight size={12} />
+                    </button>
+
+                    <div className={cn(
+                        "flex-1 flex flex-col p-6 overflow-y-auto no-scrollbar transition-opacity duration-200",
+                        !isRightSidebarOpen && "opacity-0 pointer-events-none"
+                    )}>
+                        <div className="space-y-6">
+                            <div>
+                                <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 font-sans">ESTIMATED REACH</h2>
+                                <div className="p-6 bg-slate-900 rounded-2xl text-white shadow-xl">
+                                    <div className="text-3xl font-black">1,240</div>
+                                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Matched Profiles</div>
+                                    <div className="flex items-center justify-between mt-6">
+                                        <div className="h-1.5 w-full bg-slate-700/50 rounded-full overflow-hidden mr-3">
+                                            <div className="h-full bg-[#0066FF] w-[45%]" />
+                                        </div>
+                                        <span className="text-[11px] font-black text-blue-400">45.2%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-3">
+                                <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">PERFORMANCE IMPACT</h2>
+                                <div className="grid grid-cols-1 gap-2">
+                                    <ImpactCard label="Conv. Lift" value="+2.45%" />
+                                    <ImpactCard label="Est. Revenue" value="$12,430" color="text-emerald-500" font="font-mono" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,60 +528,161 @@ export function SegmentBuilderPage({ onBack }: { onBack: () => void }) {
     );
 }
 
-function ComponentItem({ icon: Icon, label, items, color }: any) {
+function SidebarCategory({ icon: Icon, label, items, color }: any) {
     return (
         <div className="space-y-2">
             <div className="flex items-center gap-2 px-1">
-                <Icon size={14} className={color} />
-                <span className="text-[12px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-wider">{label}</span>
+                <Icon size={12} className={color} />
+                <span className="text-[10px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-wider">{label}</span>
             </div>
-            <div className="grid grid-cols-1 gap-1.5 focus-within:z-10">
-                {items.map((item: string) => (
-                    <div 
-                        key={item}
-                        className="group flex items-center gap-2 p-2.5 rounded-xl border border-white dark:border-slate-900 bg-white dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700 transition-all shadow-sm cursor-grab active:cursor-grabbing"
-                    >
-                        <GripVertical size={14} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
-                        <span className="text-[13px] text-slate-500 dark:text-slate-400 font-bold leading-none">{item}</span>
-                    </div>
+            <div className="flex flex-col gap-1">
+                {items?.map((item: Criteria) => (
+                    <Tooltip key={item.name} delayDuration={300}>
+                        <TooltipTrigger asChild>
+                            <div 
+                                draggable
+                                onDragStart={(e) => {
+                                    e.dataTransfer.setData('criteria', JSON.stringify(item));
+                                    e.dataTransfer.effectAllowed = 'copy';
+                                }}
+                                className="group flex items-center gap-2 p-2 rounded-lg border border-transparent hover:border-slate-100 hover:bg-slate-50 transition-all active:cursor-grabbing cursor-grab shadow-none hover:shadow-sm"
+                            >
+                                <GripVertical size={12} className="text-slate-200 group-hover:text-slate-300" />
+                                <span className="text-[11px] text-slate-600 dark:text-slate-400 font-medium leading-none">{item.name}</span>
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl max-w-[240px] border-none font-medium leading-relaxed">
+                            {item.description}
+                        </TooltipContent>
+                    </Tooltip>
                 ))}
             </div>
         </div>
     );
 }
+function CompactCondition({ type, field, operator, value, window, onDelete, onChange }: any) {
+    const fields = ['Email Marketing Consent', 'SMS Marketing Consent', 'Opened Count', 'Clicked Count', 'Valid Order Count', 'Lifetime Value', 'Average Order Value', 'Days Since Last Activity', 'Subscription Status', 'Created At Date', 'Last Purchase Date'];
+    const windows = ['30 days', '60 days', '90 days', '120 days', '180 days', '365 days', 'All time'];
 
-function LogicBlock({ condition, action, frequency, date }: any) {
+    // Identify field types
+    const isDate = field.toLowerCase().includes('date');
+    const isCategorical = ['Email Marketing Consent', 'SMS Marketing Consent', 'Subscription Status'].includes(field);
+    const isNumeric = !isDate && !isCategorical;
+
+    // Filter operators based on type
+    let operators = ['Equal To'];
+    if (isNumeric) {
+        operators = ['Greater Than', 'Greater Than or Equal', 'Less Than', 'Less Than or Equal', 'Equal To'];
+    } else if (isDate) {
+        operators = ['Within Last'];
+        if (operator !== 'Within Last') onChange({ operator: 'Within Last' });
+    }
+
+    const categoryValues = field.includes('Consent') ? ['subscribed', 'unsubscribed'] : ['active', 'passive'];
+
     return (
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-[32px] border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative group">
-            <div className="flex flex-col gap-4">
+        <div className="bg-slate-50/50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-100 transition-all group relative">
+            <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">{condition}</span>
-                    <button className="opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-xl text-rose-500">
-                        <Trash2 size={16} />
-                    </button>
+                    <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-slate-400 tracking-wider">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500/50" /> {type}
+                    </div>
+                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onClick={onDelete} className="p-1 hover:bg-rose-50 rounded text-slate-300 hover:text-rose-400 transition-all">
+                            <Trash2 size={12} />
+                        </button>
+                    </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
-                    <button className="px-5 py-2.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-[15px] font-black text-slate-900 dark:text-white border-2 border-transparent hover:border-[#0066FF] transition-all flex items-center gap-2 group/btn">
-                        {action}
-                        <ChevronDown size={16} className="text-slate-400 group-hover/btn:text-[#0066FF]" />
-                    </button>
+                <div className="flex flex-wrap items-center gap-2 font-sans">
+                    <CompactSelector options={fields} activeOption={field} onSelect={(val) => onChange({ field: val })} />
+                    <CompactSelector options={operators} activeOption={operator} onSelect={(val) => onChange({ operator: val })} highlighted />
                     
-                    <button className="px-5 py-2.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-[15px] font-black text-slate-900 dark:text-white border-2 border-transparent hover:border-[#0066FF] transition-all flex items-center gap-2 group/btn">
-                        {frequency}
-                        <ChevronDown size={16} className="text-slate-400 group-hover/btn:text-[#0066FF]" />
-                    </button>
+                    {isCategorical ? (
+                        <CompactSelector options={categoryValues} activeOption={value} onSelect={(val) => onChange({ value: val })} color="text-blue-600 font-bold" />
+                    ) : (
+                        <div className="flex items-center gap-2">
+                            <input 
+                                type="text"
+                                value={value}
+                                onChange={(e) => onChange({ value: e.target.value })}
+                                className="h-8 px-3 w-16 bg-white border border-slate-100 rounded-lg text-[11px] font-bold text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/50 transition-all text-center shadow-sm"
+                                placeholder="0"
+                            />
+                            {isDate && <span className="text-[11px] font-bold text-slate-400">days</span>}
+                        </div>
+                    )}
 
-                    <button className="px-5 py-2.5 bg-slate-50 dark:bg-slate-800 rounded-2xl text-[15px] font-black text-slate-900 dark:text-white border-2 border-transparent hover:border-[#0066FF] transition-all flex items-center gap-2 group/btn">
-                        {date}
-                        <ChevronDown size={16} className="text-slate-400 group-hover/btn:text-[#0066FF]" />
-                    </button>
+                    {window && !isDate && (
+                        <div className="flex items-center gap-2">
+                            <span className="text-[11px] font-bold text-slate-300">in</span>
+                            <CompactSelector options={windows} activeOption={window} onSelect={(val) => onChange({ window: val })} />
+                        </div>
+                    )}
                 </div>
             </div>
-            {/* Index Pin */}
-            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 flex items-center justify-center text-[10px] font-black text-slate-400 shadow-sm">
-                +
-            </div>
+        </div>
+    );
+}
+
+function CompactSelector({ options, activeOption, onSelect, highlighted = false, color = "text-slate-900 dark:text-white" }: any) {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <button 
+                onClick={() => setIsOpen(!isOpen)}
+                className={cn(
+                    "h-8 px-3 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1.5 border border-transparent whitespace-nowrap",
+                    highlighted ? "bg-blue-50 text-blue-600 border-blue-100" : "bg-white border-slate-100 shadow-sm hover:border-slate-200",
+                    isOpen && "ring-2 ring-blue-500/20 border-blue-500/50",
+                    color
+                )}
+            >
+                {activeOption}
+                <ChevronDown size={12} className={cn("text-slate-300 transition-transform", isOpen && "rotate-180")} />
+            </button>
+
+            {isOpen && (
+                <div className="absolute top-[calc(100%+4px)] left-0 z-[100] min-w-[160px] bg-white border border-slate-100 rounded-xl shadow-2xl overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-100">
+                    {options.map((opt: string) => (
+                        <button 
+                            key={opt}
+                            onClick={() => {
+                                onSelect(opt);
+                                setIsOpen(false);
+                            }}
+                            className={cn(
+                                "w-full text-left px-3 py-2 text-[11px] font-bold transition-all flex items-center justify-between",
+                                opt === activeOption ? "bg-blue-50 text-[#0066FF]" : "text-slate-500 hover:bg-slate-50"
+                            )}
+                        >
+                            {opt}
+                            {opt === activeOption && <Check size={12} />}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+function ImpactCard({ label, value, color = "text-slate-900", font = "font-sans" }: any) {
+    return (
+        <div className="p-3.5 border border-slate-100 rounded-xl bg-slate-50/50 hover:bg-white transition-colors">
+            <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest mb-1">{label}</p>
+            <p className={cn("text-sm font-black", color, font)}>{value}</p>
         </div>
     );
 }
