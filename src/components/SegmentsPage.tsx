@@ -191,8 +191,7 @@ export function SegmentsPage({ onOpenBuilder }: { onOpenBuilder: () => void }) {
                                         className="w-full flex items-center justify-between p-4 bg-gradient-to-br from-[#0066FF] to-[#0052CC] rounded-xl text-white shadow-lg shadow-blue-500/20 group hover:-translate-y-0.5 transition-all"
                                     >
                                         <div className="flex flex-col items-start gap-0.5">
-                                            <span className="text-[11px] font-black uppercase tracking-widest opacity-80">PRO FEATURE</span>
-                                            <span className="text-[13px] font-black">Build from scratch</span>
+                                            <span className="text-[15px] font-black">Segment Builder</span>
                                         </div>
                                         <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                                             <ArrowRight size={16} />
