@@ -1,0 +1,15 @@
+﻿L2696: MISMATCH </TooltipProvider> (opened <p> at L2684)
+L2756: MISMATCH </tr> (opened <TooltipProvider> at L2681)
+L2759: MISMATCH </tbody> (opened <tr> at L2600)
+L2760: MISMATCH </table> (opened <tbody> at L2596)
+L2761: MISMATCH </div> (opened <table> at L2558)
+L3211: MISMATCH </TabsContent> (opened <div> at L2797)
+L3226: MISMATCH </Tabs> (opened <div> at L2791)
+L3228: MISMATCH </main> (opened <div> at L2375)
+L3229: MISMATCH </div> (opened <TabsContent> at L1483)
+L3230: MISMATCH </TooltipProvider> (opened <Tabs> at L1470)
+UNCLOSED TAGS:
+  <TooltipProvider> at L1337
+  <div> at L1338
+  <main> at L1411
+  <div> at L1456

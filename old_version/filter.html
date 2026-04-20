@@ -1,0 +1,1832 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BrandFlow Filter Standard - Refactored</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-blue: #0472FD;
+      --brand-blue-hover: #0562d9;
+
+      --bg-primary: #0f1419;
+      --bg-secondary: #1a1f2e;
+      --bg-tertiary: #242b3d;
+      --bg-card: #1e2433;
+
+      --text-primary: #ffffff;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+
+      --neutral-bg: #2d3548;
+      --neutral-border: #374151;
+
+      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+      --r4: 4px;
+      --r6: 6px;
+      --r8: 8px;
+      --r10: 10px;
+      --r12: 12px;
+
+      --btn-pad-y: 8px;
+      --btn-pad-x: 14px;
+      --btn-font: 13px;
+
+      --input-pad-y: 10px;
+      --input-pad-x: 14px;
+      --input-font: 13px;
+
+      --font: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f1f5f9;
+      --bg-card: #ffffff;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --neutral-bg: #e2e8f0;
+      --neutral-border: #cbd5e1;
+
+      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .app {
+      padding: 24px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    /* ===== Header ===== */
+    .appHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--neutral-border);
+      position: sticky;
+      top: 0;
+      z-index: 900;
+    }
+
+    .headerLogo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--brand-blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .headerActions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ===== Top Bar (Search + Add + Chips with flex wrap) ===== */
+    .filterBar {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r8);
+    }
+
+    .leftControls {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .searchBox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: var(--input-pad-y) var(--input-pad-x);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r8);
+      max-width: 420px;
+      min-width: 240px;
+    }
+
+    .searchBox svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+    }
+
+    .searchBox input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: var(--input-font);
+      font-weight: 500;
+    }
+
+    .searchBox input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .searchBox:focus-within {
+      border-color: var(--brand-blue);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: var(--btn-pad-y) var(--btn-pad-x);
+      font-size: var(--btn-font);
+      font-weight: 500;
+      border-radius: var(--r6);
+      cursor: pointer;
+      user-select: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid var(--neutral-border);
+      color: var(--text-secondary);
+    }
+
+    .btn.secondary:hover {
+      background: var(--neutral-bg);
+      color: var(--text-primary);
+    }
+
+    .btn.primary {
+      border: none;
+      background: var(--brand-blue);
+      color: #ffffff;
+    }
+
+    .btn.primary:hover {
+      background: var(--brand-blue-hover);
+    }
+
+    .btn.icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: var(--r8);
+      background: transparent;
+      border: 1px solid var(--neutral-border);
+      color: var(--text-secondary);
+      justify-content: center;
+    }
+
+    .btn.icon:hover {
+      background: var(--neutral-bg);
+      color: var(--text-primary);
+    }
+
+    .chips {
+      display: contents;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: var(--r8);
+      border: 1px solid var(--neutral-border);
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      vertical-align: top;
+      text-indent: 0;
+    }
+
+    .chip:hover {
+      background: var(--neutral-bg);
+      color: var(--text-primary);
+    }
+
+    .chipDot {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--brand-blue);
+    }
+
+    .chipX {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--r4);
+      border: 1px solid var(--neutral-border);
+      background: transparent;
+      color: var(--text-secondary);
+    }
+
+    .chipX svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .chipX:hover {
+      background: rgba(239, 68, 68, .12);
+      border-color: rgba(239, 68, 68, .55);
+      color: #fff;
+    }
+
+    /* ===== Popovers ===== */
+    .popover {
+      position: fixed;
+      z-index: 1000;
+      width: 720px;
+      max-width: calc(100vw - 48px);
+      background: var(--bg-secondary);
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r10);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .popover.small {
+      width: 360px;
+      max-width: calc(100vw - 24px);
+      border-radius: var(--r10);
+    }
+
+    .popoverBody {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 440px;
+      background: var(--bg-secondary);
+    }
+
+    .leftPanel {
+      border-right: 1px solid var(--neutral-border);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .panelSearch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: var(--input-pad-y) var(--input-pad-x);
+      background: var(--bg-tertiary);
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r8);
+    }
+
+    .panelSearch svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+    }
+
+    .panelSearch input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: var(--input-font);
+      font-weight: 500;
+    }
+
+    .panelSearch input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .panelSearch:focus-within {
+      border-color: var(--brand-blue);
+    }
+
+    .filterList {
+      overflow: auto;
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r10);
+      background: var(--bg-tertiary);
+      padding: 8px;
+      flex: 1;
+      min-height: 260px;
+    }
+
+    .sectionHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 10px 8px 6px;
+    }
+
+    .sectionLabel {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin: 0;
+    }
+
+    .badge {
+      min-width: 20px;
+      height: auto;
+      padding: 4px 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--r4);
+      border: 1px solid rgba(4, 114, 253, .35);
+      background: rgba(4, 114, 253, .14);
+      color: #bcd7ff;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .filterItem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: var(--r8);
+      cursor: pointer;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .filterItem:hover {
+      background: var(--neutral-bg);
+      color: var(--text-primary);
+      border-color: var(--neutral-border);
+    }
+
+    .filterItem.active {
+      background: rgba(4, 114, 253, .15);
+      color: var(--text-primary);
+      border-color: rgba(4, 114, 253, .4);
+      border-width: 0.5px;
+    }
+
+    .rightPanel {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .rightHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      margin: -14px -14px 14px;
+      background: rgba(0, 0, 0, .06);
+    }
+
+    .rightHeaderTitle {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      min-height: 20px;
+    }
+
+    .emptyState {
+      border: 1px dashed rgba(255, 255, 255, .18);
+      border-radius: var(--r10);
+      background: var(--bg-card);
+      height: 100%;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 18px;
+      text-align: center;
+    }
+
+    /* Add-popover editor shell */
+    .editorShell {
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r10);
+      background: var(--bg-card);
+      padding: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .select,
+    .input {
+      padding: var(--input-pad-y) var(--input-pad-x);
+      border-radius: var(--r8);
+      border: 1px solid var(--neutral-border);
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-size: var(--input-font);
+      font-weight: 500;
+      outline: none;
+      width: 100%;
+    }
+
+    .input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .select:focus,
+    .input:focus {
+      border-color: var(--brand-blue);
+    }
+
+    .listBox {
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r10);
+      background: var(--bg-tertiary);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .listBoxHeader {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--neutral-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .list {
+      max-height: 220px;
+      overflow: auto;
+      padding: 8px;
+    }
+
+    .checkRow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: var(--r8);
+      border: 1px solid transparent;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .checkRow:hover {
+      background: var(--neutral-bg);
+      color: var(--text-primary);
+      border-color: var(--neutral-border);
+    }
+
+    .checkRow input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--brand-blue);
+    }
+
+    .inlineActions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .linkBtn {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: var(--r6);
+      border: 1px solid transparent;
+      user-select: none;
+      display: inline-block;
+    }
+
+    .linkBtn:hover {
+      background: var(--neutral-bg);
+      border-color: var(--neutral-border);
+      color: var(--text-primary);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    /* Chip editor */
+    .chipEditor {
+      padding: 12px;
+    }
+
+    .chipEditorTop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .chipEditorTitle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .chipEditorTitle .countPill {
+      padding: 2px 8px;
+      border-radius: var(--r6);
+      background: rgba(4, 114, 253, .14);
+      border: 1px solid rgba(4, 114, 253, .35);
+      color: #bcd7ff;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .segmentControl {
+      display: flex;
+      background: var(--bg-tertiary);
+      padding: 4px;
+      border-radius: var(--r8);
+      border: 1px solid var(--neutral-border);
+      margin-bottom: 12px;
+    }
+
+    .segmentBtn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px;
+      border-radius: var(--r6);
+      cursor: pointer;
+    }
+
+    .segmentBtn.active {
+      background: var(--neutral-bg);
+      color: var(--text-primary);
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .matchPreview {
+      background: var(--bg-primary);
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r8);
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .previewTitle {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .previewVisual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      background: var(--bg-tertiary);
+      border-radius: var(--r6);
+    }
+
+    .pvChip {
+      padding: 2px 8px;
+      background: var(--neutral-bg);
+      border: 1px solid var(--neutral-border);
+      border-radius: var(--r4);
+      font-size: 11px;
+      color: var(--text-primary);
+    }
+
+    .pvOp {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .tagPill {
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1.2;
+    }
+
+    .tag-blue {
+      background: #3b82f6;
+    }
+
+    /* Best Seller */
+    .tag-green {
+      background: #10b981;
+    }
+
+    /* Discounted */
+    .tag-purple {
+      background: #8b5cf6;
+    }
+
+    /* Organic/New */
+    .tag-red {
+      background: #ef4444;
+    }
+
+    /* Alert */
+    .tag-cyan {
+      background: #06b6d4;
+    }
+
+    /* Active */
+    .tag-gray {
+      background: #64748b;
+    }
+
+    @media (max-width: 900px) {
+      .popoverBody {
+        grid-template-columns: 1fr;
+      }
+
+      .leftPanel {
+        border-right: none;
+        border-bottom: 1px solid var(--neutral-border);
+      }
+
+      .leftControls {
+        display: flex;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .searchBox {
+        max-width: none;
+      }
+
+      .chips {
+        display: block;
+        padding-left: 0;
+        text-indent: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="appHeader">
+    <div class="headerLogo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L2 7l10" />
+      </svg>
+      Brand Flow Filter Design System
+    </div>
+    <div class="headerActions">
+      <select id="currencySelect" class="select" style="width:auto; min-width:100px;">
+        <option value="$">USD ($)</option>
+        <option value="€">EUR (€)</option>
+        <option value="£">GBP (£)</option>
+        <option value="₺">TRY (₺)</option>
+      </select>
+      <button class="btn icon" id="themeToggleBtn" title="Toggle Theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="app">
+    <div class="filterBar" id="filterBar">
+      <div class="leftControls" id="leftControls">
+        <div class="searchBox">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10.5 19a8.5 8.5 0 1 1 0-17 8.5 8.5 0 0 1 0 17Z" stroke="currentColor" stroke-width="2"
+              opacity=".9" />
+            <path d="M16.9 16.9 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9" />
+          </svg>
+          <input id="globalSearch" placeholder="Search accounts by ID or Name..." />
+        </div>
+
+        <button class="btn secondary" id="addFilterBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          Add Filter
+        </button>
+      </div>
+
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+
+  <div id="popoverRoot"></div>
+
+  <script>
+    /* ===== Data ===== */
+    const FILTER_DEFS = {
+      tagList: { section: "PRODUCT_INFO", label: "Tag List", type: "multi", options: ["Best Seller", "High Rated", "Discounted", "New Arrival"] },
+      status: { section: "PRODUCT_INFO", label: "Status", type: "multi", options: ["Active", "Inactive", "Paused"] },
+      productName: { section: "PRODUCT_INFO", label: "Product Name", type: "text" },
+      fulfillmentChannel: { section: "PRODUCT_INFO", label: "Fulfillment Channel", type: "multi", options: ["FBA", "FBM"] },
+
+      price: {
+        section: "SALES_REVENUE",
+        label: "Price",
+        type: "number",
+        inputHint: "amount",
+        currencySymbol: "$",
+        operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"]
+      },
+      sales: { section: "SALES_REVENUE", label: "Order", type: "number", inputHint: "value", operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"] },
+
+      trialEndTime: { section: "ORDERS_UNITS", label: "Trial End Time", type: "date", operators: ["before", "after", "between"] },
+      activePackageTypes: {
+        section: "ORDERS_UNITS", label: "Active Package Types", type: "multi", options: [
+          "3PL WMS", "3PL and Returns Management", "Agency Old", "Amazon - Advertising Managed", "Amazon - DSP", "Amazon - Full Service"
+        ]
+      }
+    };
+
+    const SECTIONS = [
+      { id: "PRODUCT_INFO", label: "PRODUCT INFO" },
+      { id: "SALES_REVENUE", label: "SALES & REVENUE" },
+      { id: "ORDERS_UNITS", label: "ORDERS & UNITS" }
+    ];
+
+
+    /* ===== State ===== */
+    const state = {
+      currency: "$",
+      applied: [
+        { key: "activePackageTypes", type: "multi", value: ["3PL WMS", "Agency Old"] },
+        { key: "trialEndTime", type: "date", operator: "before", value1: "2025-12-16" },
+        { key: "price", type: "number", operator: "greater than", value1: "150" }
+      ],
+      addFilterOpen: false,
+      chipEditorOpenFor: null,
+      selectedFilterKey: null,
+      draft: null,
+      expanded: true // Default to expanded so user sees wrapping first, then can close
+    };
+
+    const els = {
+      popoverRoot: document.getElementById("popoverRoot"),
+      addFilterBtn: document.getElementById("addFilterBtn"),
+      chips: document.getElementById("chips"),
+      filterBar: document.getElementById("filterBar"),
+      leftControls: document.getElementById("leftControls"),
+      currencySelect: document.getElementById("currencySelect"),
+      themeToggleBtn: document.getElementById("themeToggleBtn")
+    };
+
+    /* ===== Theme & Currency ===== */
+    els.themeToggleBtn.addEventListener("click", () => {
+      const html = document.documentElement;
+      const isLight = html.getAttribute("data-theme") === "light";
+      html.setAttribute("data-theme", isLight ? "dark" : "light");
+    });
+
+    els.currencySelect.addEventListener("change", (e) => {
+      state.currency = e.target.value;
+      renderChips();
+      // If an editor is open that uses currency, we should re-render it to update placeholders
+      if (state.addFilterOpen) renderRightEditorInAddPopover();
+      if (state.chipEditorOpenFor) renderChipEditorPopover();
+    });
+
+    /* ===== Popover positioning ===== */
+    function positionPopover(popEl, anchorEl, opts = {}) {
+      const gap = opts.gap ?? 8;
+      const align = opts.align ?? "left";
+      const rect = anchorEl.getBoundingClientRect();
+
+      let top = rect.bottom + gap;
+      let left = (align === "right") ? (rect.right - popEl.offsetWidth) : rect.left;
+
+      const padding = 12;
+      const maxLeft = window.innerWidth - popEl.offsetWidth - padding;
+      left = Math.max(padding, Math.min(left, maxLeft));
+
+      const maxTop = window.innerHeight - popEl.offsetHeight - padding;
+      top = Math.max(padding, Math.min(top, maxTop));
+
+      popEl.style.top = `${Math.round(top)}px`;
+      popEl.style.left = `${Math.round(left)}px`;
+    }
+
+    function onResizeReposition() {
+      const addPop = document.getElementById("addFilterPopover");
+      if (addPop && state.addFilterOpen) positionPopover(addPop, els.addFilterBtn, { align: "left" });
+
+      if (state.chipEditorOpenFor) {
+        const chipEl = document.querySelector(`.chip[data-chip="${cssEscape(state.chipEditorOpenFor)}"]`);
+        const chipPop = document.getElementById("chipEditorPopover");
+        if (chipEl && chipPop) positionPopover(chipPop, chipEl, { align: "left" });
+      }
+
+      checkWrap(); // Re-check wrapping on resize
+    }
+    window.addEventListener("resize", onResizeReposition);
+    window.addEventListener("scroll", onResizeReposition, true);
+
+    /* ===== Outside click close ===== */
+    document.addEventListener("mousedown", (e) => {
+      const addPop = document.getElementById("addFilterPopover");
+      const chipPop = document.getElementById("chipEditorPopover");
+
+      const clickedInsideAdd = addPop && addPop.contains(e.target);
+      const clickedAddBtn = els.addFilterBtn.contains(e.target);
+      const clickedInsideChip = chipPop && chipPop.contains(e.target);
+      const clickedChip = e.target.closest(".chip");
+
+      if (state.addFilterOpen && !clickedInsideAdd && !clickedAddBtn) closeAddFilterPopover();
+
+      if (state.chipEditorOpenFor && !clickedInsideChip) {
+        const sameChip = clickedChip && clickedChip.getAttribute("data-chip") === state.chipEditorOpenFor;
+        if (!sameChip) closeChipEditorPopover();
+      }
+    });
+
+    /* ===== Chip rendering ===== */
+    function chipText(applied, label) {
+      if (applied.type === "multi") {
+        const arr = applied.value || [];
+        const count = arr.length;
+        if (count === 0) {
+          return `${label}: All`;
+        } else if (count <= 3) {
+          return `${label}: ${arr.join(", ")}`;
+        } else {
+          const shown = arr.slice(0, 3);
+          return `${label}: ${shown.join(", ")} +${count - 3} more`;
+        }
+      }
+
+      if (applied.type === "date") {
+        const op = applied.operator || "before";
+        const v1 = applied.value1 || "";
+        const v2 = applied.value2 || "";
+        const opText = capitalize(op);
+
+        if (op === "between") return `${label} ${opText} ${v1} and ${v2}`;
+        return `${label} ${opText} ${v1}`.trim();
+      }
+
+      if (applied.type === "number") {
+        const op = applied.operator || "equals";
+        const opMap = {
+          "equals": "=", "greater than": ">", "less than": "<",
+          "greater than or equal": "≥", "less than or equal": "≤",
+          "between": "between"
+        };
+        const sym = opMap[op] || op;
+
+        // Currency formatting
+        const isPrice = applied.key === "price";
+        const cur = isPrice ? state.currency : "";
+        const v1 = applied.value1 ? formatMoney(applied.value1) : "";
+        const v2 = applied.value2 ? formatMoney(applied.value2) : "";
+
+        if (op === "between") return `${label} ${sym} ${cur}${v1} and ${cur}${v2}`.trim();
+        return `${label} ${sym} ${cur}${v1}`.trim();
+      }
+
+      if (applied.type === "text") return `${label}: ${applied.value1 || ""}`.trim();
+      return label;
+    }
+
+    function chipTooltip(applied, label) {
+      if (applied.type !== "multi") return "";
+      const arr = applied.value || [];
+      if (arr.length <= 1) return "";
+
+      const MAX = 10;
+      const visible = arr.slice(0, MAX);
+      const remaining = arr.length - MAX;
+
+      let text = `${label}: ${visible.join(", ")}`;
+      if (remaining > 0) text += ` +${remaining} more`;
+      return text;
+    }
+
+
+    function htmlEscape(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function renderChips() {
+      const chipsHtml = state.applied.map(applied => {
+        const def = FILTER_DEFS[applied.key];
+        const label = def?.label || applied.key;
+        const { text, tooltip } = generateChipContent(applied, label);
+
+        return `
+          <div class="chip" data-chip="${applied.key}" title="${htmlEscape(tooltip || "Click to edit")}">
+            <span class="chipDot"></span>
+            <span>${htmlEscape(text)}</span>
+            <span class="chipX" data-x="${applied.key}">
+              <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+          </div>`;
+      }).join('');
+
+      els.chips.innerHTML = chipsHtml;
+
+      // Add Toggle Button (initially hidden)
+      const toggleBtn = document.createElement("button");
+      toggleBtn.className = "linkBtn";
+      toggleBtn.id = "chipToggleBtn";
+      toggleBtn.style.display = "none";
+      toggleBtn.textContent = "Show less";
+      toggleBtn.onclick = () => {
+        state.expanded = !state.expanded;
+        checkWrap();
+      };
+      els.chips.appendChild(toggleBtn);
+
+      // Attach event listeners
+      els.chips.querySelectorAll(".chip").forEach(chip => {
+        chip.addEventListener("click", handleChipClick);
+      });
+
+      // Calculate wrapping
+      // We need to wait for layout? Usually sync is fine, but safety timeout is better if fonts loading
+      requestAnimationFrame(checkWrap);
+    }
+
+    function checkWrap() {
+      const toggleBtn = document.getElementById("chipToggleBtn");
+      if (!toggleBtn) return;
+
+      const chips = Array.from(els.chips.querySelectorAll(".chip"));
+      if (chips.length === 0) {
+        toggleBtn.style.display = "none";
+        return;
+      }
+
+      // 1. Reset Reset visibility to measure correctly
+      chips.forEach(c => c.style.display = "");
+      toggleBtn.style.display = "none"; // Hide initially to measure pure content
+
+      // Measure baseline top from the left controls (search bar)
+      // Everything in .filterBar is flex items. 
+      // We assume valid "first line" items have roughly same offsetTop as leftControls or the first item.
+      const baseTop = els.leftControls.offsetTop;
+      const tolerance = 15; // px
+
+      // Find the first chip that breaks the line
+      let wrapIndex = -1;
+      for (let i = 0; i < chips.length; i++) {
+        if (chips[i].offsetTop > baseTop + tolerance) {
+          wrapIndex = i;
+          break;
+        }
+      }
+
+      // If no wrapping found
+      if (wrapIndex === -1) {
+        // Just ensure expanded state matches reality? 
+        // Actually if it fits in 1 line, we don't show button.
+        return;
+      }
+
+      // We have wrapping. Show button.
+      toggleBtn.style.display = "inline-flex";
+      toggleBtn.textContent = state.expanded ? "Show less" : "Show all";
+
+      if (state.expanded) {
+        // Show all (already shown)
+        // Button is at the end.
+      } else {
+        // Collapse: Show only items that fit on line 1 ALONG with the button.
+        // 1. Hide everything from wrapIndex
+        for (let i = wrapIndex; i < chips.length; i++) chips[i].style.display = "none";
+
+        // 2. Check if button wrapped
+        // We need to loop backwards removing items until button fits
+        while (toggleBtn.offsetTop > baseTop + tolerance && wrapIndex > 0) {
+          wrapIndex--;
+          chips[wrapIndex].style.display = "none";
+        }
+      }
+    }
+
+    function generateChipContent(applied, label) {
+      let text = "";
+      let tooltip = "";
+
+      if (applied.type === "multi") {
+        const arr = applied.value || [];
+        const count = arr.length;
+        if (count === 0) {
+          text = `${label}: All`;
+        } else if (count <= 3) {
+          text = `${label}: ${arr.join(", ")}`;
+        } else {
+          const shown = arr.slice(0, 3);
+          text = `${label}: ${shown.join(", ")} +${count - 3} more`;
+        }
+        if (count > 0) tooltip = `${label}: ${arr.join(", ")}`;
+      } else if (applied.type === "text") {
+        text = `${label}: ${applied.value1 || "(empty)"}`;
+      } else if (applied.type === "date") {
+        // Date handling
+        const opMap = {
+          "between": "between", "before": "before", "after": "after"
+        };
+        const opText = opMap[applied.operator] || capitalize(applied.operator);
+        const v1 = applied.value1 || "";
+        const v2 = applied.value2 || "";
+
+        if (applied.operator === "between") {
+          text = `${label} ${opText} ${v1} and ${v2}`;
+          if (!v2) text += " (incomplete)";
+        } else {
+          text = `${label} ${opText} ${v1}`.trim();
+        }
+      } else if (applied.type === "number") {
+        // Number handling (with currency)
+        const opMap = {
+          "equals": "=", "greater than": ">", "less than": "<",
+          "greater than or equal": "≥", "less than or equal": "≤",
+          "between": "between"
+        };
+        const opText = opMap[applied.operator] || capitalize(applied.operator);
+
+        const isPrice = applied.key === "price";
+        const cur = isPrice ? state.currency : "";
+
+        if (applied.operator === "between") {
+          const v1 = applied.value1 ? formatMoney(applied.value1) : "";
+          const v2 = applied.value2 ? formatMoney(applied.value2) : "";
+          text = `${label} ${opText} ${cur}${v1} and ${cur}${v2}`;
+          if (!v2) text += " (incomplete)";
+        } else {
+          const v1 = applied.value1 ? formatMoney(applied.value1) : "";
+          text = `${label} ${opText} ${cur}${v1}`.trim();
+        }
+      }
+
+      return { text, tooltip };
+    }
+
+    function removeApplied(key) {
+      state.applied = state.applied.filter(x => x.key !== key);
+      renderChips();
+    }
+
+    function handleChipClick(e) {
+      const chip = e.currentTarget;
+      const xBtn = e.target.closest("[data-x]");
+      if (xBtn) {
+        removeApplied(xBtn.dataset.x);
+      } else {
+        openChipEditorPopover(chip.dataset.chip);
+      }
+    }
+
+    /* ===== Badges: per-filter (NOT per-section) ===== */
+    function appliedBadgeForFilterKey(key) {
+      const def = FILTER_DEFS[key];
+      const a = state.applied.find(x => x.key === key);
+      if (!def || !a) return 0;
+
+      if (def.type === "multi") return (a.value || []).length;
+      return 1;
+    }
+
+    /* ===== Add Filter button ===== */
+    els.addFilterBtn.addEventListener("click", () => {
+      if (state.addFilterOpen) closeAddFilterPopover();
+      else openAddFilterPopover();
+    });
+
+    function openAddFilterPopover() {
+      state.addFilterOpen = true;
+      state.selectedFilterKey = null;
+      state.draft = null;
+      closeChipEditorPopover();
+      renderAddFilterPopover();
+    }
+
+    function closeAddFilterPopover() {
+      state.addFilterOpen = false;
+      state.selectedFilterKey = null;
+      state.draft = null;
+      const el = document.getElementById("addFilterPopover");
+      if (el) el.remove();
+    }
+
+    /* ===== Add Filter popover rendering ===== */
+    function renderAddFilterPopover() {
+      const existing = document.getElementById("addFilterPopover");
+      if (existing) existing.remove();
+      if (!state.addFilterOpen) return;
+
+      const pop = document.createElement("div");
+      pop.className = "popover";
+      pop.id = "addFilterPopover";
+
+      pop.innerHTML = `
+        <div class="popoverBody">
+          <div class="leftPanel">
+            <div style="font-size:14px; font-weight:600; color:var(--text-primary); padding: 2px 2px 6px;">Select Filter</div>
+
+            <div class="panelSearch">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M10.5 19a8.5 8.5 0 1 1 0-17 8.5 8.5 0 0 1 0 17Z" stroke="currentColor" stroke-width="2" opacity=".9"/>
+                <path d="M16.9 16.9 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+              </svg>
+              <input id="filterSearch" placeholder="Search filters..." />
+            </div>
+
+            <div class="filterList" id="filterList">
+              ${renderFilterGroupsHtml()}
+            </div>
+          </div>
+
+          <div class="rightPanel" id="rightPanel">
+            <div class="rightHeader">
+              <div class="rightHeaderTitle">
+                ${state.selectedFilterKey ? escapeHtml(FILTER_DEFS[state.selectedFilterKey].label) : ""}
+              </div>
+              <button class="btn icon" id="closeAddPopoverBtn" type="button" title="Close">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            ${state.selectedFilterKey ? "" : `<div class="emptyState">Select a filter from the left to configure</div>`}
+          </div>
+        </div>
+      `;
+
+      els.popoverRoot.appendChild(pop);
+      positionPopover(pop, els.addFilterBtn, { align: "left" });
+
+      pop.querySelector("#closeAddPopoverBtn").addEventListener("click", closeAddFilterPopover);
+
+      pop.querySelectorAll(".filterItem").forEach(item => {
+        item.addEventListener("click", () => {
+          const key = item.getAttribute("data-key");
+          state.selectedFilterKey = key;
+          state.draft = buildDraftFromApplied(key);
+          renderAddFilterPopover();         // keeps active highlight correct
+          renderRightEditorInAddPopover();  // mounts editor
+        });
+      });
+
+      pop.querySelector("#filterSearch").addEventListener("input", (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        applyFilterSearch(pop, q);
+      });
+
+      if (state.selectedFilterKey) renderRightEditorInAddPopover();
+    }
+
+    function renderFilterGroupsHtml() {
+      return SECTIONS.map(sec => {
+        const items = Object.entries(FILTER_DEFS).filter(([k, def]) => def.section === sec.id);
+        return `
+          <div class="sectionBlock" data-section="${escapeAttr(sec.id)}">
+            <div class="sectionHeader">
+              <div class="sectionLabel">${escapeHtml(sec.label)}</div>
+            </div>
+            ${items.map(([k, def]) => {
+          const b = appliedBadgeForFilterKey(k);
+          return `
+                <div class="filterItem ${state.selectedFilterKey === k ? "active" : ""}" data-key="${escapeAttr(k)}">
+                  <div>${escapeHtml(def.label)}</div>
+                  ${b ? `<div class="badge filterBadge">${b}</div>` : ``}
+                </div>
+              `;
+        }).join("")}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function applyFilterSearch(pop, q) {
+      const blocks = [...pop.querySelectorAll(".sectionBlock")];
+      blocks.forEach(block => {
+        const items = [...block.querySelectorAll(".filterItem")];
+        let anyVisible = false;
+
+        items.forEach(item => {
+          const key = item.getAttribute("data-key");
+          const def = FILTER_DEFS[key];
+          const visible = def.label.toLowerCase().includes(q);
+          item.style.display = visible ? "" : "none";
+          if (visible) anyVisible = true;
+        });
+
+        block.style.display = anyVisible ? "" : "none";
+      });
+    }
+
+    /* ===== Right editor in Add Filter (NO duplicate card title) ===== */
+    function renderRightEditorInAddPopover() {
+      const pop = document.getElementById("addFilterPopover");
+      if (!pop) return;
+
+      const rightPanel = pop.querySelector("#rightPanel");
+      if (!rightPanel) return;
+
+      const old = rightPanel.querySelector(".editorShell");
+      if (old) old.remove();
+
+      const def = FILTER_DEFS[state.selectedFilterKey];
+      if (!def) return;
+
+      const shell = document.createElement("div");
+      shell.className = "editorShell";
+      shell.innerHTML = `
+        ${def.type === "multi" ? multiEditorInnerHtml(def, { context: "add" }) : ""}
+        ${def.type === "number" ? numberEditorInnerHtml(def, { context: "add" }) : ""}
+        ${def.type === "date" ? dateEditorInnerHtml(def, { context: "add" }) : ""}
+        ${def.type === "text" ? textEditorInnerHtml(def, { context: "add" }) : ""}
+
+        <div class="footer">
+          <button class="btn secondary" id="addCancelBtn" type="button">Cancel</button>
+          <button class="btn primary" id="addApplyBtn" type="button">Apply</button>
+        </div>
+      `;
+      rightPanel.appendChild(shell);
+
+      if (def.type === "multi") wireMultiEditor(def, { context: "add" });
+      if (def.type === "number") wireNumberEditor(def, { context: "add" });
+      if (def.type === "date") wireDateEditor(def, { context: "add" });
+      if (def.type === "text") wireTextEditor(def, { context: "add" });
+
+      shell.querySelector("#addCancelBtn").onclick = closeAddFilterPopover;
+      shell.querySelector("#addApplyBtn").onclick = () => { applyDraftToApplied(def, state.selectedFilterKey); closeAddFilterPopover(); };
+    }
+
+    /* ===== Chip editor (small popover) ===== */
+    function openChipEditorPopover(key) {
+      state.chipEditorOpenFor = key;
+      closeAddFilterPopover();
+      state.draft = buildDraftFromApplied(key);
+      renderChipEditorPopover();
+    }
+
+    function closeChipEditorPopover() {
+      state.chipEditorOpenFor = null;
+      const el = document.getElementById("chipEditorPopover");
+      if (el) el.remove();
+    }
+
+    function renderChipEditorPopover() {
+      const existing = document.getElementById("chipEditorPopover");
+      if (existing) existing.remove();
+      if (!state.chipEditorOpenFor) return;
+
+      const key = state.chipEditorOpenFor;
+      const def = FILTER_DEFS[key];
+      if (!def) return;
+
+      const applied = state.applied.find(x => x.key === key);
+      // state.draft is already set by openChipEditorPopover
+
+      const pop = document.createElement("div");
+      pop.className = "popover small";
+      pop.id = "chipEditorPopover";
+
+      let content = `
+        <div class="chipEditor">
+          <div class="chipEditorTop">
+            <div class="chipEditorTitle">
+              ${escapeHtml(def.label)}
+              ${def.type === "multi" ? `<span class="countPill">${(applied?.value || []).length}</span>` : ``}
+            </div>
+            <button class="btn icon" id="closeChipPopoverBtn" type="button" title="Close" style="width:32px;height:32px;">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+      `;
+
+      if (def.type === "multi") content += multiEditorInnerHtml(def, { context: "chip" });
+      if (def.type === "number") content += numberEditorInnerHtml(def, { context: "chip" });
+      if (def.type === "date") content += dateEditorInnerHtml(def, { context: "chip" });
+      if (def.type === "text") content += textEditorInnerHtml(def, { context: "chip" });
+
+      content += `
+          <div class="footer">
+            <button class="btn secondary" id="chipCancelBtn" type="button">Cancel</button>
+            <button class="btn primary" id="chipApplyBtn" type="button">Apply</button>
+          </div>
+        </div>
+      `;
+
+      pop.innerHTML = content;
+      els.popoverRoot.appendChild(pop);
+
+      const chipEl = document.querySelector(`.chip[data-chip="${cssEscape(key)}"]`);
+      if (chipEl) positionPopover(pop, chipEl, { align: "left", gap: 8 });
+
+      pop.querySelector("#closeChipPopoverBtn").addEventListener("click", closeChipEditorPopover);
+      pop.querySelector("#chipCancelBtn").addEventListener("click", closeChipEditorPopover);
+
+      if (def.type === "multi") wireMultiEditor(def, { context: "chip" });
+      if (def.type === "number") wireNumberEditor(def, { context: "chip" });
+      if (def.type === "date") wireDateEditor(def, { context: "chip" });
+      if (def.type === "text") wireTextEditor(def, { context: "chip" });
+
+      pop.querySelector("#chipApplyBtn").addEventListener("click", () => {
+        applyDraftToApplied(def, key);
+        closeChipEditorPopover();
+      });
+    }
+
+    /* ===== Draft + apply ===== */
+    function buildDraftFromApplied(key) {
+      const def = FILTER_DEFS[key];
+      const existing = state.applied.find(x => x.key === key);
+
+      if (!existing) {
+        if (def.type === "multi") return { key, type: def.type, selected: new Set(), match: "any" };
+        if (def.type === "number") return { key, type: def.type, operator: "greater than or equal", value1: "", value2: "" };
+        if (def.type === "date") return { key, type: def.type, operator: "before", value1: "", value2: "" };
+        if (def.type === "text") return { key, type: def.type, value1: "" };
+      }
+
+      if (def.type === "multi") return { key, type: def.type, selected: new Set(existing.value || []), match: existing.match || "any" };
+      if (def.type === "text") return { key, type: def.type, value1: existing.value1 || "" };
+      return { key, type: def.type, operator: existing.operator, value1: existing.value1 || "", value2: existing.value2 || "" };
+    }
+
+    function applyDraftToApplied(def, key) {
+      const idx = state.applied.findIndex(x => x.key === key);
+      let item;
+
+      if (def.type === "multi") item = { key, type: "multi", value: [...state.draft.selected], match: state.draft.match };
+      if (def.type === "number") item = { key, type: "number", operator: state.draft.operator, value1: state.draft.value1, value2: state.draft.value2 };
+      if (def.type === "date") item = { key, type: "date", operator: state.draft.operator, value1: state.draft.value1, value2: state.draft.value2 };
+      if (def.type === "text") item = { key, type: "text", value1: state.draft.value1 };
+
+      if (idx >= 0) state.applied[idx] = item;
+      else state.applied.push(item);
+
+      renderChips();
+      if (state.addFilterOpen) renderAddFilterPopover();
+    }
+
+    /* ===== Editors (inner HTML + wire) ===== */
+    function getPlaceholder(def) {
+      if (def.type === "date") return "Select Date";
+      if (def.type === "text") return "Enter Text";
+
+      if (def.type === "number") {
+        if (def.inputHint === "amount") {
+          // Use dynamic state currency
+          const sym = state.currency;
+          return `Enter Amount (${sym})`;
+        }
+        return "Enter Value";
+      }
+      return "Enter Value";
+    }
+
+    function renderPreviewVisual(selectedSet, match) {
+      const arr = Array.from(selectedSet);
+      if (arr.length === 0) {
+        return `<div class="previewVisual" style="color:var(--text-muted); justify-content:center; font-style:italic;">No tags selected</div>`;
+      }
+
+      // Logic: Show up to 3, then +More
+      const MAX = 3;
+      const shown = arr.slice(0, MAX);
+      const remaining = arr.length - MAX;
+      const opLabel = match === "any" ? "OR" : "AND";
+
+      let html = '<div class="previewVisual" style="flex-wrap:wrap; justify-content:flex-start;">';
+      shown.forEach((tag, idx) => {
+        if (idx > 0) html += `<span class="pvOp">${opLabel}</span>`;
+        // Colorful tag pill
+        const colorClass = getTagColorClass(tag);
+        html += `
+          <div class="tagPill ${colorClass}" style="display:inline-flex; align-items:center; gap:6px;">
+            <span>${escapeHtml(tag)}</span>
+          </div>`;
+      });
+
+      if (remaining > 0) {
+        if (shown.length > 0) html += `<span class="pvOp">${opLabel}</span>`;
+        html += `<span class="pvChip" style="background:transparent; border:none; padding-left:0;">+${remaining} more...</span>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    /* Tag Styling Helpers */
+    function getTagColorClass(tag) {
+      // Deterministic or mapped colors
+      const lower = tag.toLowerCase();
+      if (lower.includes("best") || lower.includes("blue")) return "tag-blue";
+      if (lower.includes("rated") || lower.includes("green")) return "tag-green";
+      if (lower.includes("discount") || lower.includes("red")) return "tag-red";
+      if (lower.includes("new") || lower.includes("organic")) return "tag-purple";
+      if (lower.includes("active")) return "tag-cyan";
+
+      return "tag-gray";
+    }
+
+    /* Currency Helpers */
+    function formatMoney(val) {
+      if (!val) return "";
+      const n = parseFloat(val.toString().replace(/,/g, ''));
+      if (isNaN(n)) return val;
+      const parts = val.toString().split('.');
+      const hasDecimal = parts.length > 1;
+      return n.toLocaleString('en-US', { minimumFractionDigits: hasDecimal ? 2 : 0, maximumFractionDigits: 2 });
+    }
+
+    function parseMoney(val) {
+      if (!val) return "";
+      return val.toString().replace(/,/g, '');
+    }
+
+    function multiEditorInnerHtml(def, { context }) {
+      const match = state.draft.match || "any";
+      // Support conditional display based on selection count
+      const isTagList = (state.draft.key === "tagList" || state.selectedFilterKey === "tagList");
+      const selectedCount = state.draft.selected.size;
+      // Show if it's tag list AND we have 2 or more items (conceptually). 
+      // We render the container always for TagList, but toggle display in JS.
+
+      let toggleHtml = "";
+      if (isTagList) {
+        const isAny = match === "any";
+        const displayStyle = selectedCount >= 2 ? "" : "display:none";
+
+        toggleHtml = `
+          <div id="${context}-matchControls" style="${displayStyle}">
+            <div class="segmentControl">
+              <button type="button" class="segmentBtn ${isAny ? 'active' : ''}" id="${context}-matchAny">Match Any</button>
+              <button type="button" class="segmentBtn ${!isAny ? 'active' : ''}" id="${context}-matchAll">Match All</button>
+            </div>
+
+            <div class="matchPreview" id="${context}-matchPreviewContainer">
+              <div class="previewTitle" id="${context}-previewTitle">
+                ${isAny
+            ? "Displays products that have <strong>at least one</strong> of the selected tags."
+            : "Displays products that have <strong>all</strong> of the selected tags."}
+              </div>
+              ${renderPreviewVisual(state.draft.selected, match)}
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        ${toggleHtml}
+        <div class="listBox">
+          <div class="listBoxHeader">
+            <div class="panelSearch" style="flex:1; margin:0;">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M10.5 19a8.5 8.5 0 1 1 0-17 8.5 8.5 0 0 1 0 17Z" stroke="currentColor" stroke-width="2" opacity=".9"/>
+                <path d="M16.9 16.9 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+              </svg>
+              <input id="${context}-multiSearch" placeholder="Search..." />
+            </div>
+            <div class="inlineActions">
+              <span class="linkBtn" id="${context}-selectAllBtn">Select All</span>
+              <span class="linkBtn" id="${context}-clearBtn">Clear</span>
+            </div>
+          </div>
+          <div class="list" id="${context}-multiList"></div>
+        </div>
+      `;
+    }
+
+    function wireMultiEditor(def, { context }) {
+      const pop = context === "chip" ? document.getElementById("chipEditorPopover") : document.getElementById("addFilterPopover");
+      if (!pop) return;
+
+      const listEl = pop.querySelector(`#${context}-multiList`);
+      const searchEl = pop.querySelector(`#${context}-multiSearch`);
+      const selectAllBtn = pop.querySelector(`#${context}-selectAllBtn`);
+      const clearBtn = pop.querySelector(`#${context}-clearBtn`);
+
+      const btnAny = pop.querySelector(`#${context}-matchAny`);
+      const btnAll = pop.querySelector(`#${context}-matchAll`);
+
+      if (!listEl || !searchEl || !selectAllBtn || !clearBtn) return;
+
+      const controlsEl = pop.querySelector(`#${context}-matchControls`);
+      const previewTitleEl = pop.querySelector(`#${context}-previewTitle`);
+
+      function updatePreview() {
+        // Toggle visibility of controls based on count
+        if (controlsEl) {
+          if (state.draft.selected.size >= 2) controlsEl.style.display = "";
+          else controlsEl.style.display = "none";
+        }
+
+        const previewContainer = pop.querySelector(`#${context}-matchPreviewContainer`);
+        if (previewContainer) {
+          const oldVis = previewContainer.querySelector(".previewVisual");
+          if (oldVis) oldVis.outerHTML = renderPreviewVisual(state.draft.selected, state.draft.match);
+        }
+      }
+
+      // Match toggle (only if present)
+      if (btnAny && btnAll) {
+        btnAny.onclick = () => {
+          state.draft.match = "any";
+          btnAny.classList.add("active");
+          btnAll.classList.remove("active");
+          if (previewTitleEl) previewTitleEl.innerHTML = "Displays products that have <strong>at least one</strong> of the selected tags.";
+          updatePreview();
+        };
+        btnAll.onclick = () => {
+          state.draft.match = "all";
+          btnAll.classList.add("active");
+          btnAny.classList.remove("active");
+          if (previewTitleEl) previewTitleEl.innerHTML = "Displays products that have <strong>all</strong> of the selected tags.";
+          updatePreview();
+        };
+      }
+
+      const renderList = (q = "") => {
+        const query = (q || "").trim().toLowerCase();
+        const items = def.options.filter(x => x.toLowerCase().includes(query));
+        listEl.innerHTML = items.map(opt => {
+          const checked = state.draft.selected.has(opt) ? "checked" : "";
+          return `
+            <label class="checkRow">
+              <input type="checkbox" ${checked} data-opt="${escapeAttr(opt)}" />
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+      };
+
+      renderList();
+      // Initial check for visibility
+      updatePreview();
+
+      listEl.addEventListener("change", (e) => {
+        const cb = e.target;
+        if (!cb || cb.tagName !== "INPUT") return;
+        const opt = cb.getAttribute("data-opt");
+        if (cb.checked) state.draft.selected.add(opt);
+        else state.draft.selected.delete(opt);
+
+        updatePreview();
+      });
+
+      searchEl.addEventListener("input", () => renderList(searchEl.value));
+      selectAllBtn.addEventListener("click", () => {
+        def.options.forEach(o => state.draft.selected.add(o));
+        renderList(searchEl.value);
+        updatePreview();
+      });
+      clearBtn.addEventListener("click", () => {
+        state.draft.selected.clear();
+        renderList(searchEl.value);
+        updatePreview();
+      });
+    }
+
+    function numberEditorInnerHtml(def, { context }) {
+      const op = state.draft.operator || "equals";
+      const isBetween = op === "between";
+      const ph = getPlaceholder(def);
+      return `
+        <div class="field">
+          <select class="select" id="${context}-opSelect">
+            ${def.operators.map(o => `<option value="${escapeAttr(o)}" ${o === op ? "selected" : ""}>${escapeHtml(capitalize(o))}</option>`).join("")}
+          </select>
+
+          <input class="input" id="${context}-v1" inputmode="decimal" placeholder="${escapeAttr(ph)}" value="${escapeAttr(state.draft.value1 || "")}" />
+        </div>
+
+        ${isBetween ? `
+          <div class="field">
+            <input class="input" id="${context}-v2" inputmode="decimal" placeholder="${escapeAttr(ph)}" value="${escapeAttr(state.draft.value2 || "")}" />
+          </div>
+        ` : ``}
+      `;
+    }
+
+    function wireNumberEditor(def, { context }) {
+      const pop = context === "chip" ? document.getElementById("chipEditorPopover") : document.getElementById("addFilterPopover");
+      if (!pop) return;
+
+      const opSelect = pop.querySelector(`#${context}-opSelect`);
+      const v1 = pop.querySelector(`#${context}-v1`);
+      const v2 = pop.querySelector(`#${context}-v2`);
+      if (!opSelect || !v1) return;
+
+      // Format initial values
+      if (def.inputHint === "amount") {
+        v1.value = formatMoney(v1.value);
+        if (v2) v2.value = formatMoney(v2.value);
+      }
+
+      const handleInput = (el, field) => {
+        // Raw value for state (strip commas)
+        state.draft[field] = parseMoney(el.value);
+      };
+
+      const handleBlur = (el) => {
+        if (def.inputHint === "amount") {
+          el.value = formatMoney(el.value);
+        }
+      };
+
+      opSelect.onchange = () => {
+        state.draft.operator = opSelect.value;
+        if (state.draft.operator !== "between") state.draft.value2 = "";
+
+        if (context === "add") { renderAddFilterPopover(); renderRightEditorInAddPopover(); }
+        else renderChipEditorPopover();
+      };
+
+      v1.oninput = () => handleInput(v1, 'value1');
+      v1.onblur = () => handleBlur(v1);
+
+      if (v2) {
+        v2.oninput = () => handleInput(v2, 'value2');
+        v2.onblur = () => handleBlur(v2);
+      }
+    }
+
+    function dateEditorInnerHtml(def, { context }) {
+      const op = state.draft.operator || "before";
+      const isBetween = op === "between";
+      return `
+        <div class="field">
+          <select class="select" id="${context}-opSelect">
+            ${def.operators.map(o => `<option value="${escapeAttr(o)}" ${o === op ? "selected" : ""}>${escapeHtml(capitalize(o))}</option>`).join("")}
+          </select>
+
+          <input class="input" id="${context}-d1" type="date" placeholder="Select Date" value="${escapeAttr(state.draft.value1 || "")}" />
+        </div>
+
+        ${isBetween ? `
+          <div class="field">
+            <input class="input" id="${context}-d2" type="date" placeholder="Select Date" value="${escapeAttr(state.draft.value2 || "")}" />
+          </div>
+        ` : ``}
+      `;
+    }
+
+    function wireDateEditor(def, { context }) {
+      const pop = context === "chip" ? document.getElementById("chipEditorPopover") : document.getElementById("addFilterPopover");
+      if (!pop) return;
+
+      const opSelect = pop.querySelector(`#${context}-opSelect`);
+      const d1 = pop.querySelector(`#${context}-d1`);
+      const d2 = pop.querySelector(`#${context}-d2`);
+      if (!opSelect || !d1) return;
+
+      opSelect.onchange = () => {
+        state.draft.operator = opSelect.value;
+        if (state.draft.operator !== "between") state.draft.value2 = "";
+
+        if (context === "add") { renderAddFilterPopover(); renderRightEditorInAddPopover(); }
+        else renderChipEditorPopover();
+      };
+
+      d1.oninput = () => state.draft.value1 = d1.value;
+      if (d2) d2.oninput = () => state.draft.value2 = d2.value;
+    }
+
+    function textEditorInnerHtml(def, { context }) {
+      return `
+        <div class="field">
+          <input class="input" id="${context}-t1" placeholder="Enter Text" value="${escapeAttr(state.draft.value1 || "")}" />
+        </div>
+      `;
+    }
+
+    function wireTextEditor(def, { context }) {
+      const pop = context === "chip" ? document.getElementById("chipEditorPopover") : document.getElementById("addFilterPopover");
+      if (!pop) return;
+
+      const t1 = pop.querySelector(`#${context}-t1`);
+      if (!t1) return;
+
+      t1.oninput = () => state.draft.value1 = t1.value;
+    }
+
+    /* ===== Utils ===== */
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+    function escapeAttr(str) { return escapeHtml(str); }
+    function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+    function cssEscape(s) {
+      if (window.CSS && typeof window.CSS.escape === "function") return window.CSS.escape(String(s));
+      return String(s).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+    }
+
+    /* ===== Demo seed ===== */
+    state.applied = [
+      { key: "activePackageTypes", type: "multi", value: ["3PL WMS", "Agency Old"] },
+      { key: "trialEndTime", type: "date", operator: "before", value1: "2025-12-16", value2: "" }
+    ];
+
+    renderChips();
+  </script>
+</body>
+
+</html>

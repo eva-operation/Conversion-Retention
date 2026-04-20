@@ -1,0 +1,9 @@
+﻿L3202: MISMATCH </TabsContent> (opened <div> at L2788)
+L3217: MISMATCH </Tabs> (opened <div> at L2783)
+L3219: MISMATCH </main> (opened <TabsContent> at L1483)
+L3220: MISMATCH </div> (opened <Tabs> at L1470)
+L3221: MISMATCH </TooltipProvider> (opened <div> at L1456)
+UNCLOSED TAGS:
+  <TooltipProvider> at L1337
+  <div> at L1338
+  <main> at L1411

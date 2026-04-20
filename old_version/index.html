@@ -1,0 +1,2271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Risks — Eva Brand Flow</title>
+
+  <!-- Poppins Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Poppins", "ui-sans-serif", "system-ui"],
+            mono: ["monospace"]
+          },
+          colors: {
+            background: "var(--background)",
+            foreground: "var(--foreground)",
+            card: "var(--card)",
+            "card-foreground": "var(--card-foreground)",
+            primary: "var(--primary)",
+            "primary-foreground": "var(--primary-foreground)",
+            secondary: "var(--secondary)",
+            "secondary-foreground": "var(--secondary-foreground)",
+            muted: "var(--muted)",
+            "muted-foreground": "var(--muted-foreground)",
+            accent: "var(--accent)",
+            "accent-foreground": "var(--accent-foreground)",
+            destructive: "var(--destructive)",
+            border: "var(--border)",
+            input: "var(--input)",
+          },
+          borderRadius: {
+            lg: "10px",
+            md: "8px",
+            sm: "6px",
+            DEFAULT: "6px",
+            xl: "14px",
+            "2xl": "18px",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --background: #f5f6fa;
+      --foreground: #0d1117;
+      --card: #ffffff;
+      --card-foreground: #0d1117;
+      --primary: #5b50f5;
+      --primary-foreground: #ffffff;
+      --primary-soft: rgba(91, 80, 245, 0.08);
+      --primary-border: rgba(91, 80, 245, 0.20);
+      --secondary: #f0effe;
+      --secondary-foreground: #1e1b4b;
+      --muted: #f1f3f8;
+      --muted-foreground: #6b7280;
+      --accent: #eef0ff;
+      --accent-foreground: #5b50f5;
+      --destructive: #ef4444;
+      --border: #e5e7ef;
+      --input: #dce0ec;
+      --ring: rgba(91, 80, 245, 0.30);
+
+      --sidebar: #ffffff;
+      --sidebar-fg: #374151;
+      --sidebar-muted: #9ca3af;
+      --sidebar-active-bg: #f0effe;
+      --sidebar-active-fg: #4338ca;
+      --sidebar-border: #eef0f6;
+      --sidebar-hover: #f9fafb;
+
+      --risk-red-text: #dc2626;
+      --risk-red-bg: #fef2f2;
+      --risk-red-border: #fecaca;
+
+      --success: #059669;
+      --warning: #d97706;
+
+      --radius: 10px;
+
+      /* Elevation */
+      --shadow-xs: 0 1px 2px rgba(13, 17, 23, 0.04);
+      --shadow-sm: 0 1px 3px rgba(13, 17, 23, 0.06), 0 1px 2px rgba(13, 17, 23, 0.04);
+      --shadow-md: 0 4px 6px -1px rgba(13, 17, 23, 0.06), 0 2px 4px -1px rgba(13, 17, 23, 0.04);
+      --shadow-card: 0 1px 3px rgba(13, 17, 23, 0.05), 0 8px 20px rgba(13, 17, 23, 0.06);
+    }
+
+    * {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body,
+    input,
+    button,
+    select,
+    textarea {
+      font-family: 'DM Sans', sans-serif !important;
+    }
+
+    /* ── Scrollbar ─────────────────────────── */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(13, 17, 23, 0.10) transparent;
+    }
+
+    *::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background: rgba(13, 17, 23, 0.10);
+      border-radius: 999px;
+    }
+
+    /* ── Animations ────────────────────────── */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes expandRow {
+      from {
+        opacity: 0;
+        transform: translateY(-3px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeInUp {
+      animation: fadeInUp 0.35s ease forwards;
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 0.25s ease forwards;
+    }
+
+    .animate-slideDown {
+      animation: slideDown 0.25s ease forwards;
+    }
+
+    .expanded-row {
+      animation: expandRow 0.2s ease forwards;
+    }
+
+    /* ── Focus ring ────────────────────────── */
+    .focus-ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 1px rgba(91, 80, 245, 0.30), 0 0 0 4px rgba(91, 80, 245, 0.12);
+    }
+
+    /* ── Sidebar ───────────────────────────── */
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: var(--sidebar-fg);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+
+    .sidebar-link:hover {
+      background: var(--sidebar-hover);
+      color: var(--foreground);
+    }
+
+    .sidebar-link.active {
+      background: var(--sidebar-active-bg);
+      color: var(--sidebar-active-fg);
+      font-weight: 600;
+    }
+
+    .sidebar-link .icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .sidebar-link.active .icon {
+      opacity: 1;
+    }
+
+    /* ── Buttons ───────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--foreground);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .btn:hover {
+      background: #f8f9fb;
+      border-color: #d0d5de;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:active {
+      background: #f1f3f7;
+      transform: translateY(0.5px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border-color: rgba(91, 80, 245, 0.7);
+    }
+
+    .btn-primary:hover {
+      background: #4f44e0;
+      border-color: rgba(91, 80, 245, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+      background: var(--muted);
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted-foreground);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .icon-btn:hover {
+      background: #f8f9fb;
+      color: var(--foreground);
+      border-color: #d0d5de;
+    }
+
+    /* ── Inputs ────────────────────────────── */
+    .ui-input {
+      border: 1px solid var(--input);
+      background: #fff;
+      color: var(--foreground);
+      border-radius: 8px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .ui-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(91, 80, 245, 0.12);
+    }
+
+    .ui-input::placeholder {
+      color: var(--muted-foreground);
+    }
+
+    /* ── Checkbox ──────────────────────────── */
+    .ui-checkbox {
+      accent-color: var(--primary);
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ── Segmented control ─────────────────── */
+    .seg {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--muted);
+    }
+
+    .seg button {
+      padding: 5px 14px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      color: var(--muted-foreground);
+      cursor: pointer;
+      transition: all 0.15s;
+      background: transparent;
+    }
+
+    .seg button[aria-pressed="true"] {
+      background: #fff;
+      color: var(--sidebar-active-fg);
+      border-color: rgba(91, 80, 245, 0.18);
+      box-shadow: var(--shadow-xs);
+      font-weight: 600;
+    }
+
+    .seg button:hover:not([aria-pressed="true"]) {
+      color: var(--foreground);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ── Cards ─────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-card);
+    }
+
+    /* ── Filter cards ──────────────────────── */
+    .filter-card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-xs);
+      user-select: none;
+    }
+
+    .filter-card:hover {
+      border-color: var(--primary-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-card.active {
+      border-color: var(--primary);
+      border-width: 0.5px;
+      background: #f5f3ff;
+      color: var(--primary);
+    }
+
+    .filter-card.active span,
+    .filter-card.active .money {
+      color: var(--primary) !important;
+    }
+
+    .filter-card.active svg {
+      color: var(--primary) !important;
+    }
+
+    .filter-card.active .tooltip-icon svg {
+      color: var(--muted-foreground) !important;
+      opacity: 0.35;
+    }
+
+    /* ── Tooltip ───────────────────────────── */
+    .tooltip-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .filter-card:hover .tooltip-container {
+      opacity: 1;
+    }
+
+    .tooltip-icon {
+      color: var(--muted-foreground);
+      cursor: help;
+      display: flex;
+    }
+
+    .tooltip-content {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      background: #1e293b;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      width: max-content;
+      max-width: 200px;
+      line-height: 1.4;
+      white-space: normal;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.2s;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .tooltip-content::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #1e293b;
+    }
+
+    .tooltip-container:hover .tooltip-content {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* ── Table ─────────────────────────────── */
+    .row-hover:hover {
+      background: #fafbff;
+    }
+
+    .row-hover {
+      transition: background 0.12s;
+    }
+
+    /* ── Badge ─────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2.5px 8px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
+      border: none;
+      white-space: nowrap;
+    }
+
+    /* ── Status indicator ──────────────────── */
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Tab ───────────────────────────────── */
+    .tab-btn {
+      padding: 10px 4px;
+      font-size: 13.5px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      color: var(--muted-foreground);
+      background: transparent;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .tab-btn[data-state="active"] {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .tab-btn:hover:not([data-state="active"]) {
+      color: var(--foreground);
+    }
+
+    /* ── Divider ───────────────────────────── */
+    .divider {
+      background: var(--border);
+      height: 1px;
+    }
+
+    /* ── Topbar avatar ─────────────────────── */
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      transition: box-shadow 0.15s;
+    }
+
+    .avatar:hover {
+      box-shadow: 0 0 0 2px var(--primary-border);
+    }
+
+    /* ── Initials ──────────────────────────── */
+    .initials-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      border: 1.5px solid rgba(91, 80, 245, 0.15);
+      background: linear-gradient(135deg, #f0effe 0%, #e8e5ff 100%);
+      color: var(--sidebar-active-fg);
+    }
+
+    /* ── Expand caret ──────────────────────── */
+    .expand-caret {
+      transition: transform 0.2s ease;
+    }
+
+    .expanded .expand-caret {
+      transform: rotate(180deg);
+    }
+
+    /* ── Subtle Section Label ──────────────── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-foreground);
+    }
+
+    /* ── Chip in summary bar ───────────────── */
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 1px 8px;
+      border-radius: 5px;
+      border: 1px solid #e5e7ef;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      box-shadow: var(--shadow-xs);
+      white-space: nowrap;
+    }
+
+    /* ── Hover actions column ──────────────── */
+    .action-cell {
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    tr:hover .action-cell {
+      opacity: 1;
+    }
+
+    /* ── Table header ──────────────────────── */
+    thead th {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted-foreground);
+    }
+
+    /* ── Money value ───────────────────────── */
+    .money {
+      font-family: 'DM Mono', monospace;
+      font-size: 12.5px;
+    }
+
+    /* ── Page load animation ───────────────── */
+    .page-content>* {
+      opacity: 0;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .page-content>*:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+
+    .page-content>*:nth-child(2) {
+      animation-delay: 0.10s;
+    }
+
+    .page-content>*:nth-child(3) {
+      animation-delay: 0.15s;
+    }
+
+    .page-content>*:nth-child(4) {
+      animation-delay: 0.20s;
+    }
+
+    /* ===== Filter Popover & Chips ===== */
+    .popover {
+      position: fixed;
+      z-index: 1000;
+      width: 720px;
+      max-width: calc(100vw - 48px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      font-family: inherit;
+      animation: fadeInUp 0.2s ease-out;
+    }
+
+    .popover.small {
+      width: 360px;
+      max-width: calc(100vw - 24px);
+    }
+
+    .popoverBody {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 440px;
+      background: var(--card);
+    }
+
+    .leftPanel {
+      border-right: 1px solid var(--border);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .panelSearch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .panelSearch svg {
+      width: 16px;
+      height: 16px;
+      color: var(--muted-foreground);
+    }
+
+    .panelSearch input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--foreground);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .filterList {
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 8px;
+      flex: 1;
+      min-height: 260px;
+    }
+
+    .sectionHeaderPopover {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 10px 8px 6px;
+    }
+
+    .sectionLabelPopover {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted-foreground);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin: 0;
+    }
+
+    .filterItem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      color: var(--foreground);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.1s ease;
+    }
+
+    .filterItem:hover {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    .filterItem.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: var(--primary-border);
+      border-width: 0.5px;
+    }
+
+    .rightPanel {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .emptyState {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--muted);
+      height: 100%;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted-foreground);
+      font-size: 13px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .editorShell {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 12px;
+    }
+
+    .listBox {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .listBoxHeader {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--muted);
+    }
+
+    .list {
+      max-height: 220px;
+      overflow: auto;
+      padding: 8px;
+    }
+
+    .checkRow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      user-select: none;
+      color: var(--foreground);
+      font-size: 13px;
+    }
+
+    .checkRow:hover {
+      background: var(--accent);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--foreground);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-xs);
+      transition: all 0.15s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--primary-border);
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    .chipDot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .chipX {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      color: var(--muted-foreground);
+      transition: all 0.1s ease;
+    }
+
+    .chipX:hover {
+      background: rgba(239, 68, 68, .1);
+      color: #ef4444;
+    }
+
+    .select-popover,
+    .input-popover {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--foreground);
+      font-size: 13px;
+      font-weight: 500;
+      outline: none;
+      width: 100%;
+    }
+
+    .select-popover:focus,
+    .input-popover:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    .badge-popover {
+      min-width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .footer-popover {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .popoverBody {
+        grid-template-columns: 1fr;
+      }
+
+      .leftPanel {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+  </style>
+</head>
+
+<body class="font-sans bg-background text-foreground">
+  <div class="min-h-screen flex">
+
+    <!-- ── Sidebar ──────────────────────────────────────────── -->
+    <aside
+      class="w-[220px] bg-[color:var(--sidebar)] border-r border-[color:var(--sidebar-border)] hidden md:flex flex-col flex-shrink-0"
+      style="box-shadow: 1px 0 0 var(--sidebar-border);">
+
+      <!-- Logo -->
+      <div class="px-5 pt-5 pb-4 flex items-center gap-3 border-b border-[color:var(--sidebar-border)]">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-[11px] text-white"
+          style="background: linear-gradient(135deg, #5b50f5 0%, #7c6bff 100%); box-shadow: 0 2px 8px rgba(91,80,245,0.35);">
+          EB
+        </div>
+        <div>
+          <div class="text-[13px] font-700 leading-tight" style="font-weight:700;">Eva Brand Flow</div>
+          <div class="text-[11px] text-[color:var(--sidebar-muted)]" style="margin-top:1px;">Console</div>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <nav class="px-3 py-3 flex-1 flex flex-col gap-0.5">
+
+        <div class="section-label px-3 py-2 mt-1">Main</div>
+
+        <a class="sidebar-link" href="#">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </span>
+          Clients
+        </a>
+
+        <a class="sidebar-link active" href="#">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+          </span>
+          Projects
+          <span class="ml-auto inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold"
+            style="background:var(--primary-soft); color:var(--primary);">18</span>
+        </a>
+
+        <a class="sidebar-link" href="#">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 20V10M12 20V4M6 20v-6" />
+            </svg>
+          </span>
+          Analytics
+        </a>
+
+        <a class="sidebar-link" href="#">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+            </svg>
+          </span>
+          Tasks
+          <span class="ml-auto inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold"
+            style="background:#fef3c7; color:#92400e;">5</span>
+        </a>
+
+        <a class="sidebar-link" href="#">
+          <span class="icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </span>
+          Chats
+        </a>
+      </nav>
+
+      <!-- User -->
+      <div class="p-3 border-t border-[color:var(--sidebar-border)]">
+        <div
+          class="flex items-center gap-2.5 px-2 py-2 rounded-lg cursor-pointer hover:bg-[color:var(--sidebar-hover)] transition-colors">
+          <div
+            class="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
+            style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">AB</div>
+          <div class="flex-1 min-w-0">
+            <div class="text-[12.5px] font-600 leading-tight truncate" style="font-weight:600;">Alex Boyle</div>
+            <div class="text-[11px] text-[color:var(--sidebar-muted)] truncate">Account Manager</div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            class="text-[color:var(--sidebar-muted)] flex-shrink-0">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ──────────────────────────────────────────────── -->
+    <div class="flex-1 min-w-0 flex flex-col">
+
+      <!-- Topbar -->
+      <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-border"
+        style="box-shadow: 0 1px 0 var(--border);">
+        <div class="px-6 h-14 flex items-center gap-3">
+
+          <!-- Mobile logo -->
+          <div class="md:hidden flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[10px] text-white"
+              style="background: linear-gradient(135deg, #5b50f5 0%, #7c6bff 100%);">EB</div>
+          </div>
+
+          <!-- Breadcrumb -->
+          <div class="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground">
+            <span class="hover:text-foreground cursor-pointer transition-colors">Console</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+            <span class="text-foreground font-500" style="font-weight:500; color:var(--foreground);">Projects</span>
+          </div>
+
+          <div class="flex-1"></div>
+
+          <div class="flex items-center gap-1.5">
+            <!-- Notification -->
+            <button class="icon-btn" aria-label="Notifications" style="position:relative;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
+                <path d="M13.73 21a2 2 0 01-3.46 0" />
+              </svg>
+              <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-red-500"></span>
+            </button>
+            <!-- Help -->
+            <button class="icon-btn" aria-label="Help">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <path d="M12 17h.01" />
+              </svg>
+            </button>
+            <!-- Divider -->
+            <div class="w-px h-5 bg-border mx-1"></div>
+            <!-- Avatar -->
+            <div class="avatar" style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #4338ca;">AB</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <main class="flex-1 px-6 py-7 max-w-[1280px] mx-auto w-full page-content">
+
+        <!-- ── Page Header ──────────────────── -->
+        <div>
+          <div class="flex items-start justify-between">
+            <div>
+              <h1 class="text-[22px] font-bold tracking-tight leading-tight">Project Risks</h1>
+              <p class="text-sm mt-1" style="color: var(--muted-foreground);">Monitor accounts, track risk changes, and
+                surface critical insights</p>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex gap-6 mt-5 border-b border-border">
+            <button id="tabProjects" onclick="setActiveView('projects')" class="tab-btn" data-state="active">
+              Account View
+            </button>
+            <button id="tabRisk" onclick="setActiveView('risk')" class="tab-btn" data-state="inactive">
+              Project View
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Filter Bar ───────────────────── -->
+        <div class="mt-5 sticky top-14 z-20" id="stickyFilterBar">
+          <div class="card transition-all duration-300 overflow-hidden" id="filterBarInner">
+
+            <!-- Filter controls row -->
+            <div id="filterBarTop" class="px-4 py-3">
+              <div class="flex flex-wrap items-center gap-2">
+
+                <!-- Search -->
+                <div class="relative flex-1 min-w-[260px]">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                    style="color:var(--muted-foreground);">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round">
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="m21 21-4.35-4.35" />
+                    </svg>
+                  </span>
+                  <input class="ui-input w-full pl-9 pr-3 py-2 text-[13px]" placeholder="Search accounts or projects…"
+                    oninput="handleSearch(this.value)" />
+                </div>
+
+
+                <button class="btn gap-1.5" id="addFilterBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Add filter
+                </button>
+
+                <button class="btn ml-auto gap-1.5"
+                  style="color:var(--muted-foreground); border-color: transparent; box-shadow:none; background:transparent;"
+                  onclick="resetFilters()">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                    <path d="M3 3v5h5" />
+                  </svg>
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <!-- Chips Container -->
+            <div id="chipsContainer" class="px-5 pb-3 border-t border-border hidden bg-[#fafbff]">
+              <div id="chips" class="chips pt-3"></div>
+            </div>
+
+            <!-- Smart Filters Panel -->
+            <div id="smartFiltersSection" class="w-full animate-slideDown">
+              <div class="divider"></div>
+              <div class="px-5 py-5 flex flex-col gap-6">
+
+                <!-- Current Risk -->
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="section-label">Current Risk</span>
+                    <div class="flex items-center gap-3">
+                      <button class="text-[11px] font-600 transition-colors hover:text-foreground"
+                        style="font-weight:600; color:var(--primary);" onclick="selectAll('risks', true)">Select
+                        all</button>
+                      <span style="color:var(--border);">·</span>
+                      <button class="text-[11px] font-600 transition-colors hover:text-foreground"
+                        style="font-weight:600; color:var(--muted-foreground);"
+                        onclick="selectAll('risks', false)">Clear</button>
+                    </div>
+                  </div>
+                  <div id="riskSummaryCards" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2"><!-- JS -->
+                  </div>
+                </div>
+
+                <!-- WoW + Ownership row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-5 border-t border-border">
+
+                  <!-- WoW Change -->
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="section-label">WoW Change</span>
+                      <div class="flex items-center gap-3">
+                        <button class="text-[11px] font-600 transition-colors hover:text-foreground"
+                          style="font-weight:600; color:var(--primary);" onclick="selectAll('wows', true)">Select
+                          all</button>
+                        <span style="color:var(--border);">·</span>
+                        <button class="text-[11px] font-600 transition-colors hover:text-foreground"
+                          style="font-weight:600; color:var(--muted-foreground);"
+                          onclick="selectAll('wows', false)">Clear</button>
+                      </div>
+                    </div>
+                    <div id="wowSummaryCards" class="grid grid-cols-3 gap-2"><!-- JS --></div>
+                  </div>
+
+                  <!-- Ownership -->
+                  <div class="lg:pl-6 lg:border-l lg:border-border">
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="section-label">Ownership</span>
+                      <div class="flex items-center gap-3">
+                        <button class="text-[11px] font-600 transition-colors hover:text-foreground"
+                          style="font-weight:600; color:var(--primary);" onclick="selectAll('owners', true)">Select
+                          all</button>
+                        <span style="color:var(--border);">·</span>
+                        <button class="text-[11px] font-600 transition-colors hover:text-foreground"
+                          style="font-weight:600; color:var(--muted-foreground);"
+                          onclick="selectAll('owners', false)">Clear</button>
+                      </div>
+                    </div>
+                    <div id="ownSummaryCards" class="grid grid-cols-2 gap-2"><!-- JS --></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="filterBarSummary" onclick="toggleSmartFilters(true)"
+              class="hidden px-5 py-2.5 items-center gap-3 bg-[#fafbff] border-t border-border animate-fadeIn cursor-pointer hover:bg-slate-50 transition-colors">
+              <div id="summaryText" class="text-[12px] flex-1 flex flex-wrap items-center gap-1 leading-relaxed"
+                style="color:var(--muted-foreground);"><!-- JS --></div>
+              <button onclick="toggleSmartFilters(true)"
+                class="shrink-0 text-[11px] font-700 transition-colors hover:opacity-80 flex items-center gap-1.5"
+                style="font-weight:700; color:var(--primary); padding: 4px 10px; border-radius: 6px; background: var(--primary-soft);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Edit Quick Filter
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Table Section ────────────────── -->
+        <div class="mt-6">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-[16px] font-700" style="font-weight:700;">Project Risks</h2>
+              <p class="text-[12px] mt-0.5" style="color:var(--muted-foreground);" id="footerCountSub">All accounts ·
+                Sorted by risk</p>
+            </div>
+          </div>
+
+          <div class="card overflow-hidden">
+            <!-- Table toolbar -->
+            <div class="px-4 py-3 flex flex-wrap items-center gap-2.5 border-b border-border bg-white">
+              <div class="seg">
+                <button aria-pressed="false" id="viewCards" onclick="switchView('cards')">Cards</button>
+                <button aria-pressed="true" id="viewTable" onclick="switchView('table')">Table</button>
+              </div>
+
+              <div class="h-5 w-px bg-border mx-1"></div>
+
+              <div class="ml-auto flex items-center gap-2">
+                <span id="selectionInfo" class="hidden text-[12px] font-600 px-2 py-1 rounded-md"
+                  style="font-weight:600; background:var(--primary-soft); color:var(--primary);">0 selected</span>
+
+                <button class="btn btn-ghost text-[12px] gap-1.5 px-2.5 py-1.5"
+                  style="font-size:12px; color:var(--muted-foreground);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                  Columns
+                </button>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse" style="min-width: 2200px; table-layout: fixed;">
+                <colgroup>
+                  <col style="width:44px"> <!-- Checkbox -->
+                  <col style="width:240px"> <!-- Account/Project Name -->
+                  <col style="width:100px"> <!-- MRR -->
+                  <col style="width:120px"> <!-- Current Risk Color -->
+                  <col style="width:120px"> <!-- Previous Week Color -->
+                  <col style="width:120px"> <!-- WoW Risk Change -->
+                  <col style="width:80px"> <!-- Lifetime -->
+                  <col style="width:140px"> <!-- L30D / P30D -->
+                  <col style="width:140px"> <!-- L7D / P7D -->
+                  <col style="width:80px"> <!-- Subscriptions -->
+                  <col style="width:140px"> <!-- Escalation Manager -->
+                  <col style="width:140px"> <!-- Brand Manager -->
+                  <col style="width:140px"> <!-- Advertising Manager -->
+                  <col style="width:140px"> <!-- Care Manager -->
+                  <col style="width:140px"> <!-- Graphic Designer -->
+                  <col style="width:160px"> <!-- Notes/Details -->
+                  <col style="width:110px"> <!-- Created At -->
+                </colgroup>
+
+                <thead>
+                  <tr class="border-b border-border" style="background: #f7f8fb;">
+                    <th class="px-3 py-2.5 text-center">
+                      <input type="checkbox" class="ui-checkbox" id="selectAll" onchange="toggleSelectAll(this)" />
+                    </th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">
+                      <div>Account Name</div>
+                      <div class="text-[9px] font-500 mt-0.5 opacity-60 lowercase tracking-normal">Projects</div>
+                    </th>
+                    <th
+                      class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground text-right">
+                      MRR</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Current
+                      Risk</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Prev
+                      Week</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">WoW
+                      Change</th>
+                    <th
+                      class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground text-right">
+                      Lifetime
+                    </th>
+                    <th
+                      class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground text-right">
+                      L30D /
+                      P30D</th>
+                    <th
+                      class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground text-right">
+                      L7D /
+                      P7D</th>
+                    <th
+                      class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground text-right">
+                      Subs</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Esc.
+                      Manager</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Brand
+                      Manager</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Adv.
+                      Manager</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Care
+                      Manager</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Graphic
+                      Designer</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">
+                      Notes/Details</th>
+                    <th class="px-4 py-2.5 text-[11px] font-600 uppercase tracking-wider text-muted-foreground">Created
+                      At</th>
+                  </tr>
+                </thead>
+
+                <tbody id="projectsTableBody" class="divide-y divide-border">
+                  <!-- JS renders here -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-5 py-3 border-t border-border flex items-center justify-between bg-[#fafbff]">
+              <span id="footerCount" class="text-[12px] font-500"
+                style="font-weight:500; color:var(--muted-foreground);">Showing 0 accounts</span>
+              <div class="flex items-center gap-1.5">
+                <button class="btn text-[12px] px-3 py-1.5" style="font-size:12px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                  Prev
+                </button>
+                <div class="flex items-center gap-1">
+                  <button class="px-2.5 py-1 rounded text-[12px] font-700"
+                    style="font-weight:700; background:var(--primary-soft); color:var(--primary);">1</button>
+                  <button
+                    class="px-2.5 py-1 rounded text-[12px] font-500 text-muted-foreground hover:bg-muted transition-colors"
+                    style="font-weight:500;">2</button>
+                  <button
+                    class="px-2.5 py-1 rounded text-[12px] font-500 text-muted-foreground hover:bg-muted transition-colors"
+                    style="font-weight:500;">3</button>
+                </div>
+                <button class="btn text-[12px] px-3 py-1.5" style="font-size:12px;">
+                  Next
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ── Data & Constants ─────────────────────────────────────────
+    const risks = [
+      { name: "Black", hex: "#111827", bg: "#f3f4f6", border: "#d1d5db", desc: "Cancellation Requested" },
+      { name: "Red", hex: "#be123c", bg: "#fff1f2", border: "#ffe4e6", desc: "Critical Risk Level; High Churn Probability and Escalation Required" },
+      { name: "Orange", hex: "#f97316", bg: "#fff7ed", border: "#ffedd5", desc: "Temporary Service Suspension (1–2 Months)" },
+      { name: "Yellow", hex: "#eab308", bg: "#fefce8", border: "#fef08a", desc: "Early Risk Indicator; Under Monitoring (Watchlist)" },
+      { name: "Green", hex: "#10b981", bg: "#ecfdf5", border: "#ccfbf1", desc: "Strong Performance and Healthy Client Relationship" },
+      { name: "Blue", hex: "#3b82f6", bg: "#eff6ff", border: "#dbeafe", desc: "Cancellation Approved (Management Decision)" },
+      { name: "White", hex: "#ffffff", bg: "#ffffff", border: "#e5e7eb", desc: "Service Not Yet Initiated" },
+      { name: "None", hex: "#9ca3af", bg: "#f3f4f6", border: "#f3f4f6", desc: "Not Updated for Current Weeks Report Yet" }
+    ];
+
+    const wowChanges = [
+      { type: "Positive", label: "Positive", desc: "Risk level decreased; the account moved to a better position compared to last week", class: "bg-emerald-600/10 text-emerald-600 border border-emerald-600/20" },
+      { type: "Negative", label: "Negative", desc: "Risk level increased; the account moved to a higher risk position compared to last week", class: "bg-red-600/10 text-red-600 border border-red-600/20" },
+      { type: "None", label: "No Change", desc: "Risk level remained the same as last week", class: "bg-gray-600/10 text-gray-600 border border-dashed border-gray-600/25" }
+    ];
+
+    const amNames = ["A. Johnson", "B. Smith", "C. Lee", "D. Brown", "E. Davis", "F. Wilson"];
+    const csmNames = ["G. Martinez", "H. Anderson", "I. Thomas", "J. Jackson", "K. White", "L. Harris"];
+    const brandNames = ["S. Rogers", "B. Banner", "T. Stark", "N. Romanoff", "P. Quill"];
+    const careNames = ["C. Danvers", "W. Maximoff", "S. Strange", "T. Challa", "O. Okoye"];
+    const designerNames = ["P. Parker", "M. Morales", "G. Stacy", "B. Reilly", "K. Bishop"];
+    const accountNames = ["Acme Corp", "Globex Inc.", "Soylent Corp", "Initech", "Umbrella Corp", "Stark Ind", "Wayne Ent", "Cyberdyne", "Massive Dynamic", "Hooli", "Pied Piper", "Aviato", "Vandelay Ind", "Dunder Mifflin", "Sabre", "Aperture Sci", "Black Mesa", "Tyrell Corp"];
+    const projectTypes = ["Full Service", "SEO Campaign", "PPC Growth", "Social Media", "Content Mkt", "Email Auto"];
+
+    let allAccounts = [];
+    let activeFilters = {
+      search: "",
+      risks: risks.map(r => r.name.toLowerCase()),
+      wows: ["pos", "neg", "none"],
+      owners: ["my", "other"]
+    };
+
+    // ── State Management ─────────────────────────────────────────
+    function toggleFilter(type, value) {
+      const arr = activeFilters[type];
+      const idx = arr.indexOf(value);
+      if (idx > -1) arr.splice(idx, 1);
+      else arr.push(value);
+      renderTable();
+      updateCounts();
+    }
+
+    function selectAll(type, select) {
+      if (type === 'risks') activeFilters.risks = select ? risks.map(r => r.name.toLowerCase()) : [];
+      else if (type === 'wows') activeFilters.wows = select ? ["pos", "neg", "none"] : [];
+      else if (type === 'owners') activeFilters.owners = select ? ["my", "other"] : [];
+      renderTable();
+      updateCounts();
+    }
+
+    function handleSearch(v) {
+      activeFilters.search = v.toLowerCase();
+      renderTable();
+      updateCounts();
+    }
+
+    function updateSelectionInfo() {
+      const checked = document.querySelectorAll("#projectsTableBody .ui-checkbox:checked").length;
+      const info = document.getElementById("selectionInfo");
+      if (!info) return;
+      if (checked > 0) {
+        info.classList.remove("hidden");
+        info.textContent = `${checked} selected`;
+      } else {
+        info.classList.add("hidden");
+      }
+    }
+
+    function toggleSelectAll(cb) {
+      document.querySelectorAll('#projectsTableBody .ui-checkbox').forEach(c => {
+        c.checked = cb.checked;
+      });
+      updateSelectionInfo();
+    }
+
+    function resetFilters() {
+      activeFilters = {
+        search: "",
+        risks: risks.map(r => r.name.toLowerCase()),
+        wows: ["pos", "neg", "none"],
+        owners: ["my", "other"]
+      };
+      if (window.filterState) filterState.applied = [];
+      const inp = document.querySelector('input[placeholder="Search accounts or projects…"]');
+      if (inp) inp.value = "";
+      renderChips();
+      renderTable();
+      updateCounts();
+    }
+    function switchView(v) {
+      document.getElementById('viewCards').setAttribute('aria-pressed', v === 'cards' ? 'true' : 'false');
+      document.getElementById('viewTable').setAttribute('aria-pressed', v === 'table' ? 'true' : 'false');
+    }
+
+    // ── Data Generation ──────────────────────────────────────────
+    function generateData() {
+      allAccounts = [];
+      for (let i = 0; i < 18; i++) {
+        const accName = accountNames[i];
+        const numProjs = Math.floor(Math.random() * 3) + 1;
+        const accProjects = [];
+        let worstRiskIdx = 7;
+
+        for (let p = 0; p < numProjs; p++) {
+          const rIdx = Math.floor(Math.random() * 8);
+          if (rIdx < worstRiskIdx) worstRiskIdx = rIdx;
+          const riskObj = risks[rIdx];
+          const prevRiskObj = risks[Math.floor(Math.random() * 8)];
+          const wowIdx = rIdx < risks.indexOf(prevRiskObj) ? 1 : (rIdx > risks.indexOf(prevRiskObj) ? 0 : 2);
+          const pName = projectTypes[Math.floor(Math.random() * projectTypes.length)];
+          const mrr = Math.floor(Math.random() * 8000) + 2000;
+          const salesL30 = Math.floor(Math.random() * 50000) + 10000;
+          accProjects.push({
+            name: pName, subName: "Starter", mrr,
+            salesL30, salesP30: salesL30 * 0.9, salesL7: salesL30 / 4, salesP7: salesL30 / 4,
+            risk: riskObj, prevRisk: prevRiskObj, wow: wowChanges[wowIdx],
+            lifetime: Math.floor(Math.random() * 24),
+            am: amNames[Math.floor(Math.random() * amNames.length)],
+            csm: csmNames[Math.floor(Math.random() * csmNames.length)],
+            bm: brandNames[Math.floor(Math.random() * brandNames.length)],
+            cm: careNames[Math.floor(Math.random() * careNames.length)],
+            gd: designerNames[Math.floor(Math.random() * designerNames.length)],
+            createdAt: new Date(Date.now() - Math.floor(Math.random() * 10000000000)).toLocaleDateString(),
+            isMyProject: Math.random() < 0.3, hasNote: Math.random() < 0.6,
+            notes: Math.random() < 0.6 ? (Math.random() < 0.5 ? "Urgent: Project needs a complete audit before the next weekly escalation meeting to avoid further delays." : "Client requested a shift in strategy regarding PPC goals for the upcoming quarter, targeting a 15% growth.") : ""
+          });
+        }
+        const firstP = accProjects[0];
+        allAccounts.push({
+          id: i + 1, name: accName, initials: accName.split(' ').map(n => n[0]).join(''),
+          mrr: accProjects.reduce((s, p) => s + p.mrr, 0),
+          salesL30: accProjects.reduce((s, p) => s + p.salesL30, 0),
+          salesP30: accProjects.reduce((s, p) => s + p.salesP30, 0),
+          salesL7: accProjects.reduce((s, p) => s + p.salesL7, 0),
+          salesP7: accProjects.reduce((s, p) => s + p.salesP7, 0),
+          subs: numProjs, hasNote: accProjects.some(p => p.hasNote),
+          risk: risks[worstRiskIdx], prevRisk: accProjects[0].prevRisk,
+          wow: wowChanges[worstRiskIdx < 4 ? 1 : 2],
+          lifetime: 12,
+          am: firstP.am, csm: firstP.csm, bm: firstP.bm, cm: firstP.cm, gd: firstP.gd, createdAt: firstP.createdAt,
+          projects: accProjects, expanded: false
+        });
+      }
+    }
+
+    // ── Render Summary Cards ─────────────────────────────────────
+    function updateCounts() {
+      const rStats = {};
+      risks.forEach(r => rStats[r.name.toLowerCase()] = { count: 0, mrr: 0, hex: r.hex });
+      const wStats = {
+        pos: { mrr: 0, count: 0, label: "Positive" },
+        neg: { mrr: 0, count: 0, label: "Negative" },
+        none: { mrr: 0, count: 0, label: "No change" }
+      };
+      const oStats = {
+        my: { mrr: 0, count: 0, label: "My Projects" },
+        other: { mrr: 0, count: 0, label: "Others" }
+      };
+
+      allAccounts.forEach(acc => {
+        const rKey = acc.risk.name.toLowerCase();
+        if (rStats[rKey]) { rStats[rKey].count++; rStats[rKey].mrr += acc.mrr; }
+        const wKey = acc.wow.type === "Positive" ? "pos" : (acc.wow.type === "Negative" ? "neg" : "none");
+        wStats[wKey].count++; wStats[wKey].mrr += acc.mrr;
+        const oKey = acc.projects.some(p => p.isMyProject) ? 'my' : 'other';
+        oStats[oKey].count++; oStats[oKey].mrr += acc.mrr;
+      });
+
+      // Risk Cards
+      const riskEl = document.getElementById('riskSummaryCards');
+      riskEl.innerHTML = risks.map(r => {
+        const key = r.name.toLowerCase();
+        const stat = rStats[key];
+        const isOn = activeFilters.risks.includes(key);
+        return `
+          <div class="filter-card ${isOn ? 'active' : ''}" onclick="toggleFilter('risks', '${key}')">
+            <div class="flex items-center justify-between mb-1.5">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <div class="status-dot" style="background:${r.hex};"></div>
+                <span class="text-[11.5px] font-600 capitalize truncate" style="font-weight:600; color:var(--foreground);">${key}</span>
+                <div class="tooltip-container" onclick="event.stopPropagation()">
+                  <span class="tooltip-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  </span>
+                  <div class="tooltip-content">${r.desc}</div>
+                </div>
+              </div>
+              <input type="checkbox" class="ui-checkbox pointer-events-none" ${isOn ? 'checked' : ''}>
+            </div>
+            <div class="text-[15px] font-700 tracking-tight money" style="font-weight:700;">$${stat.mrr.toLocaleString()}</div>
+            <div class="text-[11px] mt-0.5 mb-3" style="color:var(--muted-foreground);">${stat.count} account${stat.count !== 1 ? 's' : ''}</div>
+            <div class="w-full h-2 rounded-full" style="background:${r.hex}; ${r.hex.toLowerCase() === '#ffffff' ? 'border: 1px solid var(--border);' : ''}"></div>
+          </div>`;
+      }).join('');
+
+      // WoW Cards
+      const wowIcons = {
+        pos: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-foreground)"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>`,
+        neg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-foreground)"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>`,
+        none: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-foreground)"><line x1="5" y1="12" x2="19" y2="12"></line></svg>`
+      };
+      const wowEl = document.getElementById('wowSummaryCards');
+      wowEl.innerHTML = ["pos", "neg", "none"].map(key => {
+        const stat = wStats[key];
+        const isOn = activeFilters.wows.includes(key);
+        const wowDef = wowChanges.find(w => w.type === (key === 'pos' ? 'Positive' : (key === 'neg' ? 'Negative' : 'None')));
+        return `
+          <div class="filter-card ${isOn ? 'active' : ''}" onclick="toggleFilter('wows', '${key}')">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 min-w-0">
+                ${wowIcons[key]}
+                <span class="text-[11.5px] font-600 truncate" style="font-weight:600; color:var(--foreground);">${wowDef.label}</span>
+                <div class="tooltip-container" onclick="event.stopPropagation()">
+                  <span class="tooltip-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  </span>
+                  <div class="tooltip-content">${wowDef.desc}</div>
+                </div>
+              </div>
+              <input type="checkbox" class="ui-checkbox pointer-events-none" ${isOn ? 'checked' : ''}>
+            </div>
+            <div class="text-[15px] font-700 tracking-tight money" style="font-weight:700;">$${stat.mrr.toLocaleString()}</div>
+            <div class="text-[11px] mt-0.5" style="color:var(--muted-foreground);">${stat.count} account${stat.count !== 1 ? 's' : ''}</div>
+          </div>`;
+      }).join('');
+
+      // Own Cards
+      const ownIcons = {
+        my: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-foreground)"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+        other: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-foreground)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`
+      };
+      const ownEl = document.getElementById('ownSummaryCards');
+      const ownDescs = { my: "Accounts where you are assigned as the Ad Manager or Esc. Manager", other: "Accounts assigned to other team members" };
+      ownEl.innerHTML = ["my", "other"].map(key => {
+        const stat = oStats[key];
+        const isOn = activeFilters.owners.includes(key);
+        return `
+          <div class="filter-card ${isOn ? 'active' : ''}" onclick="toggleFilter('owners', '${key}')">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 min-w-0">
+                ${ownIcons[key]}
+                <span class="text-[11.5px] font-600 truncate" style="font-weight:600; color:var(--foreground);">${stat.label}</span>
+                <div class="tooltip-container" onclick="event.stopPropagation()">
+                  <span class="tooltip-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  </span>
+                  <div class="tooltip-content">${ownDescs[key]}</div>
+                </div>
+              </div>
+              <input type="checkbox" class="ui-checkbox pointer-events-none" ${isOn ? 'checked' : ''}>
+            </div>
+            <div class="text-[15px] font-700 tracking-tight money" style="font-weight:700;">$${stat.mrr.toLocaleString()}</div>
+            <div class="text-[11px] mt-0.5" style="color:var(--muted-foreground);">${stat.count} account${stat.count !== 1 ? 's' : ''}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function matchesAppliedFilters(acc) {
+      if (filterState.applied.length === 0) return true;
+      return filterState.applied.every(f => {
+        let val = acc[f.key];
+        if (f.key === 'notes') {
+          return acc.projects.some(p => p.notes.toLowerCase().includes(f.value.toLowerCase()));
+        }
+        if (f.type === "multi") {
+          return f.value.length === 0 || f.value.includes(val);
+        }
+        if (f.type === "number") {
+          const v = parseFloat(val), v1 = parseFloat(f.value1), v2 = parseFloat(f.value2);
+          if (isNaN(v)) return true;
+          switch (f.operator) {
+            case "equals": return v === v1;
+            case "greater than": return v > v1;
+            case "less than": return v < v1;
+            case "greater than or equal": return v >= v1;
+            case "less than or equal": return v <= v1;
+            case "between": return v >= v1 && v <= v2;
+            default: return true;
+          }
+        }
+        if (f.type === "text") {
+          return !f.value || String(val || "").toLowerCase().includes(f.value.toLowerCase());
+        }
+        return true;
+      });
+    }
+
+    // ── Render Table ─────────────────────────────────────────────
+    function renderTable() {
+      const tbody = document.getElementById("projectsTableBody");
+      tbody.innerHTML = "";
+
+      const renderWowBadge = (w) => {
+        const iconMap = {
+          "Positive": `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="opacity-80"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>`,
+          "Negative": `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="opacity-80"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>`,
+          "None": `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="opacity-80"><line x1="5" y1="12" x2="19" y2="12"></line></svg>`
+        };
+        return `<span class="badge ${w.class}">${iconMap[w.type] || ""}${w.label}</span>`;
+      };
+      const renderRiskBadge = (r) => {
+        const lowerName = r.name.toLowerCase();
+        const isWhite = lowerName === 'white';
+        const isNone = lowerName === 'none';
+        const borderColor = isWhite ? '#e5e7eb' : (r.border || 'rgba(0,0,0,0.1)');
+        const dotBorder = isWhite ? '#d1d5db' : 'rgba(0,0,0,0.08)';
+        const textColor = isWhite ? 'var(--foreground)' : r.hex;
+        const borderStyle = isNone ? 'dashed' : 'solid';
+        return `
+          <span class="badge" style="background:${r.bg}; color:${textColor}; border: 0.5px ${borderStyle} ${borderColor};">
+            <span class="status-dot" style="background:${r.hex}; border: 0.5px solid ${dotBorder};"></span>${r.name}
+          </span>`;
+      };
+
+      let visibleCount = 0;
+      allAccounts.forEach(acc => {
+        const rMatch = activeFilters.risks.includes(acc.risk.name.toLowerCase());
+        const wKey = acc.wow.type === "Positive" ? "pos" : (acc.wow.type === "Negative" ? "neg" : "none");
+        const wMatch = activeFilters.wows.includes(wKey);
+        const isMy = acc.projects.some(p => p.isMyProject);
+        const oMatch = activeFilters.owners.includes(isMy ? 'my' : 'other');
+        const sMatch = !activeFilters.search || acc.name.toLowerCase().includes(activeFilters.search);
+        const aMatch = matchesAppliedFilters(acc);
+
+        if (!(rMatch && wMatch && oMatch && sMatch && aMatch)) return;
+        visibleCount++;
+
+        const projNames = acc.projects.slice(0, 2).map(p => p.name).join(", ");
+        const remaining = acc.projects.length > 2 ? ` +${acc.projects.length - 2}` : "";
+
+        const tr = document.createElement('tr');
+        tr.className = `row-hover cursor-pointer border-b border-border ${acc.expanded ? 'expanded' : ''}`;
+
+        tr.innerHTML = `
+          <td class="px-3 py-3 text-center">
+            <input type="checkbox" class="ui-checkbox" onchange="updateSelectionInfo()" onclick="e => e.stopPropagation()">
+          </td>
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="initials-badge flex-shrink-0">${acc.initials}</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-[13px] font-600 leading-tight truncate" style="font-weight:600; color:var(--foreground);">${acc.name}</div>
+                <div class="text-[11px] mt-0.5 truncate flex items-center gap-1.5" style="color:var(--muted-foreground);">
+                  <span class="truncate">${projNames}${remaining ? ` <span class="text-[10px] font-700 text-primary/70">+${acc.projects.length - 2} more</span>` : ""}</span>
+                  <svg class="expand-caret flex-shrink-0 opacity-40" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="px-4 py-3 text-right"><span class="money text-[13px] font-600" style="font-weight:600; color:var(--foreground);">$${acc.mrr.toLocaleString()}</span></td>
+          <td class="px-4 py-3">${renderRiskBadge(acc.risk)}</td>
+          <td class="px-4 py-3">${renderRiskBadge(acc.prevRisk)}</td>
+          <td class="px-4 py-3">${renderWowBadge(acc.wow)}</td>
+          <td class="px-4 py-3 text-right"><span class="text-[12.5px]" style="color:var(--muted-foreground);">${acc.lifetime}<span class="text-[11px] ml-0.5">mo</span></span></td>
+          <td class="px-4 py-3 text-right"><span class="money text-[12.5px]" style="color:var(--muted-foreground);">$${acc.salesL30.toLocaleString()}</span></td>
+          <td class="px-4 py-3 text-right"><span class="money text-[12.5px]" style="color:var(--muted-foreground);">$${acc.salesL7.toLocaleString()}</span></td>
+          <td class="px-4 py-3 text-right">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-600" style="font-weight:600; background:var(--muted); color:var(--muted-foreground);">${acc.subs}</span>
+          </td>
+          <td class="px-4 py-3"><span class="text-[12px] font-500" style="font-weight:500; color:var(--foreground);">${acc.csm}</span></td>
+          <td class="px-4 py-3"><span class="text-[12px] font-500" style="font-weight:500; color:var(--foreground);">${acc.bm}</span></td>
+          <td class="px-4 py-3"><span class="text-[12px] font-500" style="font-weight:500; color:var(--foreground);">${acc.am}</span></td>
+          <td class="px-4 py-3"><span class="text-[12px] font-500" style="font-weight:500; color:var(--foreground);">${acc.cm}</span></td>
+          <td class="px-4 py-3"><span class="text-[12px] font-500" style="font-weight:500; color:var(--foreground);">${acc.gd}</span></td>
+          <td class="px-4 py-3 text-center"><span class="text-[11px] text-muted-foreground">—</span></td>
+          <td class="px-4 py-3"><span class="text-[11.5px] font-mono text-muted-foreground">${acc.createdAt}</span></td>
+        `;
+
+        tr.onclick = (e) => {
+          if (e.target.type === 'checkbox') return;
+          acc.expanded = !acc.expanded;
+          renderTable();
+        };
+        tbody.appendChild(tr);
+
+        if (acc.expanded) {
+          acc.projects.forEach(p => {
+            const ptr = document.createElement('tr');
+            ptr.className = "expanded-row border-b border-border";
+            ptr.style.background = "#fafbff";
+            ptr.innerHTML = `
+              <td class="px-3 py-2 text-center opacity-30">
+                <input type="checkbox" class="ui-checkbox scale-90">
+              </td>
+              <td class="px-4 py-2.5 pl-14">
+                <div class="flex items-center gap-2">
+                  <div class="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style="background:var(--primary-soft);">
+                    <div class="w-1 h-1 rounded-full" style="background:var(--primary);"></div>
+                  </div>
+                  <span class="text-[12.5px] font-500" style="font-weight:500; color:var(--foreground);">${p.name}</span>
+                </div>
+              </td>
+              <td class="px-4 py-2 text-right"><span class="money text-[12px] font-600" style="font-weight:600; color:var(--muted-foreground);">$${p.mrr.toLocaleString()}</span></td>
+              <td class="px-4 py-2">${renderRiskBadge(p.risk)}</td>
+              <td class="px-4 py-2">${renderRiskBadge(p.prevRisk)}</td>
+              <td class="px-4 py-2">${renderWowBadge(p.wow)}</td>
+              <td class="px-4 py-2 text-right"><span class="text-[12px]" style="color:var(--muted-foreground);">${p.lifetime}mo</span></td>
+              <td class="px-4 py-2 text-right"><span class="money text-[12px]" style="color:var(--muted-foreground);">$${p.salesL30.toLocaleString()}</span></td>
+              <td class="px-4 py-2 text-right"><span class="money text-[12px]" style="color:var(--muted-foreground);">$${p.salesL7.toLocaleString()}</span></td>
+              <td class="px-4 py-2 text-right text-[11px] text-muted-foreground">—</td>
+              <td class="px-4 py-2"><span class="text-[11.5px]" style="color:var(--muted-foreground);">${p.csm}</span></td>
+              <td class="px-4 py-2"><span class="text-[11.5px]" style="color:var(--muted-foreground);">${p.bm}</span></td>
+              <td class="px-4 py-2"><span class="text-[11.5px]" style="color:var(--muted-foreground);">${p.am}</span></td>
+              <td class="px-4 py-2"><span class="text-[11.5px]" style="color:var(--muted-foreground);">${p.cm}</span></td>
+              <td class="px-4 py-2"><span class="text-[11.5px]" style="color:var(--muted-foreground);">${p.gd}</span></td>
+              <td class="px-4 py-2">
+                ${p.notes ? `
+                  <div class="flex items-center gap-1.5 min-w-0" style="max-width:180px;">
+                    <span class="text-[11px] text-muted-foreground italic truncate">
+                      ${p.notes.length > 50 ? p.notes.substring(0, 50) + '...' : p.notes}
+                    </span>
+                    ${p.notes.length > 50 ? `
+                      <div class="tooltip-container ml-auto" onclick="event.stopPropagation()">
+                        <span class="tooltip-icon">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </span>
+                        <div class="tooltip-content">${p.notes}</div>
+                      </div>
+                    ` : ''}
+                  </div>
+                ` : '<span class="text-[11px] text-muted-foreground">—</span>'}
+              </td>
+              <td class="px-4 py-2 opacity-50"><span class="text-[11px] font-mono">${p.createdAt}</span></td>
+            `;
+            tbody.appendChild(ptr);
+          });
+        }
+      });
+
+      const fc = document.getElementById("footerCount");
+      if (fc) fc.textContent = `Showing ${visibleCount} account${visibleCount !== 1 ? 's' : ''}`;
+      const fcs = document.getElementById("footerCountSub");
+      if (fcs) fcs.textContent = `${visibleCount} of ${allAccounts.length} accounts · Sorted by risk`;
+      updateFilterSummary();
+    }
+
+    // ── Filter Summary ────────────────────────────────────────────
+    function updateFilterSummary() {
+      const el = document.getElementById('summaryText');
+      if (!el) return;
+
+      const renderChip = (txt, bgColor, textColor, icon, customBorder, isDashed) => {
+        const isWhite = bgColor.toLowerCase() === '#ffffff' || bgColor.toLowerCase() === 'white';
+        const finalTextColor = isWhite ? 'var(--foreground)' : textColor;
+        // If it looks like a hex/color, use it for border with transparency, else use customBorder
+        const borderColor = customBorder || (isWhite ? '#e5e7eb' : `${textColor}33`); // 33 is ~20% opacity
+
+        return `
+          <span class="badge ml-1" style="background:${bgColor}; color:${finalTextColor}; border: 0.5px ${isDashed ? 'dashed' : 'solid'} ${borderColor};">
+            ${icon ? icon : `<span class="status-dot" style="background:${textColor}; border: 0.5px solid rgba(0,0,0,0.08);"></span>`}
+            ${txt}
+          </span>`;
+      };
+
+      const r = activeFilters.risks, w = activeFilters.wows, o = activeFilters.owners;
+      let oText = o.length === 2 ? "All projects" : (o.includes('my') ? "My projects" : "Others' projects");
+
+      let rText = r.length === 8 ? renderChip("Any risk", "rgba(52, 64, 84, 0.1)", "#344054")
+        : r.length === 0 ? `<span style="color:#dc2626; font-weight:500; font-size:11px; font-style:italic;">no risk filter</span>`
+          : r.map(key => {
+            const f = risks.find(x => x.name.toLowerCase() === key);
+            return renderChip(f ? f.name : key, f ? f.bg : "#f3f4f6", f ? f.hex : "#6b7280", null, f ? f.border : null, key === 'none');
+          }).join("");
+
+      const wMap = {
+        pos: { label: "Positive", bg: "rgba(5, 150, 105, 0.1)", color: "#059669", border: "rgba(5, 150, 105, 0.2)", dashed: false, icon: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>` },
+        neg: { label: "Negative", bg: "rgba(220, 38, 38, 0.1)", color: "#dc2626", border: "rgba(220, 38, 38, 0.2)", dashed: false, icon: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>` },
+        none: { label: "No change", bg: "rgba(107, 114, 128, 0.1)", color: "#6b7280", border: "rgba(107, 114, 128, 0.2)", dashed: true, icon: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>` }
+      };
+
+      let wText = w.length === 3 ? renderChip("Any change", "rgba(52, 64, 84, 0.1)", "#344054")
+        : w.length === 0 ? `<span style="color:#dc2626; font-weight:500; font-size:11px; font-style:italic;">no change filter</span>`
+          : w.map(key => renderChip(wMap[key].label, wMap[key].bg, wMap[key].color, wMap[key].icon, wMap[key].border, wMap[key].dashed)).join("");
+
+      el.innerHTML = `<span style="color:var(--muted-foreground); font-size:11.5px;">Showing</span> <span style="color:var(--primary); font-weight:600; font-size:11.5px;">${oText}</span> <span style="color:var(--muted-foreground); font-size:11.5px;">· Risk</span> ${rText} <span style="color:var(--muted-foreground); font-size:11.5px;">· Change</span> ${wText}`;
+    }
+
+    // ── Toggle Smart Filters ──────────────────────────────────────
+    function toggleSmartFilters(show) {
+      const summary = document.getElementById('filterBarSummary');
+      const inner = document.getElementById('filterBarInner');
+      const smart = document.getElementById('smartFiltersSection');
+
+      if (show) {
+        smart.classList.remove('hidden');
+        summary.classList.add('hidden');
+        summary.classList.remove('flex');
+      } else {
+        smart.classList.add('hidden');
+        summary.classList.remove('hidden');
+        summary.classList.add('flex');
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 280) toggleSmartFilters(false);
+    });
+
+
+    function setActiveView(v) {
+      document.getElementById("tabProjects").setAttribute("data-state", v === 'projects' ? 'active' : 'inactive');
+      document.getElementById("tabRisk").setAttribute("data-state", v === 'risk' ? 'active' : 'inactive');
+    }
+
+
+    /* ===== Filter Dialog Implementation (Ported from filter.html) ===== */
+    const SECTIONS = [
+      { id: "ACCOUNT_INFO", label: "ACCOUNT INFO" },
+      { id: "ASSIGNMENT", label: "ASSIGNMENT" },
+      { id: "FINANCIALS", label: "FINANCIALS" },
+      { id: "METRICS", label: "METRICS" }
+    ];
+
+    const FILTER_DEFS = {
+      // ACCOUNT INFO
+      name: { section: "ACCOUNT_INFO", label: "Account Name", type: "multi", options: accountNames },
+      lifetime: { section: "ACCOUNT_INFO", label: "Lifetime (mo)", type: "number", inputHint: "value", operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"] },
+      subs: { section: "ACCOUNT_INFO", label: "Subscriptions", type: "number", inputHint: "count", operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"] },
+      createdAt: { section: "ACCOUNT_INFO", label: "Created At", type: "text", inputHint: "MM/DD/YYYY" },
+      notes: { section: "ACCOUNT_INFO", label: "Notes/Details", type: "text", inputHint: "search text..." },
+
+      // ASSIGNMENT
+      am: { section: "ASSIGNMENT", label: "Advertising Manager", type: "multi", options: amNames },
+      csm: { section: "ASSIGNMENT", label: "Escalation Manager", type: "multi", options: csmNames },
+      bm: { section: "ASSIGNMENT", label: "Brand Manager", type: "multi", options: brandNames },
+      cm: { section: "ASSIGNMENT", label: "Care Manager", type: "multi", options: careNames },
+      gd: { section: "ASSIGNMENT", label: "Graphic Designer", type: "multi", options: designerNames },
+
+      // FINANCIALS
+      mrr: { section: "FINANCIALS", label: "MRR", type: "number", inputHint: "amount", currencySymbol: "$", operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"] },
+
+      // METRICS
+      salesL30: { section: "METRICS", label: "L30D Spend", type: "number", inputHint: "amount", currencySymbol: "$", operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"] },
+      salesL7: { section: "METRICS", label: "L7D Spend", type: "number", inputHint: "amount", currencySymbol: "$", operators: ["equals", "greater than", "less than", "greater than or equal", "less than or equal", "between"] },
+    };
+
+    const filterState = {
+      applied: [],
+      addFilterOpen: false,
+      chipEditorOpenFor: null,
+      selectedFilterKey: null,
+      draft: null
+    };
+
+    const filterEls = {
+      addFilterBtn: document.getElementById("addFilterBtn"),
+      chips: document.getElementById("chips"),
+      chipsContainer: document.getElementById("chipsContainer"),
+      popoverRoot: null
+    };
+
+    // Create popover root if not exists
+    let root = document.getElementById("popoverRoot");
+    if (!root) {
+      root = document.createElement("div");
+      root.id = "popoverRoot";
+      document.body.appendChild(root);
+    }
+    filterEls.popoverRoot = root;
+
+    filterEls.addFilterBtn.onclick = (e) => {
+      e.stopPropagation();
+      if (filterState.addFilterOpen) closeAddFilterPopover();
+      else openAddFilterPopover();
+    };
+
+    function openAddFilterPopover() {
+      filterState.addFilterOpen = true;
+      filterState.selectedFilterKey = null;
+      filterState.draft = null;
+      closeChipEditorPopover();
+      renderAddFilterPopover();
+    }
+
+    function closeAddFilterPopover() {
+      filterState.addFilterOpen = false;
+      const el = document.getElementById("addFilterPopover");
+      if (el) el.remove();
+    }
+
+    function renderAddFilterPopover() {
+      const existing = document.getElementById("addFilterPopover");
+      if (existing) existing.remove();
+      if (!filterState.addFilterOpen) return;
+
+      const pop = document.createElement("div");
+      pop.className = "popover";
+      pop.id = "addFilterPopover";
+
+      pop.innerHTML = `
+        <div class="popoverBody">
+          <div class="leftPanel">
+            <div style="font-size:13px; font-weight:700; color:var(--foreground); padding: 4px 4px 8px;">Select Filter</div>
+            <div class="panelSearch">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input id="filterSearch" placeholder="Search filters..." />
+            </div>
+            <div class="filterList">
+              ${renderFilterGroupsHtml()}
+            </div>
+          </div>
+          <div class="rightPanel" id="rightPanel">
+            <button class="icon-btn" id="closeAddPopoverBtn" style="position:absolute; top:12px; right:12px; width:28px; height:28px; border:none; background:transparent; box-shadow:none; z-index:10; color: var(--muted-foreground);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+            ${filterState.selectedFilterKey ? "" : `<div class="emptyState">Select a filter from the left to configure</div>`}
+          </div>
+        </div>
+      `;
+
+      filterEls.popoverRoot.appendChild(pop);
+      positionPopover(pop, filterEls.addFilterBtn);
+
+      pop.querySelector("#closeAddPopoverBtn").onclick = closeAddFilterPopover;
+
+      pop.querySelectorAll(".filterItem").forEach(item => {
+        item.onclick = () => {
+          const key = item.dataset.key;
+          filterState.selectedFilterKey = key;
+          filterState.draft = buildDraftFromApplied(key);
+          renderAddFilterPopover();
+          renderRightEditor();
+        };
+      });
+
+      pop.querySelector("#filterSearch").oninput = (e) => {
+        const q = e.target.value.toLowerCase();
+        pop.querySelectorAll(".filterItem").forEach(item => {
+          const visible = FILTER_DEFS[item.dataset.key].label.toLowerCase().includes(q);
+          item.style.display = visible ? "" : "none";
+        });
+      };
+
+      if (filterState.selectedFilterKey) renderRightEditor();
+    }
+
+    function renderFilterGroupsHtml() {
+      return SECTIONS.map(sec => {
+        const items = Object.entries(FILTER_DEFS).filter(([k, def]) => def.section === sec.id);
+        if (items.length === 0) return "";
+        return `
+          <div class="sectionBlock mb-4">
+            <div class="sectionHeaderPopover">
+              <div class="sectionLabelPopover">${sec.label}</div>
+            </div>
+            ${items.map(([k, def]) => {
+          const applied = filterState.applied.find(x => x.key === k);
+          const count = applied ? (def.type === "multi" ? applied.value.length : 1) : 0;
+          return `
+                <div class="filterItem ${filterState.selectedFilterKey === k ? 'active' : ''}" data-key="${k}">
+                  <span>${def.label}</span>
+                  ${count ? `<span class="badge-popover">${count}</span>` : ''}
+                </div>
+              `;
+        }).join("")}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderRightEditor() {
+      const panel = document.getElementById("rightPanel");
+      const def = FILTER_DEFS[filterState.selectedFilterKey];
+      if (!def || !panel) return;
+
+      const shell = document.createElement("div");
+      shell.className = "editorShell animate-fadeIn";
+
+      let html = "";
+      if (def.type === "multi") {
+        html = `
+          <div class="listBox">
+            <div class="listBoxHeader">
+              <span class="text-[12px] font-700">Select ${def.label}</span>
+              <div class="flex gap-2">
+                <button class="text-[11px] font-600 text-primary hover:underline" onclick="selectAllDraft(true)">Select all</button>
+                <button class="text-[11px] font-600 text-muted-foreground hover:underline" onclick="selectAllDraft(false)">Clear</button>
+              </div>
+            </div>
+            <div class="list">
+              ${def.options.map(opt => `
+                <label class="checkRow">
+                  <input type="checkbox" class="ui-checkbox" ${filterState.draft.selected.has(opt) ? 'checked' : ''} onchange="toggleDraftOption('${opt}')">
+                  <span>${opt}</span>
+                </label>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      } else if (def.type === "number") {
+        html = `
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="text-[11px] font-700 text-muted-foreground uppercase mb-1 block">Operator</label>
+              <select class="select-popover" onchange="filterState.draft.operator = this.value; renderRightEditor()">
+                ${def.operators.map(op => `<option value="${op}" ${filterState.draft.operator === op ? 'selected' : ''}>${op}</option>`).join("")}
+              </select>
+            </div>
+            <div class="flex gap-3">
+              <div class="flex-1">
+                <label class="text-[11px] font-700 text-muted-foreground uppercase mb-1 block">Value</label>
+                <input type="number" class="input-popover" value="${filterState.draft.value1}" oninput="filterState.draft.value1 = this.value" placeholder="${def.inputHint === 'amount' ? '$ 0.00' : '0'}">
+              </div>
+              ${filterState.draft.operator === 'between' ? `
+                <div class="flex-1">
+                  <label class="text-[11px] font-700 text-muted-foreground uppercase mb-1 block">To</label>
+                  <input type="number" class="input-popover" value="${filterState.draft.value2}" oninput="filterState.draft.value2 = this.value" placeholder="0">
+                </div>
+              ` : ""}
+            </div>
+          </div>
+        `;
+      } else if (def.type === "text") {
+        html = `
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="text-[11px] font-700 text-muted-foreground uppercase mb-1 block">Contains Text</label>
+              <input type="text" class="input-popover" value="${filterState.draft.value}" oninput="filterState.draft.value = this.value" placeholder="${def.inputHint}">
+            </div>
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="footer-popover">
+          <button class="btn text-[12px]" onclick="closeAddFilterPopover()">Cancel</button>
+          <button class="btn btn-primary text-[12px]" onclick="applyDraft()">Apply</button>
+        </div>
+      `;
+
+      shell.innerHTML = html;
+      const old = panel.querySelector(".editorShell");
+      if (old) old.remove();
+      panel.appendChild(shell);
+    }
+
+    window.toggleDraftOption = (opt) => {
+      if (filterState.draft.selected.has(opt)) filterState.draft.selected.delete(opt);
+      else filterState.draft.selected.add(opt);
+    };
+
+    window.selectAllDraft = (sel) => {
+      const def = FILTER_DEFS[filterState.selectedFilterKey];
+      if (sel) def.options.forEach(o => filterState.draft.selected.add(o));
+      else filterState.draft.selected.clear();
+      renderRightEditor();
+    };
+
+    function buildDraftFromApplied(key) {
+      const def = FILTER_DEFS[key];
+      const existing = filterState.applied.find(x => x.key === key);
+      if (def.type === "multi") return { key, type: "multi", selected: new Set(existing ? existing.value : []) };
+      if (def.type === "number") return { key, type: "number", operator: existing ? existing.operator : "greater than or equal", value1: existing ? existing.value1 : "", value2: existing ? existing.value2 : "" };
+      if (def.type === "text") return { key, type: "text", value: existing ? existing.value : "" };
+    }
+
+    window.applyDraft = () => {
+      const key = filterState.selectedFilterKey;
+      const def = FILTER_DEFS[key];
+      const idx = filterState.applied.findIndex(x => x.key === key);
+      let item;
+      if (def.type === "multi") item = { key, type: "multi", value: Array.from(filterState.draft.selected) };
+      if (def.type === "number") item = { key, type: "number", operator: filterState.draft.operator, value1: filterState.draft.value1, value2: filterState.draft.value2 };
+      if (def.type === "text") item = { key, type: "text", value: filterState.draft.value };
+
+      if (idx > -1) filterState.applied[idx] = item;
+      else filterState.applied.push(item);
+
+      renderChips();
+      renderTable();
+      closeAddFilterPopover();
+    };
+
+    function renderChips() {
+      if (filterState.applied.length === 0) {
+        filterEls.chipsContainer.classList.add("hidden");
+        return;
+      }
+      filterEls.chipsContainer.classList.remove("hidden");
+
+      filterEls.chips.innerHTML = filterState.applied.map(a => {
+        const def = FILTER_DEFS[a.key];
+        let text = def.label;
+        if (a.type === "multi") {
+          text = `${def.label}: ${a.value.length === 0 ? 'All' : (a.value.length <= 2 ? a.value.join(", ") : a.value.slice(0, 2).join(", ") + " +" + (a.value.length - 2))}`;
+        } else if (a.type === "number") {
+          const opMap = { "equals": "=", "greater than": ">", "less than": "<", "greater than or equal": "≥", "less than or equal": "≤", "between": "between" };
+          text = `${def.label} ${opMap[a.operator] || a.operator} ${a.value1}${a.operator === 'between' ? ' and ' + a.value2 : ''}`;
+        } else if (a.type === "text") {
+          text = `${def.label}: ${a.value || 'Any'}`;
+        }
+        return `
+          <div class="chip" onclick="openChipEditor('${a.key}')">
+            <span class="chipDot"></span>
+            <span>${text}</span>
+            <span class="chipX" onclick="event.stopPropagation(); removeFilter('${a.key}')">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    window.removeFilter = (key) => {
+      filterState.applied = filterState.applied.filter(x => x.key !== key);
+      renderChips();
+      renderTable();
+    };
+
+    function closeChipEditorPopover() {
+      // Small popover for chip editing not implemented yet/using main for now
+    }
+
+    window.openChipEditor = (key) => {
+      filterState.selectedFilterKey = key;
+      filterState.draft = buildDraftFromApplied(key);
+      filterState.addFilterOpen = true;
+      renderAddFilterPopover();
+    };
+
+    function positionPopover(pop, anchor) {
+      const rect = anchor.getBoundingClientRect();
+      let top = rect.bottom + 8;
+      let left = rect.left;
+      if (left + pop.offsetWidth > window.innerWidth) left = window.innerWidth - pop.offsetWidth - 24;
+      pop.style.top = top + "px";
+      pop.style.left = Math.max(24, left) + "px";
+    }
+
+    // Close on click outside
+    document.addEventListener("mousedown", (e) => {
+      const pop = document.getElementById("addFilterPopover");
+      if (pop && !pop.contains(e.target) && !filterEls.addFilterBtn.contains(e.target)) {
+        closeAddFilterPopover();
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      const pop = document.getElementById("addFilterPopover");
+      if (pop && filterState.addFilterOpen) positionPopover(pop, filterEls.addFilterBtn);
+    });
+
+    // ── Init ──────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      generateData();
+      updateCounts();
+      renderTable();
+    });
+  </script>
+</body>
+
+</html>

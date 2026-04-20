@@ -1,0 +1,1389 @@
+L273: OPEN <HTMLSpanElement>
+L274: OPEN <span>
+L280: CLOSE </span> (matches L274)
+L292: OPEN <div>
+L293: OPEN <Badge>
+L304: SELF <span/>
+L310: SELF <Edit/>
+L312: CLOSE </Badge> (matches L293)
+L313: CLOSE </div> (matches L292)
+L320: OPEN <Badge>
+L321: SELF <Icon/>
+L323: CLOSE </Badge> (matches L320)
+L339: OPEN <span>
+L339: CLOSE </span> (matches L339)
+L342: OPEN <Badge>
+L343: OPEN <span>
+L343: CLOSE </span> (matches L343)
+L344: CLOSE </Badge> (matches L342)
+L349: OPEN <div>
+L351: CLOSE </div> (matches L349)
+L356: OPEN <div>
+L357: OPEN <div>
+L360: OPEN <button>
+L368: CLOSE </button> (matches L360)
+L370: CLOSE </div> (matches L357)
+L372: OPEN <div>
+L374: OPEN <React.Fragment>
+L376: CLOSE </React.Fragment> (matches L374)
+L378: OPEN <button>
+L386: CLOSE </button> (matches L378)
+L387: CLOSE </div> (matches L372)
+L389: CLOSE </div> (matches L356)
+L425: OPEN <div>
+L426: OPEN <span>
+L426: CLOSE </span> (matches L426)
+L427: OPEN <div>
+L428: OPEN <span>
+L428: CLOSE </span> (matches L428)
+L429: OPEN <span>
+L429: CLOSE </span> (matches L429)
+L430: CLOSE </div> (matches L427)
+L431: CLOSE </div> (matches L425)
+L435: OPEN <div>
+L438: OPEN <div>
+L439: OPEN <div>
+L439: CLOSE </div> (matches L439)
+L442: OPEN <div>
+L443: OPEN <div>
+L444: OPEN <div>
+L445: SELF <Activity/>
+L446: CLOSE </div> (matches L444)
+L447: OPEN <h3>
+L447: CLOSE </h3> (matches L447)
+L448: CLOSE </div> (matches L443)
+L449: OPEN <div>
+L450: OPEN <span>
+L452: CLOSE </span> (matches L450)
+L453: OPEN <span>
+L453: CLOSE </span> (matches L453)
+L454: CLOSE </div> (matches L449)
+L455: CLOSE </div> (matches L442)
+L458: OPEN <div>
+L458: CLOSE </div> (matches L458)
+L461: OPEN <div>
+L462: SELF <StatRow/>
+L463: SELF <StatRow/>
+L464: SELF <StatRow/>
+L465: SELF <StatRow/>
+L466: SELF <StatRow/>
+L467: CLOSE </div> (matches L461)
+L468: CLOSE </div> (matches L438)
+L471: OPEN <div>
+L472: OPEN <div>
+L472: CLOSE </div> (matches L472)
+L475: OPEN <div>
+L476: OPEN <div>
+L477: OPEN <div>
+L478: SELF <BarChart3/>
+L479: CLOSE </div> (matches L477)
+L480: OPEN <h3>
+L480: CLOSE </h3> (matches L480)
+L481: CLOSE </div> (matches L476)
+L482: OPEN <div>
+L483: OPEN <span>
+L485: CLOSE </span> (matches L483)
+L486: OPEN <span>
+L486: CLOSE </span> (matches L486)
+L487: CLOSE </div> (matches L482)
+L488: CLOSE </div> (matches L475)
+L491: OPEN <div>
+L491: CLOSE </div> (matches L491)
+L494: OPEN <div>
+L495: SELF <StatRow/>
+L496: SELF <StatRow/>
+L497: SELF <StatRow/>
+L498: SELF <StatRow/>
+L499: SELF <StatRow/>
+L500: CLOSE </div> (matches L494)
+L501: CLOSE </div> (matches L471)
+L504: OPEN <div>
+L505: OPEN <div>
+L505: CLOSE </div> (matches L505)
+L508: OPEN <div>
+L509: OPEN <div>
+L510: OPEN <div>
+L511: SELF <Users/>
+L512: CLOSE </div> (matches L510)
+L513: OPEN <h3>
+L513: CLOSE </h3> (matches L513)
+L514: CLOSE </div> (matches L509)
+L515: OPEN <div>
+L516: OPEN <div>
+L517: OPEN <span>
+L519: CLOSE </span> (matches L517)
+L520: OPEN <div>
+L521: SELF <UserMinus/>
+L522: OPEN <span>
+L522: CLOSE </span> (matches L522)
+L523: CLOSE </div> (matches L520)
+L524: CLOSE </div> (matches L516)
+L525: OPEN <span>
+L525: CLOSE </span> (matches L525)
+L526: CLOSE </div> (matches L515)
+L527: CLOSE </div> (matches L508)
+L530: OPEN <div>
+L530: CLOSE </div> (matches L530)
+L533: OPEN <div>
+L534: SELF <StatRow/>
+L535: SELF <StatRow/>
+L537: OPEN <div>
+L537: CLOSE </div> (matches L537)
+L538: CLOSE </div> (matches L533)
+L539: CLOSE </div> (matches L504)
+L542: OPEN <div>
+L543: OPEN <div>
+L543: CLOSE </div> (matches L543)
+L546: OPEN <div>
+L547: OPEN <div>
+L548: OPEN <div>
+L549: SELF <Settings/>
+L550: CLOSE </div> (matches L548)
+L551: OPEN <h3>
+L551: CLOSE </h3> (matches L551)
+L552: CLOSE </div> (matches L547)
+L553: OPEN <div>
+L554: OPEN <span>
+L556: CLOSE </span> (matches L554)
+L557: OPEN <span>
+L557: CLOSE </span> (matches L557)
+L558: CLOSE </div> (matches L553)
+L559: CLOSE </div> (matches L546)
+L562: OPEN <div>
+L562: CLOSE </div> (matches L562)
+L565: OPEN <div>
+L566: SELF <StatRow/>
+L567: SELF <StatRow/>
+L568: SELF <StatRow/>
+L569: OPEN <div>
+L569: CLOSE </div> (matches L569)
+L570: CLOSE </div> (matches L565)
+L571: CLOSE </div> (matches L542)
+L573: CLOSE </div> (matches L435)
+L592: OPEN <div>
+L593: OPEN <div>
+L594: OPEN <div>
+L595: OPEN <span>
+L595: CLOSE </span> (matches L595)
+L596: CLOSE </div> (matches L594)
+L598: SELF <div/>
+L600: OPEN <div>
+L601: OPEN <div>
+L602: OPEN <p>
+L602: CLOSE </p> (matches L602)
+L603: OPEN <p>
+L603: CLOSE </p> (matches L603)
+L604: CLOSE </div> (matches L601)
+L605: OPEN <div>
+L606: OPEN <p>
+L606: CLOSE </p> (matches L606)
+L607: OPEN <p>
+L607: CLOSE </p> (matches L607)
+L608: CLOSE </div> (matches L605)
+L609: OPEN <div>
+L610: OPEN <p>
+L610: CLOSE </p> (matches L610)
+L611: OPEN <div>
+L612: OPEN <span>
+L612: CLOSE </span> (matches L612)
+L613: OPEN <span>
+L614: SELF <UserMinus/>
+L615: CLOSE </span> (matches L613)
+L616: CLOSE </div> (matches L611)
+L617: CLOSE </div> (matches L609)
+L618: CLOSE </div> (matches L600)
+L619: CLOSE </div> (matches L593)
+L621: OPEN <div>
+L622: CLOSE </div> (matches L621)
+L623: CLOSE </div> (matches L592)
+L644: OPEN <string>
+L667: OPEN <string>
+L668: OPEN <string>
+L669: OPEN <string>
+L670: OPEN <string>
+L675: OPEN <number>
+L676: OPEN <string>
+L677: OPEN <number>
+L679: OPEN <number>
+L680: OPEN <string>
+L681: OPEN <number>
+L683: OPEN <number>
+L684: OPEN <string>
+L685: OPEN <number>
+L687: OPEN <number>
+L688: OPEN <string>
+L689: OPEN <number>
+L691: OPEN <number>
+L692: OPEN <string>
+L693: OPEN <number>
+L708: OPEN <string>
+L709: OPEN <string>
+L710: OPEN <string>
+L711: OPEN <string>
+L714: OPEN <string>
+L715: OPEN <string>
+L716: OPEN <string>
+L719: OPEN <number>
+L720: OPEN <string>
+L721: OPEN <number>
+L723: OPEN <number>
+L724: OPEN <string>
+L725: OPEN <number>
+L727: OPEN <number>
+L728: OPEN <string>
+L729: OPEN <number>
+L731: OPEN <number>
+L732: OPEN <string>
+L733: OPEN <number>
+L735: OPEN <number>
+L736: OPEN <string>
+L737: OPEN <number>
+L752: OPEN <string>
+L753: OPEN <string>
+L754: OPEN <string>
+L755: OPEN <string>
+L764: OPEN <string>
+L768: OPEN <number>
+L769: OPEN <string>
+L778: OPEN <any>
+L779: OPEN <Risk>
+L782: OPEN <Set>
+L989: OPEN <number>
+L990: OPEN <number>
+L991: OPEN <number>
+L999: OPEN <number>
+L1047: OPEN <string>
+L1050: OPEN <string>
+L1056: OPEN <string>
+L1061: OPEN <string>
+L1337: OPEN <TooltipProvider>
+L1338: OPEN <div>
+L1341: OPEN <aside>
+L1345: OPEN <div>
+L1347: OPEN <div>
+L1348: OPEN <div>
+L1350: CLOSE </div> (matches L1348)
+L1351: OPEN <div>
+L1352: OPEN <h1>
+L1352: CLOSE </h1> (matches L1352)
+L1353: CLOSE </div> (matches L1351)
+L1354: CLOSE </div> (matches L1347)
+L1357: OPEN <div>
+L1359: CLOSE </div> (matches L1357)
+L1361: CLOSE </div> (matches L1345)
+L1363: OPEN <nav>
+L1364: OPEN <p>
+L1364: CLOSE </p> (matches L1364)
+L1373: OPEN <button>
+L1384: SELF <item.icon/>
+L1385: OPEN <span>
+L1385: CLOSE </span> (matches L1385)
+L1386: CLOSE </button> (matches L1373)
+L1388: CLOSE </nav> (matches L1363)
+L1390: OPEN <div>
+L1391: OPEN <div>
+L1392: OPEN <div>
+L1396: OPEN <div>
+L1398: CLOSE </div> (matches L1396)
+L1400: OPEN <div>
+L1401: OPEN <p>
+L1401: CLOSE </p> (matches L1401)
+L1402: OPEN <p>
+L1402: CLOSE </p> (matches L1402)
+L1403: CLOSE </div> (matches L1400)
+L1405: CLOSE </div> (matches L1392)
+L1406: CLOSE </div> (matches L1391)
+L1407: CLOSE </div> (matches L1390)
+L1408: CLOSE </aside> (matches L1341)
+L1411: OPEN <main>
+L1414: OPEN <header>
+L1415: OPEN <div>
+L1416: OPEN <button>
+L1420: SELF <PanelLeft/>
+L1420: SELF <PanelLeftClose/>
+L1421: CLOSE </button> (matches L1416)
+L1422: CLOSE </div> (matches L1415)
+L1424: OPEN <div>
+L1425: OPEN <button>
+L1426: SELF <Globe/>
+L1428: CLOSE </button> (matches L1425)
+L1429: SELF <div/>
+L1432: OPEN <button>
+L1437: SELF <Moon/>
+L1437: SELF <Sun/>
+L1438: CLOSE </button> (matches L1432)
+L1440: SELF <div/>
+L1441: OPEN <button>
+L1442: SELF <Bell/>
+L1443: SELF <span/>
+L1444: CLOSE </button> (matches L1441)
+L1445: OPEN <button>
+L1446: SELF <HelpCircle/>
+L1447: CLOSE </button> (matches L1445)
+L1448: SELF <div/>
+L1449: OPEN <button>
+L1450: SELF <LogOut/>
+L1452: CLOSE </button> (matches L1449)
+L1453: CLOSE </div> (matches L1424)
+L1454: CLOSE </header> (matches L1414)
+L1456: OPEN <div>
+L1460: OPEN <div>
+L1461: OPEN <h1>
+L1463: CLOSE </h1> (matches L1461)
+L1464: OPEN <p>
+L1466: CLOSE </p> (matches L1464)
+L1467: CLOSE </div> (matches L1460)
+L1470: OPEN <Tabs>
+L1471: OPEN <TabsList>
+L1473: OPEN <TabsTrigger>
+L1479: CLOSE </TabsTrigger> (matches L1473)
+L1481: CLOSE </TabsList> (matches L1471)
+L1483: OPEN <TabsContent>
+L1493: OPEN <div>
+L1494: OPEN <div>
+L1495: OPEN <div>
+L1496: OPEN <div>
+L1496: CLOSE </div> (matches L1496)
+L1497: OPEN <h2>
+L1497: CLOSE </h2> (matches L1497)
+L1498: CLOSE </div> (matches L1495)
+L1501: OPEN <div>
+L1502: OPEN <span>
+L1502: CLOSE </span> (matches L1502)
+L1503: CLOSE </div> (matches L1501)
+L1506: OPEN <div>
+L1506: CLOSE </div> (matches L1506)
+L1507: CLOSE </div> (matches L1494)
+L1508: OPEN <button>
+L1512: SELF <ChevronDown/>
+L1513: CLOSE </button> (matches L1508)
+L1514: CLOSE </div> (matches L1493)
+L1518: OPEN <div>
+L1528: OPEN <div>
+L1531: OPEN <button>
+L1532: OPEN <span>
+L1532: CLOSE </span> (matches L1532)
+L1533: SELF <X/>
+L1534: CLOSE </button> (matches L1531)
+L1538: OPEN <button>
+L1539: OPEN <span>
+L1539: CLOSE </span> (matches L1539)
+L1540: SELF <X/>
+L1541: CLOSE </button> (matches L1538)
+L1545: OPEN <button>
+L1546: OPEN <span>
+L1546: CLOSE </span> (matches L1546)
+L1547: SELF <X/>
+L1548: CLOSE </button> (matches L1545)
+L1552: OPEN <div>
+L1553: OPEN <button>
+L1554: OPEN <span>
+L1554: CLOSE </span> (matches L1554)
+L1558: CLOSE </button> (matches L1553)
+L1559: OPEN <button>
+L1559: SELF <X/>
+L1559: CLOSE </button> (matches L1559)
+L1560: CLOSE </div> (matches L1552)
+L1563: OPEN <div>
+L1564: OPEN <button>
+L1565: OPEN <span>
+L1565: CLOSE </span> (matches L1565)
+L1567: CLOSE </button> (matches L1564)
+L1568: OPEN <button>
+L1568: SELF <X/>
+L1568: CLOSE </button> (matches L1568)
+L1569: CLOSE </div> (matches L1563)
+L1573: OPEN <button>
+L1574: OPEN <span>
+L1574: CLOSE </span> (matches L1574)
+L1575: SELF <X/>
+L1576: CLOSE </button> (matches L1573)
+L1579: OPEN <button>
+L1580: OPEN <span>
+L1580: CLOSE </span> (matches L1580)
+L1581: SELF <X/>
+L1582: CLOSE </button> (matches L1579)
+L1585: OPEN <div>
+L1586: OPEN <button>
+L1587: OPEN <span>
+L1587: CLOSE </span> (matches L1587)
+L1588: CLOSE </button> (matches L1586)
+L1589: OPEN <button>
+L1589: SELF <X/>
+L1589: CLOSE </button> (matches L1589)
+L1590: CLOSE </div> (matches L1585)
+L1593: OPEN <button>
+L1594: OPEN <span>
+L1594: CLOSE </span> (matches L1594)
+L1595: SELF <X/>
+L1596: CLOSE </button> (matches L1593)
+L1600: OPEN <div>
+L1601: OPEN <button>
+L1602: OPEN <span>
+L1602: CLOSE </span> (matches L1602)
+L1604: CLOSE </button> (matches L1601)
+L1605: OPEN <button>
+L1605: SELF <X/>
+L1605: CLOSE </button> (matches L1605)
+L1606: CLOSE </div> (matches L1600)
+L1609: OPEN <div>
+L1610: OPEN <button>
+L1611: OPEN <span>
+L1611: CLOSE </span> (matches L1611)
+L1613: CLOSE </button> (matches L1610)
+L1614: OPEN <button>
+L1614: SELF <X/>
+L1614: CLOSE </button> (matches L1614)
+L1615: CLOSE </div> (matches L1609)
+L1622: OPEN <div>
+L1623: OPEN <button>
+L1624: OPEN <span>
+L1624: CLOSE </span> (matches L1624)
+L1625: CLOSE </button> (matches L1623)
+L1626: OPEN <button>
+L1626: SELF <X/>
+L1626: CLOSE </button> (matches L1626)
+L1627: CLOSE </div> (matches L1622)
+L1632: OPEN <div>
+L1633: OPEN <button>
+L1634: SELF <Calendar/>
+L1636: CLOSE </button> (matches L1633)
+L1637: OPEN <button>
+L1637: SELF <X/>
+L1637: CLOSE </button> (matches L1637)
+L1638: CLOSE </div> (matches L1632)
+L1642: OPEN <button>
+L1643: OPEN <span>
+L1643: CLOSE </span> (matches L1643)
+L1644: SELF <X/>
+L1645: CLOSE </button> (matches L1642)
+L1648: OPEN <button>
+L1649: OPEN <span>
+L1649: CLOSE </span> (matches L1649)
+L1650: SELF <X/>
+L1651: CLOSE </button> (matches L1648)
+L1654: OPEN <button>
+L1655: OPEN <span>
+L1655: CLOSE </span> (matches L1655)
+L1656: SELF <X/>
+L1657: CLOSE </button> (matches L1654)
+L1660: OPEN <div>
+L1661: OPEN <button>
+L1661: CLOSE </button> (matches L1661)
+L1662: OPEN <button>
+L1662: SELF <X/>
+L1662: CLOSE </button> (matches L1662)
+L1663: CLOSE </div> (matches L1660)
+L1666: OPEN <button>
+L1667: SELF <RotateCcw/>
+L1668: CLOSE </button> (matches L1666)
+L1669: CLOSE </div> (matches L1528)
+L1674: OPEN <div>
+L1676: OPEN <div>
+L1677: OPEN <div>
+L1678: SELF <Search/>
+L1679: SELF <input/>
+L1686: CLOSE </div> (matches L1677)
+L1687: OPEN <button>
+L1691: SELF <Plus/>
+L1693: CLOSE </button> (matches L1687)
+L1694: CLOSE </div> (matches L1676)
+L1699: OPEN <div>
+L1716: OPEN <div>
+L1717: OPEN <p>
+L1717: CLOSE </p> (matches L1717)
+L1718: OPEN <div>
+L1732: OPEN <button>
+L1745: SELF <item.icon/>
+L1747: CLOSE </button> (matches L1732)
+L1749: CLOSE </div> (matches L1718)
+L1750: CLOSE </div> (matches L1716)
+L1754: OPEN <div>
+L1755: OPEN <div>
+L1825: OPEN <div>
+L1826: OPEN <div>
+L1827: OPEN <div>
+L1828: SELF <Search/>
+L1829: SELF <input/>
+L1836: CLOSE </div> (matches L1827)
+L1837: OPEN <div>
+L1838: OPEN <div>
+L1839: OPEN <button>
+L1839: CLOSE </button> (matches L1839)
+L1840: OPEN <button>
+L1840: CLOSE </button> (matches L1840)
+L1841: CLOSE </div> (matches L1838)
+L1842: OPEN <span>
+L1842: CLOSE </span> (matches L1842)
+L1843: CLOSE </div> (matches L1837)
+L1844: CLOSE </div> (matches L1826)
+L1845: OPEN <div>
+L1847: OPEN <label>
+L1848: SELF <input/>
+L1854: OPEN <span>
+L1854: CLOSE </span> (matches L1854)
+L1855: CLOSE </label> (matches L1847)
+L1858: OPEN <div>
+L1858: CLOSE </div> (matches L1858)
+L1860: CLOSE </div> (matches L1845)
+L1861: CLOSE </div> (matches L1825)
+L1893: OPEN <div>
+L1894: OPEN <div>
+L1895: OPEN <div>
+L1896: OPEN <select>
+L1901: OPEN <option>
+L1901: CLOSE </option> (matches L1901)
+L1902: OPEN <option>
+L1902: CLOSE </option> (matches L1902)
+L1903: OPEN <option>
+L1903: CLOSE </option> (matches L1903)
+L1904: OPEN <option>
+L1904: CLOSE </option> (matches L1904)
+L1905: OPEN <option>
+L1905: CLOSE </option> (matches L1905)
+L1906: OPEN <option>
+L1906: CLOSE </option> (matches L1906)
+L1907: CLOSE </select> (matches L1896)
+L1908: SELF <input/>
+L1916: CLOSE </div> (matches L1895)
+L1918: OPEN <div>
+L1919: SELF <input/>
+L1927: CLOSE </div> (matches L1918)
+L1929: OPEN <p>
+L1931: CLOSE </p> (matches L1929)
+L1932: CLOSE </div> (matches L1894)
+L1933: CLOSE </div> (matches L1893)
+L1940: OPEN <div>
+L1941: OPEN <div>
+L1942: OPEN <div>
+L1943: OPEN <select>
+L1952: OPEN <option>
+L1952: CLOSE </option> (matches L1952)
+L1953: OPEN <option>
+L1953: CLOSE </option> (matches L1953)
+L1954: OPEN <option>
+L1954: CLOSE </option> (matches L1954)
+L1955: CLOSE </select> (matches L1943)
+L1956: OPEN <div>
+L1967: SELF <input/>
+L1976: SELF <input/>
+L1984: CLOSE </div> (matches L1956)
+L1985: CLOSE </div> (matches L1942)
+L1986: CLOSE </div> (matches L1941)
+L1988: CLOSE </div> (matches L1940)
+L1999: OPEN <div>
+L2000: OPEN <div>
+L2001: SELF <input/>
+L2009: CLOSE </div> (matches L2000)
+L2010: CLOSE </div> (matches L1999)
+L2016: OPEN <div>
+L2017: OPEN <div>
+L2021: OPEN <div>
+L2025: SELF <div/>
+L2029: CLOSE </div> (matches L2021)
+L2030: OPEN <div>
+L2031: OPEN <p>
+L2031: CLOSE </p> (matches L2031)
+L2032: OPEN <p>
+L2032: CLOSE </p> (matches L2032)
+L2033: CLOSE </div> (matches L2030)
+L2034: CLOSE </div> (matches L2017)
+L2035: CLOSE </div> (matches L2016)
+L2040: OPEN <div>
+L2041: SELF <Search/>
+L2042: OPEN <p>
+L2042: CLOSE </p> (matches L2042)
+L2043: OPEN <p>
+L2043: CLOSE </p> (matches L2043)
+L2044: CLOSE </div> (matches L2040)
+L2047: CLOSE </div> (matches L1755)
+L2050: OPEN <div>
+L2051: OPEN <button>
+L2051: CLOSE </button> (matches L2051)
+L2052: OPEN <div>
+L2053: OPEN <button>
+L2053: CLOSE </button> (matches L2053)
+L2054: OPEN <button>
+L2054: CLOSE </button> (matches L2054)
+L2055: CLOSE </div> (matches L2052)
+L2056: CLOSE </div> (matches L2050)
+L2057: CLOSE </div> (matches L1754)
+L2058: CLOSE </div> (matches L1699)
+L2066: OPEN <div>
+L2070: OPEN <div>
+L2071: OPEN <div>
+L2072: OPEN <p>
+L2072: CLOSE </p> (matches L2072)
+L2073: OPEN <div>
+L2074: OPEN <button>
+L2074: CLOSE </button> (matches L2074)
+L2075: OPEN <span>
+L2075: CLOSE </span> (matches L2075)
+L2076: OPEN <button>
+L2076: CLOSE </button> (matches L2076)
+L2077: CLOSE </div> (matches L2073)
+L2078: CLOSE </div> (matches L2071)
+L2079: OPEN <div>
+L2085: OPEN <div>
+L2093: OPEN <div>
+L2094: OPEN <div>
+L2095: SELF <input/>
+L2101: OPEN <p>
+L2101: CLOSE </p> (matches L2101)
+L2102: SELF <div/>
+L2103: CLOSE </div> (matches L2094)
+L2104: OPEN <Tooltip>
+L2105: OPEN <TooltipTrigger>
+L2106: SELF <Info/>
+L2107: CLOSE </TooltipTrigger> (matches L2105)
+L2108: OPEN <TooltipContent>
+L2109: OPEN <div>
+L2110: OPEN <div>
+L2111: SELF <Info/>
+L2112: OPEN <p>
+L2112: CLOSE </p> (matches L2112)
+L2113: CLOSE </div> (matches L2110)
+L2114: OPEN <p>
+L2114: CLOSE </p> (matches L2114)
+L2115: CLOSE </div> (matches L2109)
+L2116: CLOSE </TooltipContent> (matches L2108)
+L2117: CLOSE </Tooltip> (matches L2104)
+L2118: CLOSE </div> (matches L2093)
+L2119: OPEN <p>
+L2119: CLOSE </p> (matches L2119)
+L2120: OPEN <p>
+L2120: CLOSE </p> (matches L2120)
+L2123: SELF <div/>
+L2130: CLOSE </div> (matches L2085)
+L2133: CLOSE </div> (matches L2079)
+L2134: CLOSE </div> (matches L2070)
+L2137: OPEN <div>
+L2139: OPEN <div>
+L2140: OPEN <div>
+L2141: OPEN <p>
+L2141: CLOSE </p> (matches L2141)
+L2142: OPEN <div>
+L2143: OPEN <button>
+L2143: CLOSE </button> (matches L2143)
+L2144: OPEN <span>
+L2144: CLOSE </span> (matches L2144)
+L2145: OPEN <button>
+L2145: CLOSE </button> (matches L2145)
+L2146: CLOSE </div> (matches L2142)
+L2147: CLOSE </div> (matches L2140)
+L2148: OPEN <div>
+L2156: OPEN <div>
+L2164: OPEN <div>
+L2165: OPEN <div>
+L2166: SELF <input/>
+L2167: SELF <ArrowUpRight/>
+L2167: SELF <ArrowDownRight/>
+L2167: SELF <Minus/>
+L2168: OPEN <span>
+L2168: CLOSE </span> (matches L2168)
+L2169: CLOSE </div> (matches L2165)
+L2170: OPEN <Tooltip>
+L2171: OPEN <TooltipTrigger>
+L2172: SELF <Info/>
+L2173: CLOSE </TooltipTrigger> (matches L2171)
+L2174: OPEN <TooltipContent>
+L2175: OPEN <div>
+L2176: OPEN <div>
+L2177: SELF <Info/>
+L2178: OPEN <p>
+L2178: CLOSE </p> (matches L2178)
+L2179: CLOSE </div> (matches L2176)
+L2180: OPEN <p>
+L2180: CLOSE </p> (matches L2180)
+L2181: CLOSE </div> (matches L2175)
+L2182: CLOSE </TooltipContent> (matches L2174)
+L2183: CLOSE </Tooltip> (matches L2170)
+L2184: CLOSE </div> (matches L2164)
+L2185: OPEN <p>
+L2185: CLOSE </p> (matches L2185)
+L2186: OPEN <p>
+L2186: CLOSE </p> (matches L2186)
+L2187: CLOSE </div> (matches L2156)
+L2190: CLOSE </div> (matches L2148)
+L2191: CLOSE </div> (matches L2139)
+L2194: OPEN <div>
+L2195: OPEN <div>
+L2196: OPEN <p>
+L2196: CLOSE </p> (matches L2196)
+L2197: OPEN <div>
+L2198: OPEN <button>
+L2198: CLOSE </button> (matches L2198)
+L2199: OPEN <span>
+L2199: CLOSE </span> (matches L2199)
+L2200: OPEN <button>
+L2200: CLOSE </button> (matches L2200)
+L2201: CLOSE </div> (matches L2197)
+L2202: CLOSE </div> (matches L2195)
+L2203: OPEN <div>
+L2211: OPEN <div>
+L2219: OPEN <div>
+L2220: OPEN <div>
+L2221: SELF <input/>
+L2222: SELF <item.icon/>
+L2223: OPEN <span>
+L2223: CLOSE </span> (matches L2223)
+L2224: CLOSE </div> (matches L2220)
+L2225: OPEN <Tooltip>
+L2226: OPEN <TooltipTrigger>
+L2227: SELF <Info/>
+L2228: CLOSE </TooltipTrigger> (matches L2226)
+L2229: OPEN <TooltipContent>
+L2230: OPEN <div>
+L2231: OPEN <div>
+L2232: SELF <Info/>
+L2233: OPEN <p>
+L2233: CLOSE </p> (matches L2233)
+L2234: CLOSE </div> (matches L2231)
+L2235: OPEN <p>
+L2235: CLOSE </p> (matches L2235)
+L2236: CLOSE </div> (matches L2230)
+L2237: CLOSE </TooltipContent> (matches L2229)
+L2238: CLOSE </Tooltip> (matches L2225)
+L2239: CLOSE </div> (matches L2219)
+L2240: OPEN <p>
+L2240: CLOSE </p> (matches L2240)
+L2241: OPEN <p>
+L2241: CLOSE </p> (matches L2241)
+L2242: CLOSE </div> (matches L2211)
+L2245: CLOSE </div> (matches L2203)
+L2246: CLOSE </div> (matches L2194)
+L2249: OPEN <div>
+L2250: OPEN <div>
+L2251: OPEN <p>
+L2251: CLOSE </p> (matches L2251)
+L2252: OPEN <div>
+L2253: OPEN <button>
+L2253: CLOSE </button> (matches L2253)
+L2254: OPEN <span>
+L2254: CLOSE </span> (matches L2254)
+L2255: OPEN <button>
+L2255: CLOSE </button> (matches L2255)
+L2256: CLOSE </div> (matches L2252)
+L2257: CLOSE </div> (matches L2250)
+L2258: OPEN <div>
+L2271: OPEN <div>
+L2279: OPEN <div>
+L2280: OPEN <div>
+L2281: SELF <input/>
+L2282: SELF <Check/>
+L2282: SELF <Edit/>
+L2282: SELF <ShieldAlert/>
+L2283: OPEN <span>
+L2283: CLOSE </span> (matches L2283)
+L2284: CLOSE </div> (matches L2280)
+L2285: OPEN <Tooltip>
+L2286: OPEN <TooltipTrigger>
+L2287: SELF <Info/>
+L2288: CLOSE </TooltipTrigger> (matches L2286)
+L2289: OPEN <TooltipContent>
+L2290: OPEN <div>
+L2291: OPEN <div>
+L2292: SELF <Info/>
+L2293: OPEN <p>
+L2293: CLOSE </p> (matches L2293)
+L2294: CLOSE </div> (matches L2291)
+L2295: OPEN <p>
+L2295: CLOSE </p> (matches L2295)
+L2296: CLOSE </div> (matches L2290)
+L2297: CLOSE </TooltipContent> (matches L2289)
+L2298: CLOSE </Tooltip> (matches L2285)
+L2299: CLOSE </div> (matches L2279)
+L2300: OPEN <p>
+L2300: CLOSE </p> (matches L2300)
+L2301: OPEN <p>
+L2301: CLOSE </p> (matches L2301)
+L2302: CLOSE </div> (matches L2271)
+L2305: CLOSE </div> (matches L2258)
+L2306: CLOSE </div> (matches L2249)
+L2307: CLOSE </div> (matches L2137)
+L2308: CLOSE </div> (matches L2066)
+L2309: CLOSE </div> (matches L1674)
+L2315: SELF <div/>
+L2317: OPEN <div>
+L2318: OPEN <div>
+L2319: OPEN <div>
+L2320: OPEN <div>
+L2320: CLOSE </div> (matches L2320)
+L2321: OPEN <h2>
+L2321: CLOSE </h2> (matches L2321)
+L2322: CLOSE </div> (matches L2319)
+L2325: OPEN <div>
+L2326: OPEN <span>
+L2326: CLOSE </span> (matches L2326)
+L2327: CLOSE </div> (matches L2325)
+L2330: OPEN <div>
+L2330: CLOSE </div> (matches L2330)
+L2331: CLOSE </div> (matches L2318)
+L2332: OPEN <button>
+L2336: SELF <ChevronDown/>
+L2337: CLOSE </button> (matches L2332)
+L2338: CLOSE </div> (matches L2317)
+L2342: OPEN <div>
+L2343: OPEN <div>
+L2344: SELF <DashboardStats/>
+L2345: CLOSE </div> (matches L2343)
+L2346: CLOSE </div> (matches L2342)
+L2353: SELF <div/>
+L2355: OPEN <div>
+L2356: OPEN <div>
+L2357: OPEN <div>
+L2358: OPEN <div>
+L2358: CLOSE </div> (matches L2358)
+L2359: OPEN <h2>
+L2359: CLOSE </h2> (matches L2359)
+L2360: CLOSE </div> (matches L2357)
+L2363: OPEN <div>
+L2364: OPEN <span>
+L2364: CLOSE </span> (matches L2364)
+L2365: OPEN <span>
+L2365: CLOSE </span> (matches L2365)
+L2366: CLOSE </div> (matches L2363)
+L2369: OPEN <div>
+L2369: CLOSE </div> (matches L2369)
+L2370: CLOSE </div> (matches L2356)
+L2371: CLOSE </div> (matches L2355)
+L2374: OPEN <div>
+L2376: OPEN <div>
+L2377: OPEN <div>
+L2378: OPEN <p>
+L2379: OPEN <span>
+L2379: CLOSE </span> (matches L2379)
+L2380: OPEN <span>
+L2380: CLOSE </span> (matches L2380)
+L2381: CLOSE </p> (matches L2378)
+L2382: CLOSE </div> (matches L2377)
+L2383: CLOSE </div> (matches L2376)
+L2385: CLOSE </div> (matches L2374)
+L2387: OPEN <div>
+L2388: OPEN <div>
+L2389: OPEN <div>
+L2391: CLOSE </div> (matches L2389)
+L2392: OPEN <div>
+L2393: OPEN <div>
+L2394: OPEN <button>
+L2402: SELF <Settings/>
+L2403: OPEN <span>
+L2403: CLOSE </span> (matches L2403)
+L2404: CLOSE </button> (matches L2394)
+L2407: OPEN <div>
+L2409: OPEN <div>
+L2410: OPEN <h4>
+L2410: CLOSE </h4> (matches L2410)
+L2412: OPEN <div>
+L2413: OPEN <div>
+L2414: OPEN <p>
+L2414: CLOSE </p> (matches L2414)
+L2415: OPEN <div>
+L2422: OPEN <button>
+L2427: OPEN <p>
+L2427: CLOSE </p> (matches L2427)
+L2428: OPEN <p>
+L2428: CLOSE </p> (matches L2428)
+L2429: CLOSE </button> (matches L2422)
+L2431: CLOSE </div> (matches L2415)
+L2432: CLOSE </div> (matches L2413)
+L2433: CLOSE </div> (matches L2412)
+L2435: OPEN <div>
+L2436: OPEN <div>
+L2437: SELF <input/>
+L2444: OPEN <button>
+L2446: CLOSE </button> (matches L2444)
+L2447: CLOSE </div> (matches L2436)
+L2448: CLOSE </div> (matches L2435)
+L2449: CLOSE </div> (matches L2409)
+L2452: OPEN <div>
+L2453: OPEN <div>
+L2454: OPEN <div>
+L2455: OPEN <h4>
+L2455: CLOSE </h4> (matches L2455)
+L2456: OPEN <div>
+L2457: OPEN <button>
+L2457: CLOSE </button> (matches L2457)
+L2458: OPEN <span>
+L2458: CLOSE </span> (matches L2458)
+L2459: OPEN <button>
+L2459: CLOSE </button> (matches L2459)
+L2460: CLOSE </div> (matches L2456)
+L2461: CLOSE </div> (matches L2454)
+L2462: OPEN <button>
+L2462: SELF <X/>
+L2462: CLOSE </button> (matches L2462)
+L2463: CLOSE </div> (matches L2453)
+L2465: OPEN <div>
+L2466: OPEN <div>
+L2467: SELF <Search/>
+L2468: SELF <input/>
+L2475: CLOSE </div> (matches L2466)
+L2476: CLOSE </div> (matches L2465)
+L2478: OPEN <div>
+L2480: OPEN <div>
+L2484: OPEN <label>
+L2485: OPEN <div>
+L2489: SELF <input/>
+L2499: SELF <Plus/>
+L2500: CLOSE </div> (matches L2485)
+L2501: OPEN <span>
+L2501: CLOSE </span> (matches L2501)
+L2502: OPEN <Tooltip>
+L2503: OPEN <TooltipTrigger>
+L2504: SELF <Info/>
+L2505: CLOSE </TooltipTrigger> (matches L2503)
+L2506: OPEN <TooltipContent>
+L2507: OPEN <p>
+L2507: CLOSE </p> (matches L2507)
+L2508: CLOSE </TooltipContent> (matches L2506)
+L2509: CLOSE </Tooltip> (matches L2502)
+L2510: CLOSE </label> (matches L2484)
+L2513: CLOSE </div> (matches L2480)
+L2516: OPEN <div>
+L2517: OPEN <div>
+L2518: OPEN <p>
+L2518: CLOSE </p> (matches L2518)
+L2519: OPEN <p>
+L2519: CLOSE </p> (matches L2519)
+L2520: CLOSE </div> (matches L2517)
+L2521: OPEN <div>
+L2526: OPEN <div>
+L2538: SELF <div/>
+L2538: SELF <GripVertical/>
+L2539: OPEN <span>
+L2539: CLOSE </span> (matches L2539)
+L2540: OPEN <span>
+L2540: CLOSE </span> (matches L2540)
+L2541: CLOSE </div> (matches L2526)
+L2544: CLOSE </div> (matches L2521)
+L2546: CLOSE </div> (matches L2516)
+L2547: CLOSE </div> (matches L2478)
+L2548: CLOSE </div> (matches L2452)
+L2549: CLOSE </div> (matches L2407)
+L2551: CLOSE </div> (matches L2393)
+L2552: CLOSE </div> (matches L2392)
+L2553: CLOSE </div> (matches L2388)
+L2556: OPEN <div>
+L2557: OPEN <div>
+L2558: OPEN <table>
+L2559: OPEN <thead>
+L2560: OPEN <tr>
+L2561: OPEN <th>
+L2562: SELF <input/>
+L2563: CLOSE </th> (matches L2561)
+L2576: OPEN <th>
+L2589: CLOSE </th> (matches L2576)
+L2593: OPEN <th>
+L2593: CLOSE </th> (matches L2593)
+L2594: CLOSE </tr> (matches L2560)
+L2595: CLOSE </thead> (matches L2559)
+L2596: OPEN <tbody>
+L2600: OPEN <tr>
+L2601: OPEN <td>
+L2602: SELF <input/>
+L2603: CLOSE </td> (matches L2601)
+L2619: OPEN <div>
+L2620: OPEN <div>
+L2622: CLOSE </div> (matches L2620)
+L2623: OPEN <div>
+L2624: OPEN <p>
+L2624: CLOSE </p> (matches L2624)
+L2625: OPEN <div>
+L2626: OPEN <p>
+L2626: CLOSE </p> (matches L2626)
+L2627: SELF <span/>
+L2628: OPEN <p>
+L2628: CLOSE </p> (matches L2628)
+L2629: CLOSE </div> (matches L2625)
+L2630: CLOSE </div> (matches L2623)
+L2631: CLOSE </div> (matches L2619)
+L2635: OPEN <div>
+L2636: OPEN <div>
+L2637: SELF <div/>
+L2638: OPEN <span>
+L2638: CLOSE </span> (matches L2638)
+L2639: CLOSE </div> (matches L2636)
+L2640: CLOSE </div> (matches L2635)
+L2643: SELF <SubscriptionList/>
+L2645: OPEN <span>
+L2645: CLOSE </span> (matches L2645)
+L2648: SELF <RiskBadge/>
+L2658: SELF <RiskBadge/>
+L2660: SELF <WowBadge/>
+L2662: OPEN <span>
+L2662: CLOSE </span> (matches L2662)
+L2664: OPEN <span>
+L2664: CLOSE </span> (matches L2664)
+L2666: OPEN <span>
+L2666: CLOSE </span> (matches L2666)
+L2668: OPEN <span>
+L2668: CLOSE </span> (matches L2668)
+L2670: OPEN <span>
+L2670: CLOSE </span> (matches L2670)
+L2672: OPEN <span>
+L2672: CLOSE </span> (matches L2672)
+L2674: OPEN <span>
+L2674: CLOSE </span> (matches L2674)
+L2676: OPEN <span>
+L2676: CLOSE </span> (matches L2676)
+L2678: OPEN <span>
+L2678: CLOSE </span> (matches L2678)
+L2681: OPEN <TooltipProvider>
+L2682: OPEN <Tooltip>
+L2683: OPEN <TooltipTrigger>
+L2684: OPEN <p>
+L2687: CLOSE </p> (matches L2684)
+L2688: CLOSE </TooltipTrigger> (matches L2683)
+L2689: OPEN <TooltipContent>
+L2690: SELF <div/>
+L2694: CLOSE </TooltipContent> (matches L2689)
+L2695: CLOSE </Tooltip> (matches L2682)
+L2696: CLOSE </TooltipProvider> (matches L2681)
+L2700: OPEN <div>
+L2702: OPEN <Badge>
+L2704: CLOSE </Badge> (matches L2702)
+L2706: OPEN <Badge>
+L2708: CLOSE </Badge> (matches L2706)
+L2710: OPEN <Badge>
+L2712: CLOSE </Badge> (matches L2710)
+L2714: OPEN <button>
+L2724: SELF <Edit/>
+L2725: CLOSE </button> (matches L2714)
+L2726: CLOSE </div> (matches L2700)
+L2736: OPEN <td>
+L2750: CLOSE </td> (matches L2736)
+L2753: OPEN <td>
+L2754: OPEN <button>
+L2754: SELF <MoreHorizontal/>
+L2754: CLOSE </button> (matches L2754)
+L2755: CLOSE </td> (matches L2753)
+L2756: CLOSE </tr> (matches L2600)
+L2759: CLOSE </tbody> (matches L2596)
+L2760: CLOSE </table> (matches L2558)
+L2761: CLOSE </div> (matches L2557)
+L2764: OPEN <div>
+L2765: OPEN <p>
+L2765: CLOSE </p> (matches L2765)
+L2766: OPEN <div>
+L2767: OPEN <button>
+L2767: CLOSE </button> (matches L2767)
+L2768: OPEN <div>
+L2769: OPEN <button>
+L2769: CLOSE </button> (matches L2769)
+L2770: OPEN <button>
+L2770: CLOSE </button> (matches L2770)
+L2771: OPEN <button>
+L2771: CLOSE </button> (matches L2771)
+L2772: CLOSE </div> (matches L2768)
+L2773: OPEN <button>
+L2773: CLOSE </button> (matches L2773)
+L2774: CLOSE </div> (matches L2766)
+L2775: CLOSE </div> (matches L2764)
+L2776: CLOSE </div> (matches L2556)
+L2777: CLOSE </div> (matches L2387)
+L2783: OPEN <div>
+L2785: OPEN <div>
+L2785: CLOSE </div> (matches L2785)
+L2788: OPEN <div>
+L2790: OPEN <div>
+L2791: OPEN <div>
+L2792: OPEN <div>
+L2793: OPEN <div>
+L2794: OPEN <span>
+L2794: CLOSE </span> (matches L2794)
+L2795: CLOSE </div> (matches L2793)
+L2796: OPEN <div>
+L2796: CLOSE </div> (matches L2796)
+L2797: CLOSE </div> (matches L2792)
+L2798: OPEN <div>
+L2799: OPEN <TooltipProvider>
+L2800: OPEN <Tooltip>
+L2801: OPEN <TooltipTrigger>
+L2802: OPEN <button>
+L2803: SELF <RotateCcw/>
+L2805: CLOSE </button> (matches L2802)
+L2806: CLOSE </TooltipTrigger> (matches L2801)
+L2807: OPEN <TooltipContent>
+L2808: OPEN <div>
+L2809: OPEN <div>
+L2810: OPEN <span>
+L2810: CLOSE </span> (matches L2810)
+L2811: OPEN <div>
+L2813: CLOSE </div> (matches L2811)
+L2814: CLOSE </div> (matches L2809)
+L2815: OPEN <div>
+L2816: SELF <div/>
+L2820: CLOSE </div> (matches L2815)
+L2821: OPEN <div>
+L2821: CLOSE </div> (matches L2821)
+L2822: CLOSE </div> (matches L2808)
+L2823: CLOSE </TooltipContent> (matches L2807)
+L2824: CLOSE </Tooltip> (matches L2800)
+L2825: CLOSE </TooltipProvider> (matches L2799)
+L2826: OPEN <button>
+L2830: SELF <X/>
+L2831: CLOSE </button> (matches L2826)
+L2832: CLOSE </div> (matches L2798)
+L2833: CLOSE </div> (matches L2791)
+L2836: OPEN <div>
+L2837: OPEN <button>
+L2845: SELF <div/>
+L2846: CLOSE </button> (matches L2837)
+L2847: OPEN <button>
+L2855: SELF <div/>
+L2856: SELF <div/>
+L2857: CLOSE </button> (matches L2847)
+L2858: CLOSE </div> (matches L2836)
+L2859: CLOSE </div> (matches L2790)
+L2862: OPEN <div>
+L2866: OPEN <div>
+L2867: OPEN <div>
+L2868: OPEN <span>
+L2868: CLOSE </span> (matches L2868)
+L2869: OPEN <div>
+L2872: OPEN <div>
+L2880: SELF <div/>
+L2881: OPEN <span>
+L2881: CLOSE </span> (matches L2881)
+L2882: CLOSE </div> (matches L2872)
+L2884: OPEN <button>
+L2891: SELF <Info/>
+L2893: SELF <ChevronDown/>
+L2894: CLOSE </button> (matches L2884)
+L2895: CLOSE </div> (matches L2869)
+L2896: CLOSE </div> (matches L2867)
+L2898: OPEN <div>
+L2902: OPEN <div>
+L2904: OPEN <div>
+L2905: SELF <div/>
+L2906: OPEN <div>
+L2907: OPEN <span>
+L2907: CLOSE </span> (matches L2907)
+L2908: OPEN <span>
+L2908: CLOSE </span> (matches L2908)
+L2909: CLOSE </div> (matches L2906)
+L2910: CLOSE </div> (matches L2904)
+L2912: CLOSE </div> (matches L2902)
+L2913: CLOSE </div> (matches L2898)
+L2915: OPEN <div>
+L2919: OPEN <button>
+L2927: OPEN <div>
+L2928: SELF <div/>
+L2935: OPEN <p>
+L2937: CLOSE </p> (matches L2935)
+L2938: CLOSE </div> (matches L2927)
+L2939: SELF <div/>
+L2946: CLOSE </button> (matches L2919)
+L2949: CLOSE </div> (matches L2915)
+L2950: CLOSE </div> (matches L2866)
+L2953: OPEN <div>
+L2954: OPEN <div>
+L2955: OPEN <span>
+L2955: CLOSE </span> (matches L2955)
+L2956: OPEN <div>
+L2957: OPEN <span>
+L2959: CLOSE </span> (matches L2957)
+L2960: OPEN <button>
+L2967: SELF <Info/>
+L2969: SELF <ChevronDown/>
+L2970: CLOSE </button> (matches L2960)
+L2971: CLOSE </div> (matches L2956)
+L2972: CLOSE </div> (matches L2954)
+L2974: OPEN <div>
+L2978: OPEN <div>
+L2980: OPEN <div>
+L2981: OPEN <span>
+L2981: CLOSE </span> (matches L2981)
+L2982: OPEN <span>
+L2982: CLOSE </span> (matches L2982)
+L2983: CLOSE </div> (matches L2980)
+L2985: CLOSE </div> (matches L2978)
+L2986: CLOSE </div> (matches L2974)
+L2988: OPEN <div>
+L2992: OPEN <button>
+L3007: SELF <div/>
+L3009: CLOSE </button> (matches L2992)
+L3012: CLOSE </div> (matches L2988)
+L3013: CLOSE </div> (matches L2953)
+L3016: OPEN <div>
+L3017: OPEN <div>
+L3018: OPEN <div>
+L3019: OPEN <span>
+L3019: CLOSE </span> (matches L3019)
+L3020: SELF <div/>
+L3021: OPEN <div>
+L3029: OPEN <button>
+L3035: SELF <btn.icon/>
+L3036: CLOSE </button> (matches L3029)
+L3038: CLOSE </div> (matches L3021)
+L3039: CLOSE </div> (matches L3018)
+L3040: OPEN <span>
+L3040: CLOSE </span> (matches L3040)
+L3041: CLOSE </div> (matches L3017)
+L3042: OPEN <div>
+L3043: SELF <div/>
+L3050: OPEN <br>
+L3051: OPEN <div>
+L3053: CLOSE </div> (matches L3051)
+L3055: MISMATCH </div> (expected </br> from L3050)
+L3056: CLOSE </div> (matches L3042)
+L3061: OPEN <div>
+L3062: OPEN <div>
+L3063: OPEN <div>
+L3064: OPEN <h3>
+L3064: CLOSE </h3> (matches L3064)
+L3065: OPEN <p>
+L3065: CLOSE </p> (matches L3065)
+L3066: CLOSE </div> (matches L3063)
+L3067: OPEN <div>
+L3068: OPEN <span>
+L3068: CLOSE </span> (matches L3068)
+L3070: OPEN <div>
+L3071: SELF <CheckSquare/>
+L3072: CLOSE </div> (matches L3070)
+L3074: OPEN <div>
+L3075: SELF <Clock/>
+L3076: CLOSE </div> (matches L3074)
+L3078: OPEN <div>
+L3080: CLOSE </div> (matches L3078)
+L3082: CLOSE </div> (matches L3067)
+L3083: CLOSE </div> (matches L3062)
+L3085: OPEN <div>
+L3086: OPEN <div>
+L3087: OPEN <div>
+L3089: CLOSE </div> (matches L3087)
+L3090: OPEN <div>
+L3091: OPEN <p>
+L3091: CLOSE </p> (matches L3091)
+L3092: OPEN <p>
+L3092: CLOSE </p> (matches L3092)
+L3093: CLOSE </div> (matches L3090)
+L3094: CLOSE </div> (matches L3086)
+L3096: OPEN <div>
+L3097: OPEN <div>
+L3098: OPEN <div>
+L3099: OPEN <span>
+L3099: CLOSE </span> (matches L3099)
+L3100: SELF <div/>
+L3101: OPEN <div>
+L3107: OPEN <button>
+L3112: SELF <btn.icon/>
+L3113: CLOSE </button> (matches L3107)
+L3115: CLOSE </div> (matches L3101)
+L3116: CLOSE </div> (matches L3098)
+L3117: CLOSE </div> (matches L3097)
+L3118: OPEN <div>
+L3119: SELF <div/>
+L3128: OPEN <br>
+L3129: OPEN <div>
+L3131: CLOSE </div> (matches L3129)
+L3133: MISMATCH </div> (expected </br> from L3128)
+L3134: CLOSE </div> (matches L3118)
+L3135: CLOSE </div> (matches L3096)
+L3137: OPEN <div>
+L3138: SELF <Info/>
+L3139: OPEN <p>
+L3141: CLOSE </p> (matches L3139)
+L3142: CLOSE </div> (matches L3137)
+L3143: CLOSE </div> (matches L3085)
+L3146: CLOSE </div> (matches L3061)
+L3149: OPEN <div>
+L3150: OPEN <button>
+L3161: SELF <div/>
+L3163: CLOSE </button> (matches L3150)
+L3164: OPEN <div>
+L3165: OPEN <button>
+L3173: CLOSE </button> (matches L3165)
+L3174: OPEN <button>
+L3182: SELF <ChevronRight/>
+L3183: CLOSE </button> (matches L3174)
+L3184: CLOSE </div> (matches L3164)
+L3185: CLOSE </div> (matches L3149)
+L3187: SELF <style/>
+L3198: CLOSE </div> (matches L3016)
+L3199: CLOSE </div> (matches L2862)
+L3202: MISMATCH </TabsContent> (expected </div> from L2788)
+L3205: OPEN <TabsContent>
+L3206: OPEN <div>
+L3207: CLOSE </div> (matches L3206)
+L3208: OPEN <div>
+L3209: OPEN <div>
+L3210: OPEN <p>
+L3210: CLOSE </p> (matches L3210)
+L3211: OPEN <p>
+L3211: CLOSE </p> (matches L3211)
+L3212: CLOSE </div> (matches L3209)
+L3213: CLOSE </div> (matches L3208)
+L3214: CLOSE </TabsContent> (matches L3205)
+L3217: MISMATCH </Tabs> (expected </div> from L2783)
+L3218: CLOSE </div> (matches L1518)
+L3219: MISMATCH </main> (expected </TabsContent> from L1483)
+L3220: MISMATCH </div> (expected </Tabs> from L1470)
+L3221: MISMATCH </TooltipProvider> (expected </div> from L1456)
+
+REMAINING ON STACK:
+  <HTMLSpanElement> from L273
+  <string> from L644
+  <string> from L667
+  <string> from L668
+  <string> from L669
+  <string> from L670
+  <number> from L675
+  <string> from L676
+  <number> from L677
+  <number> from L679
+  <string> from L680
+  <number> from L681
+  <number> from L683
+  <string> from L684
+  <number> from L685
+  <number> from L687
+  <string> from L688
+  <number> from L689
+  <number> from L691
+  <string> from L692
+  <number> from L693
+  <string> from L708
+  <string> from L709
+  <string> from L710
+  <string> from L711
+  <string> from L714
+  <string> from L715
+  <string> from L716
+  <number> from L719
+  <string> from L720
+  <number> from L721
+  <number> from L723
+  <string> from L724
+  <number> from L725
+  <number> from L727
+  <string> from L728
+  <number> from L729
+  <number> from L731
+  <string> from L732
+  <number> from L733
+  <number> from L735
+  <string> from L736
+  <number> from L737
+  <string> from L752
+  <string> from L753
+  <string> from L754
+  <string> from L755
+  <string> from L764
+  <number> from L768
+  <string> from L769
+  <any> from L778
+  <Risk> from L779
+  <Set> from L782
+  <number> from L989
+  <number> from L990
+  <number> from L991
+  <number> from L999
+  <string> from L1047
+  <string> from L1050
+  <string> from L1056
+  <string> from L1061
+  <TooltipProvider> from L1337
+  <div> from L1338
+  <main> from L1411

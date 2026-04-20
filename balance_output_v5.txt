@@ -1,0 +1,8 @@
+﻿MISMATCH: </TabsContent> at line 3211 (opened <div> at line 2797)
+MISMATCH: </Tabs> at line 3226 (opened <div> at line 2791)
+MISMATCH: </main> at line 3228 (opened <TabsContent> at line 1483)
+MISMATCH: </div> at line 3229 (opened <Tabs> at line 1470)
+FINAL STACK SIZE: 3
+UNCLOSED: <div> opened at line 1338
+UNCLOSED: <main> opened at line 1411
+UNCLOSED: <div> opened at line 1456

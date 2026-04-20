@@ -1,0 +1,1 @@
+﻿src/emailTemplate.ts(335,58): error TS18046: 'ctx.raw' is of type 'unknown'.
