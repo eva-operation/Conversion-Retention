@@ -13,6 +13,8 @@ import { PricingPage } from './components/PricingPage';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { ListsPage } from './components/ListsPage';
+import { SegmentsPage } from './components/SegmentsPage';
+import { SegmentBuilderPage } from './components/SegmentBuilderPage';
 import { SettingsPage } from './components/SettingsPage';
 import {
     Plus,
@@ -1500,7 +1502,7 @@ const PERSONAS = [
 import AccountDetail from './AccountDetail';
 
 export default function App() {
-    const [currentPage, setCurrentPage] = useState<'dashboard' | 'account-detail' | 'tasks' | 'analytics' | 'clients' | 'chats' | 'settings' | 'help' | 'reimbursement-analytics' | 'conversion-intelligence-landing' | 'lists'>('dashboard');
+    const [currentPage, setCurrentPage] = useState<'dashboard' | 'account-detail' | 'tasks' | 'analytics' | 'clients' | 'chats' | 'settings' | 'help' | 'reimbursement-analytics' | 'conversion-intelligence-landing' | 'lists' | 'segments' | 'segment-builder'>('dashboard');
     const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['Amazon', 'Shopify', 'TikTok']);
     const [isFetchingAmazonData, setIsFetchingAmazonData] = useState(false);
@@ -7558,6 +7560,10 @@ export default function App() {
                                     />
                                 ) : currentPage === 'lists' ? (
                                     <ListsPage onViewHistory={() => setCurrentPage('settings')} />
+                                ) : currentPage === 'segments' ? (
+                                    <SegmentsPage onOpenBuilder={() => setCurrentPage('segment-builder')} />
+                                ) : currentPage === 'segment-builder' ? (
+                                    <SegmentBuilderPage onBack={() => setCurrentPage('segments')} />
                                 ) : currentPage === 'settings' ? (
                                     <SettingsPage onBack={() => setCurrentPage('dashboard')} />
                                 ) : (
