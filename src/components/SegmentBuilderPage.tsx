@@ -442,7 +442,7 @@ export function SegmentBuilderPage({ onBack, onSave }: { onBack: () => void, onS
                                                 <CompactCondition 
                                                     {...condition} 
                                                     onDelete={() => removeCondition(group.id, condition.id)}
-                                                    onChange={(updates) => updateCondition(group.id, condition.id, updates)}
+                                                    onChange={(updates: any) => updateCondition(group.id, condition.id, updates)}
                                                 />
                                                 {cIdx < group.conditions.length - 1 && (
                                                     <div className="flex justify-center -my-2 relative z-20">
@@ -595,11 +595,11 @@ function CompactCondition({ type, field, operator, value, window, onDelete, onCh
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2 font-sans">
-                    <CompactSelector options={fields} activeOption={field} onSelect={(val) => onChange({ field: val })} />
-                    <CompactSelector options={operators} activeOption={operator} onSelect={(val) => onChange({ operator: val })} highlighted />
+                    <CompactSelector options={fields} activeOption={field} onSelect={(val: any) => onChange({ field: val })} />
+                    <CompactSelector options={operators} activeOption={operator} onSelect={(val: any) => onChange({ operator: val })} highlighted />
                     
                     {isCategorical ? (
-                        <CompactSelector options={categoryValues} activeOption={value} onSelect={(val) => onChange({ value: val })} color="text-blue-600 font-bold" />
+                        <CompactSelector options={categoryValues} activeOption={value} onSelect={(val: any) => onChange({ value: val })} color="text-blue-600 font-bold" />
                     ) : (
                         <div className="flex items-center gap-2">
                             <input 
@@ -616,7 +616,7 @@ function CompactCondition({ type, field, operator, value, window, onDelete, onCh
                     {window && !isDate && (
                         <div className="flex items-center gap-2">
                             <span className="text-[11px] font-bold text-slate-300">in</span>
-                            <CompactSelector options={windows} activeOption={window} onSelect={(val) => onChange({ window: val })} />
+                            <CompactSelector options={windows} activeOption={window} onSelect={(val: any) => onChange({ window: val })} />
                         </div>
                     )}
                 </div>
