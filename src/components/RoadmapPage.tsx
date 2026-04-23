@@ -36,12 +36,12 @@ export function RoadmapPage() {
                 </div>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-                    <TierCard name="Free" price="$0" limits={['500 Emails', '150 SMS']} />
-                    <TierCard name="Starter" price="$15" limits={['5,000 Emails', '250 SMS']} isMo />
+                    <TierCard name="Free" price="$0" limits={['500 Emails']} />
+                    <TierCard name="Starter" price="$15" limits={['5,000 Emails']} isMo />
                     <TierCard 
                         name="Growth" 
                         price="$49" 
-                        limits={['20,000 Emails', '1,000 SMS']} 
+                        limits={['20,000 Emails']} 
                         isFeatured 
                         isMo 
                     />
