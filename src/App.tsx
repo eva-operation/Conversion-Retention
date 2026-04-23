@@ -1503,7 +1503,7 @@ const PERSONAS = [
 import AccountDetail from './AccountDetail';
 
 export default function App() {
-    const [currentPage, setCurrentPage] = useState<'dashboard' | 'account-detail' | 'tasks' | 'analytics' | 'clients' | 'chats' | 'settings' | 'help' | 'reimbursement-analytics' | 'conversion-intelligence-landing' | 'lists' | 'segments' | 'segment-builder'>('dashboard');
+    const [currentPage, setCurrentPage] = useState<'dashboard' | 'account-detail' | 'tasks' | 'analytics' | 'clients' | 'chats' | 'settings' | 'help' | 'reimbursement-analytics' | 'conversion-intelligence-landing' | 'roadmap' | 'lists' | 'segments' | 'segment-builder'>('dashboard');
     const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['Amazon', 'Shopify', 'TikTok']);
     const [isFetchingAmazonData, setIsFetchingAmazonData] = useState(false);
