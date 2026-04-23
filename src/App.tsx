@@ -1542,6 +1542,35 @@ export default function App() {
     const [isAmazonPage, setIsAmazonPage] = useState(false);
     const [isAdConnectionWizardOpen, setIsAdConnectionWizardOpen] = useState(false);
     const [isPricingDialogOpen, setIsPricingDialogOpen] = useState(false);
+
+    // --- URL Routing Logic ---
+    useEffect(() => {
+        const path = window.location.pathname;
+        if (path === '/roadmap') {
+            setCurrentPage('roadmap');
+        }
+
+        const handlePopState = () => {
+            const p = window.location.pathname;
+            if (p === '/roadmap') {
+                setCurrentPage('roadmap');
+            } else if (p === '/') {
+                setCurrentPage('dashboard');
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
+    useEffect(() => {
+        const currentUrl = window.location.pathname;
+        if (currentPage === 'roadmap' && currentUrl !== '/roadmap') {
+            window.history.pushState({ page: 'roadmap' }, 'Roadmap', '/roadmap');
+        } else if (currentPage !== 'roadmap' && currentUrl === '/roadmap') {
+            window.history.pushState({ page: 'dashboard' }, 'Dashboard', '/');
+        }
+    }, [currentPage]);
     const [showAdBanner, setShowAdBanner] = useState(() => localStorage.getItem('hideAdBanner') !== 'true');
 
     // Routing Logic for Conversion Intelligence Landing
