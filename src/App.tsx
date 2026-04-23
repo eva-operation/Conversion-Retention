@@ -15,6 +15,7 @@ import { Dashboard } from './components/Dashboard';
 import { ListsPage } from './components/ListsPage';
 import { SegmentsPage } from './components/SegmentsPage';
 import { SegmentBuilderPage } from './components/SegmentBuilderPage';
+import { RoadmapPage } from './components/RoadmapPage';
 import { SettingsPage } from './components/SettingsPage';
 import {
     Plus,
@@ -7620,6 +7621,21 @@ export default function App() {
                         </div>
                     </div>
                 </main>
+
+                {/* Full Page Roadmap Overlay */}
+                {currentPage === 'roadmap' && (
+                    <div className="fixed inset-0 z-[99999] bg-[#F9FAFB] dark:bg-slate-950 overflow-auto animate-in fade-in duration-500">
+                        <div className="absolute top-6 right-8 z-[100000]">
+                            <button 
+                                onClick={() => setCurrentPage('dashboard')}
+                                className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all active:scale-95 group"
+                            >
+                                <X size={20} className="group-hover:rotate-90 transition-transform" />
+                            </button>
+                        </div>
+                        <RoadmapPage />
+                    </div>
+                )}
             </div>
             <PrototypeMenu 
                 onPackageChange={(pkg) => setSelectedPackage(pkg)}

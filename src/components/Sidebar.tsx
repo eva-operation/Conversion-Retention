@@ -13,7 +13,8 @@ import {
     ChevronDown,
     Settings,
     LogOut,
-    User
+    User,
+    Kanban
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -63,6 +64,7 @@ const NAV_ITEMS: NavItem[] = [
         children: [{ id: 'plans', label: 'Plans' }] 
     },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'roadmap', label: 'Roadmap', icon: Kanban },
     { id: 'settings', label: 'Settings', icon: Settings },
 ];
 

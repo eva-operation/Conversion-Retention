@@ -203,7 +203,7 @@ export function SegmentBuilderPage({ onBack, onSave }: { onBack: () => void, onS
         
         const parts = group.conditions.map((c, idx) => {
             const junction = idx < group.conditions.length - 1 ? ` ${c.junction} ` : "";
-            const fieldText = c.field === "Select field..." ? "a specific criteria" : c.field;
+            const fieldText = c.field === "Select field..." ? "a specific criterion" : c.field;
             const valueText = (c.value === "0" || c.value === "...") && !c.field.includes('Consent') ? "" : ` ${c.operator.toLowerCase()} ${c.value}`;
             
             let windowText = "";
@@ -516,8 +516,27 @@ export function SegmentBuilderPage({ onBack, onSave }: { onBack: () => void, onS
                             <div className="space-y-3">
                                 <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">PERFORMANCE IMPACT</h2>
                                 <div className="grid grid-cols-1 gap-2">
-                                    <ImpactCard label="Conv. Lift" value="+2.45%" />
-                                    <ImpactCard label="Est. Revenue" value="$12,430" color="text-emerald-500" font="font-mono" />
+                                    <Tooltip delayDuration={300}>
+                                        <TooltipTrigger asChild>
+                                            <div className="cursor-help">
+                                                <ImpactCard label="Average CVR" value="4.2%" />
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="left" className="bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl max-w-[240px] border-none font-medium leading-relaxed">
+                                            The historical average conversion rate of the specific profiles currently included in this segment.
+                                        </TooltipContent>
+                                    </Tooltip>
+
+                                    <Tooltip delayDuration={300}>
+                                        <TooltipTrigger asChild>
+                                            <div className="cursor-help">
+                                                <ImpactCard label="Est. Revenue" value="$12,430" color="text-emerald-500" font="font-mono" />
+                                            </div>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="left" className="bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl max-w-[240px] border-none font-medium leading-relaxed">
+                                            Estimated gross revenue from targeting this segment. Formula: Reach × Average CVR × Historical Average Order Value (AOV).
+                                        </TooltipContent>
+                                    </Tooltip>
                                 </div>
                             </div>
                         </div>
